@@ -1,5 +1,3 @@
-import dynamic from "next/dynamic";
-
 import algoliasearch from "algoliasearch/lite";
 import apiUnlogged from "../services/apiUnlogged";
 import HomePage from "../PagesComponents/Home/Home";
