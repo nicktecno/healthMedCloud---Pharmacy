@@ -2,10 +2,10 @@ import algoliasearch from "algoliasearch/lite";
 import apiUnlogged from "../services/apiUnlogged";
 import HomePage from "../PagesComponents/Home/Home";
 
-const searchClient = algoliasearch(
-  process.env.NEXT_PUBLIC_REACT_APP_ALGOLIA_APP_ID,
-  process.env.NEXT_PUBLIC_REACT_APP_ALGOLIA_SEARCH_API_KEY
-);
+// const searchClient = algoliasearch(
+//   process.env.NEXT_PUBLIC_REACT_APP_ALGOLIA_APP_ID,
+//   process.env.NEXT_PUBLIC_REACT_APP_ALGOLIA_SEARCH_API_KEY
+// );
 
 const DEFAULT_PROPS = {
   searchClient,
@@ -19,24 +19,24 @@ export default function Home(props) {
   );
 }
 
-export async function getStaticProps() {
-  const { data: response } = await apiUnlogged.get("/descendant-categories");
-  const menuFilter = response.data.filter((filtro) => filtro.name !== "Root");
+// export async function getStaticProps() {
+//   const { data: response } = await apiUnlogged.get("/descendant-categories");
+//   const menuFilter = response.data.filter((filtro) => filtro.name !== "Root");
 
-  let banners = false;
+//   let banners = false;
 
-  try {
-    const { data: response } = await apiUnlogged.get("/banners");
-    banners = response;
-  } catch (e) {
-    console.log(e);
-  }
+//   try {
+//     const { data: response } = await apiUnlogged.get("/banners");
+//     banners = response;
+//   } catch (e) {
+//     console.log(e);
+//   }
 
-  return {
-    props: {
-      banners,
-      menu: menuFilter,
-    },
-    revalidate: 600,
-  };
-}
+//   return {
+//     props: {
+//       banners,
+//       menu: menuFilter,
+//     },
+//     revalidate: 600,
+//   };
+// }
