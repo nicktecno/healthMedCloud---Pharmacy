@@ -7,10 +7,10 @@ import HomePage from "../PagesComponents/Home/Home";
 //   process.env.NEXT_PUBLIC_REACT_APP_ALGOLIA_SEARCH_API_KEY
 // );
 
-const DEFAULT_PROPS = {
-  searchClient,
-  indexName: process.env.NEXT_PUBLIC_REACT_APP_ALGOLIA_INDEX_SEARCH,
-};
+// const DEFAULT_PROPS = {
+//   searchClient,
+//   indexName: process.env.NEXT_PUBLIC_REACT_APP_ALGOLIA_INDEX_SEARCH,
+// };
 
 export default function Home(props) {
   return (
