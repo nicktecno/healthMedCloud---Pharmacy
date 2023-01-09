@@ -1,8 +1,6 @@
 const { NextFederationPlugin } = require("@module-federation/nextjs-mf");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-
   webpack: (config, options) => {
     const { isServer } = options;
     config.experiments = {
@@ -20,7 +18,14 @@ const nextConfig = {
         },
         filename: "static/chunks/remoteEntry.js",
         exposes: {
-          "./home": "./PagesComponents/Home/Home.jsx",
+          // "./home": "./PagesComponents/Home/Home.jsx",
+          "./header": "./components/Header/Header.jsx",
+          "./footer": "./components/Footer/Footer.jsx",
+        },
+
+        extraOptions: {
+          exposePages: true,
+          automaticAsyncBoundary: true,
         },
       })
     );

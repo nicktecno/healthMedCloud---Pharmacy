@@ -3,8 +3,6 @@ import { Helmet } from "react-helmet";
 
 import ListHomeProducts from "../../components/ListHomeProducts";
 
-import { RightArrow } from "@styled-icons/boxicons-solid/RightArrow";
-
 import * as S from "./style";
 
 import "slick-carousel/slick/slick.css";
@@ -189,6 +187,7 @@ function HomePage(props) {
             props.banners.web.length > 0
               ? props.banners.web.map((item, index) => (
                   <a
+                    key={index}
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       window?.dataLayer &&
@@ -227,6 +226,7 @@ function HomePage(props) {
             props.banners.mobile.length > 0
               ? props.banners.mobile.map((item, index) => (
                   <a
+                    key={index}
                     style={{ cursor: "pointer" }}
                     onClick={() => {
                       window?.dataLayer &&
@@ -264,7 +264,7 @@ function HomePage(props) {
         <h2 className="produtos-txt first">Categorias</h2>
 
         <Slider {...settings}>
-          {props?.menu?.map((attr) => (
+          {props?.menu?.map((attr, index) => (
             <a key={attr.id} className="containerCategorias">
               <div
                 onClick={() => redirect(`/category/${attr.name}`)}
@@ -329,7 +329,8 @@ function HomePage(props) {
           )}
         </S.BannerMobile>
       </S.SecondaryBanner>
-      {/* <S.ConjuntoMid>
+      {process.env.NEXT_PUBLIC_REACT_APP_DESCRIPTION}
+      <S.ConjuntoMid>
         <S.BlocoExplore onClick={() => history.push("/inspire")}>
           <div className="blocoImage">
             <img
@@ -350,7 +351,7 @@ function HomePage(props) {
           </div>
           <span>Encontre profissionais</span>
         </S.BlocoExplore>
-      </S.ConjuntoMid> */}
+      </S.ConjuntoMid>
 
       <S.sliderProduct>
         <h2 className="produtos-txt">Recomendados</h2>

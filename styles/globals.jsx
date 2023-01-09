@@ -170,11 +170,14 @@ const GlobalStyles = createGlobalStyle`
 
 
     body {
+        display:flex;
+        flex-direction:column;
         line-height: 1;
+        width:100%;
         overflow-x: hidden;
         padding-top: 60px;
         padding-bottom: 50px;
-         
+         margin:0px;
         height:100%;
 
 

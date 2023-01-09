@@ -228,7 +228,7 @@ export const sliderMobile = styled.div`
     width: 20px;
   }
 
-  @media only screen and (min-width: 699px) {
+  @media only screen and (min-width: 768px) {
     display: none;
   }
 `;

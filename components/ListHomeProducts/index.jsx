@@ -12,15 +12,15 @@ const Hits = ({ hits, ...rest }) => {
   const history = useRouter();
   const [dataLayerState, setDataLayerState] = useState(false);
 
-  useEffect(() => {
-    if (window.dataLayer !== undefined) {
-      if (hits.length > 0) {
-        dataLayerTrigger();
-      }
-    } else {
-      setDataLayerState(!dataLayerState);
-    }
-  }, [dataLayerState]);
+  // useEffect(() => {
+  //   if (window.dataLayer !== undefined) {
+  //     if (hits.length > 0) {
+  //       dataLayerTrigger();
+  //     }
+  //   } else {
+  //     setDataLayerState(!dataLayerState);
+  //   }
+  // }, [dataLayerState]);
 
   async function dataLayerTrigger() {
     const DadosProdutos = hits.map((produto, i) => ({
