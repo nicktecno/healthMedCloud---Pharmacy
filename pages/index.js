@@ -15,7 +15,7 @@ const DEFAULT_PROPS = {
 export default function Home(props) {
   return (
     <>
-      <HomePage {...DEFAULT_PROPS} menu={props.menu} banners={props.banners} />
+      {/* <HomePage {...DEFAULT_PROPS} menu={props.menu} banners={props.banners} /> */}
     </>
   );
 }
