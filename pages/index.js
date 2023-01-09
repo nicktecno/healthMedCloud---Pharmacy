@@ -15,12 +15,12 @@ const DEFAULT_PROPS = {
 export default function Home(props) {
   return (
     <>
-      {/* <HomePage {...DEFAULT_PROPS} menu={props.menu} banners={props.banners} /> */}
+      <HomePage {...DEFAULT_PROPS} menu={props.menu} banners={props.banners} />
     </>
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const { data: response } = await apiUnlogged.get("/descendant-categories");
   const menuFilter = response.data.filter((filtro) => filtro.name !== "Root");
 
@@ -38,6 +38,5 @@ export async function getStaticProps() {
       banners,
       menu: menuFilter,
     },
-    revalidate: 600,
   };
 }
