@@ -1,67 +1,42 @@
+import BoxSandwichMenuContent from "../BoxSandwichMenuContent";
+
 import * as S from "./styles";
 
 export function ModalGeneralSandwichMenu({
-  modalMultiLangActive,
-  setModalMultiLangActive,
+  setOpenMenu,
+  menu,
   generalComponentsTranslation,
-  lang,
-  setLang,
 }) {
-  function handleLanguage(language) {
-    localStorage.setItem(
-      `${process.env.NEXT_PUBLIC_REACT_APP_NAME}_language`,
-      language
-    );
-    setLang(language);
-  }
-
+  document.body.style.overflow = "hidden";
   return (
-    <S.Modal className={modalMultiLangActive}>
+    <S.Modal className={"active"}>
       <S.Transparente
         onClick={() => {
           document.body.style.overflow = "auto";
 
-          setModalMultiLangActive("inactive");
+          setOpenMenu(false);
         }}
       />
 
       <S.centerModal>
         <div className="modalTitle">
-          <span className="title">
-            {generalComponentsTranslation !== false &&
-              generalComponentsTranslation?.header.labels.labelModal01}
-          </span>
           <S.closeButton
             onClick={() => {
               document.body.style.overflow = "auto";
 
-              setModalMultiLangActive("inactive");
+              setOpenMenu(false);
             }}
           >
             x
           </S.closeButton>
         </div>
-        <S.ContainerInputs>
-          <div className="containerFlags">
-            {generalComponentsTranslation !== false &&
-              generalComponentsTranslation?.header.labels.languagesPack.map(
-                (langSelect) => (
-                  <div
-                    key={langSelect.slug}
-                    onClick={() => handleLanguage(langSelect.slug)}
-                    className={
-                      lang === langSelect.slug ? "boxFlag active" : "boxFlag"
-                    }
-                  >
-                    <div className="containerImage">
-                      <img src={langSelect.image} alt={langSelect.alt} />
-                    </div>
-                    <div className="dataFlag">{langSelect.name}</div>
-                  </div>
-                )
-              )}
-          </div>
-        </S.ContainerInputs>
+        <S.ContainerBox>
+          <BoxSandwichMenuContent
+            generalComponentsTranslation={generalComponentsTranslation}
+            menu={menu}
+            setOpenMenu={setOpenMenu}
+          />
+        </S.ContainerBox>
       </S.centerModal>
     </S.Modal>
   );

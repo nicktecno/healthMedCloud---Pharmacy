@@ -413,6 +413,7 @@ const multiLang = [
           labelModal06: "Localização atual",
           labelModal07: "Menu Principal",
           labelModal08: "Início",
+          labelModal09: "Ver",
           languagesPack: [
             {
               name: "Português Brasileiro",

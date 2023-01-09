@@ -34,18 +34,16 @@ export const Modal = styled.div`
 
   left: 0;
   top: 0;
-  z-index: 99;
+  z-index: 991;
   display: none;
 
   &.active {
     display: flex;
-    justify-content: center;
-    align-items: center;
   }
 `;
 
 export const closeButton = styled.span`
-  font-size: 25px;
+  font-size: 20px;
   display: flex;
   color: var(--title-color);
   font-weight: 700;
@@ -54,27 +52,19 @@ export const closeButton = styled.span`
   right: 25px;
   cursor: pointer;
   transition: 0.3s;
-
-  ${customMedia.lessThan("400px")`
-        top: 12px;
-        right:5px;
-        padding:0 10px;
-        
-    `}
-
-  :hover {
-  }
 `;
 
 export const centerModal = styled.div`
+  margin-top: 90px;
   display: flex;
-  width: 500px;
-  height: 450px;
-  background: white;
+  width: 320px;
+  height: 100%;
+  gap: 10px;
+  background: var(--menu-sandwich-body);
   text-align: center;
   color: var(--title-color);
   flex-direction: column;
-  position: absolute;
+  position: relative;
 
   ${customMedia.lessThan("mobile")`
      width: 95%;
@@ -84,23 +74,20 @@ export const centerModal = styled.div`
     width: 100%;
     position: relative;
     color: var(--title-color);
-    background: var(--default-color);
+    background: var(--menu-sandwich-header);
     font-size: 1.125rem;
     line-height: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
 
-    height: 50px;
+    height: 30px;
     text-align: center;
 
     .title {
       font-weight: bold;
       font-size: 16px;
     }
-    ${customMedia.lessThan("tablet")`
-        margin-bottom: 0px;
-    `}
   }
 
   .modalFooter {
@@ -136,91 +123,11 @@ export const Transparente = styled.div`
   position: absolute;
 `;
 
-export const ContainerInputs = styled.div`
+export const ContainerBox = styled.div`
   display: flex;
-  margin-top: 20px;
-  flex-direction: column;
-  width: 100%;
-  max-height: 80%;
-
-  align-items: center;
-  gap: 15px;
-
-  overflow: auto;
-
-  ::-webkit-scrollbar {
-    width: 7px;
-  }
-
-  /* Track */
-
-  ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px #f4f4f5;
-    border-radius: 10px;
-  }
-
-  /* Handle */
-
-  ::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 5px;
-  }
-
-  /* Handle on hover */
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #ccc;
-  }
-  .containerFlags {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-
-    gap: 10px;
-
-    .boxFlag {
-      display: flex;
-      cursor: pointer;
-      flex-direction: column;
-      padding: 10px;
-      width: 45%;
-      height: 170px;
-      border: 2px solid transparent;
-      transition: 0.3s;
-
-      ${customMedia.lessThan("400px")`
-        width:130px;
-        height: 130px;
-        
-    `}
-
-      &.active {
-        background: var(--default-color-hover);
-      }
-      :hover {
-        border: 2px solid var(--default-color-hover);
-      }
-
-      .containerImage {
-        width: 100%;
-        height: 120px;
-        img {
-          height: 100%;
-          width: 100%;
-          object-fit: cover;
-        }
-      }
-
-      .dataFlag {
-        display: flex;
-        height: 50px;
-        width: 100%;
-        justify-content: center;
-        align-items: center;
-        font-weight: bold;
-      }
-    }
-  }
+  position: relative;
+  height: calc(100% - (140px));
+  ${customMedia.lessThan("netbook")`
+    height: calc(100% - (220px));
+    `};
 `;

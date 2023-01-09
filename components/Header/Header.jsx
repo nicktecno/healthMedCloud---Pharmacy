@@ -2,11 +2,8 @@ import React, { useEffect, useState } from "react";
 import defaultLayout from "../../jover.json";
 import ModalGeneralLocation from "../ModalGeneralLocation";
 
-import { Modal } from "react-bootstrap";
-
 import * as S from "./style";
 
-import BoxSandwichMenuContent from "../BoxSandwichMenuContent";
 import HeaderMenu from "../HeaderMenu";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -78,7 +75,7 @@ const HeaderComponent = ({
       const { data: response } = await api.get("/descendant-categories");
       setMenu(
         response.data.filter(({ name }) => {
-          return name !== "Root";
+          return name;
         })
       );
     } catch (err) {
@@ -143,13 +140,17 @@ const HeaderComponent = ({
               </S.local>
             </S.modal1>
           )}
+          {openMenu &&
+            generalComponentsTranslation !== false &&
+            generalComponentsTranslation !== undefined &&
+            menu.length > 0 && (
+              <ModalGeneralSandwichMenu
+                setOpenMenu={setOpenMenu}
+                menu={menu}
+                generalComponentsTranslation={generalComponentsTranslation}
+              />
+            )}
 
-          {openMenu && (
-            <ModalGeneralSandwichMenu
-              openMenu={openMenu}
-              setOpenMenu={setOpenMenu}
-            />
-          )}
           <S.box>
             <S.imagens>
               <div className="logoSandwich">

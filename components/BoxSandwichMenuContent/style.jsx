@@ -26,17 +26,11 @@ export const fundo = styled.div`
 
 export const menu = styled.div`
   background-color: var(--menu-sandwich-body);
-
+  height: 100%;
   ${customMedia.lessThan("tablet")`
         background-color: var(--menu-sandwich-body);
-        height: 150vh;
-        
-       
+                      
     `}
-
-  @media (min-height:1200px) and (max-height:1366px) {
-    height: 100vh;
-  }
   .children {
     position: relative;
     padding: 5px 0px;
@@ -64,9 +58,9 @@ export const menu = styled.div`
     }
   }
   width: 320px;
-  height: calc(100vh - 140px);
-  position: absolute;
-  margin-top: -1px;
+
+  position: relative;
+
   color: var(--title-color);
   font-size: 16px;
   text-transform: uppercase;
@@ -80,16 +74,9 @@ export const menu = styled.div`
   ul {
     position: relative;
     padding: 5px 0px;
-    height: 50%;
+    height: 100%;
 
     overflow: auto;
-
-    ${customMedia.greaterThan("tablet")`
-
-    height: 90%;
-    overflow: auto;
-
-    `}
 
     ::-webkit-scrollbar {
       width: 7px;
@@ -146,12 +133,6 @@ export const menu = styled.div`
       img {
         max-width: 24px;
         max-height: 24px;
-
-        ${customMedia.lessThan("tablet")`
-
-          // filter: brightness(100);
-      
-      `}
       }
 
       .ais-HierarchicalMenu-list {
@@ -167,6 +148,9 @@ export const menu = styled.div`
         .containerText {
           display: flex;
           width: 100%;
+          justify-content: flex-start;
+          align-items: flex-start;
+          text-align: start;
           line-height: 25px;
           flex-wrap: wrap;
 

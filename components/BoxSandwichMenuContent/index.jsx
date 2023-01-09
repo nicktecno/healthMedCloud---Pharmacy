@@ -3,29 +3,26 @@ import React, { useState } from "react";
 import { ArrowIosForwardOutline } from "@styled-icons/evaicons-outline/ArrowIosForwardOutline";
 import { ArrowIosBackOutline } from "@styled-icons/evaicons-outline/ArrowIosBackOutline";
 
-import { useMenu } from "../../Context/Menu";
-
-//style
 import * as S from "./style";
 import { useRouter } from "next/router";
-import { useLang } from "../../Context/LangContext";
 
-const Menu = ({ menu }) => {
+const BoxSandwichMenuContent = ({
+  generalComponentsTranslation,
+  menu,
+  setOpenMenu,
+}) => {
   const [subMenu, setSubMenu] = useState(false);
 
   const history = useRouter();
 
-  const { setOpenMenu } = useMenu();
-  const { generalComponentsTranslation } = useLang();
-
   function redirect(url) {
     window.location.href = url;
   }
-
+  console.log(generalComponentsTranslation);
   return (
     <>
       <S.menu>
-        <ul className="firstMenu">
+        <ul>
           {menu &&
             menu.map((item, index) => (
               <div key={index}>
@@ -59,11 +56,13 @@ const Menu = ({ menu }) => {
                         <div className="backMenu">
                           <ArrowIosBackOutline />
                           {generalComponentsTranslation !== false &&
+                            generalComponentsTranslation !== undefined &&
                             generalComponentsTranslation?.header.labels
                               .labelModal07}
                         </div>
                       ) : (
                         generalComponentsTranslation !== false &&
+                        generalComponentsTranslation !== undefined &&
                         generalComponentsTranslation?.header.labels.labelModal08
                       )}
                     </a>
@@ -83,69 +82,71 @@ const Menu = ({ menu }) => {
                     </a>
                   )}
                 </li>
-                {subMenu === item.id && (
-                  <ul className="children">
-                    <li>
-                      <a
-                        className="children"
-                        onClick={() => {
-                          setOpenMenu(false);
-
-                          redirect(
-                            `/category/${item.name.replace(/\s/g, "+")}`
-                          );
-                        }}
-                      >
-                        <div className="containerTextImg">
-                          <div className="containerText strong">
-                            {generalComponentsTranslation !== false &&
-                              generalComponentsTranslation?.header.labels
-                                .labelModal09}{" "}
-                            {item.name}
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    {item.children.map((children, i) => (
-                      <li key={i}>
+                {subMenu === item.id &&
+                  generalComponentsTranslation !== false &&
+                  generalComponentsTranslation !== undefined && (
+                    <ul className="children">
+                      <li>
                         <a
                           className="children"
                           onClick={() => {
                             setOpenMenu(false);
 
                             redirect(
-                              `/category/${item.name.replace(
-                                /\s/g,
-                                "+"
-                              )}/${item.name.replace(
-                                /\s/g,
-                                "+"
-                              )}+>+${children.name.replace(/\s/g, "+")}`
+                              `/category/${item.name.replace(/\s/g, "+")}`
                             );
                           }}
                         >
                           <div className="containerTextImg">
-                            <div className="containerImg">
-                              {item.image_url && (
-                                <>
-                                  {children.image_url !== null && (
-                                    <img
-                                      src={children.image_url}
-                                      alt={children.name}
-                                    />
-                                  )}
-                                </>
-                              )}
-                            </div>
                             <div className="containerText strong">
-                              {children.name}
+                              {generalComponentsTranslation !== false &&
+                                generalComponentsTranslation?.header.labels
+                                  .labelModal09}{" "}
+                              {item.name}
                             </div>
                           </div>
                         </a>
                       </li>
-                    ))}
-                  </ul>
-                )}
+                      {item.children.map((children, i) => (
+                        <li key={i}>
+                          <a
+                            className="children"
+                            onClick={() => {
+                              setOpenMenu(false);
+
+                              redirect(
+                                `/category/${item.name.replace(
+                                  /\s/g,
+                                  "+"
+                                )}/${item.name.replace(
+                                  /\s/g,
+                                  "+"
+                                )}+>+${children.name.replace(/\s/g, "+")}`
+                              );
+                            }}
+                          >
+                            <div className="containerTextImg">
+                              <div className="containerImg">
+                                {item.image_url && (
+                                  <>
+                                    {children.image_url !== null && (
+                                      <img
+                                        src={children.image_url}
+                                        alt={children.name}
+                                      />
+                                    )}
+                                  </>
+                                )}
+                              </div>
+                              <div className="containerText strong">
+                                {children.name}
+                              </div>
+                            </div>
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
               </div>
             ))}
         </ul>
@@ -154,4 +155,4 @@ const Menu = ({ menu }) => {
   );
 };
 
-export default Menu;
+export default BoxSandwichMenuContent;

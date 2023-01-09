@@ -2,9 +2,6 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import BoxSandwichMenuContent from "../BoxSandwichMenuContent";
-
-import { Modal } from "react-bootstrap";
 import ColorPicker from "../ColorPicker";
 
 import * as S from "./style";
@@ -13,6 +10,7 @@ import api from "../../services/api";
 import FooterSellerSpecs from "../FooterSellerSpecs";
 
 import { ModalGeneralMultiLang } from "../ModalGeneralMultiLang";
+import { ModalGeneralSandwichMenu } from "../ModalGeneralSandwichMenu";
 
 const FooterComponent = ({
   generalComponentsTranslation,
@@ -120,22 +118,16 @@ const FooterComponent = ({
         lang={lang}
         setLang={setLang}
       />
-      <S.modal1>
-        <S.local className={openMenu ? "ativo" : "inativo"}>
-          <Modal
-            backdropClassName
-            show={openMenu}
-            onHide={handleClose}
-            className="menu-modal"
-          >
-            <Modal.Header closeButton className="header-menu-modal" />
-            <Modal.Body className="body-menu-modal">
-              <BoxSandwichMenuContent menu={menu} />
-            </Modal.Body>
-          </Modal>
-          <S.transparente onClick={handleClose} />
-        </S.local>
-      </S.modal1>
+      {openMenu &&
+        generalComponentsTranslation !== false &&
+        generalComponentsTranslation !== undefined &&
+        menu.length > 0 && (
+          <ModalGeneralSandwichMenu
+            setOpenMenu={setOpenMenu}
+            menu={menu}
+            generalComponentsTranslation={generalComponentsTranslation}
+          />
+        )}
 
       <S.box>
         <S.imagens>

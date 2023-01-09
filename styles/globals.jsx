@@ -996,33 +996,7 @@ margin-top:0px;
             padding-right:0px !important
         }
 
-    .firstMenu {
-    display:flex;
-    flex-direction:column;
-        
-        img{
-        max-width: 30px;
-        max-height: 30px;
-
-        }
-
-        ${customMedia.lessThan("pobre")`
-      padding-right:0px !important;
-      width:95%;
-       
-    `}
-        
-        li{
-            padding-bottom: 10px;
-            transition: 0.2s ease-out;
-            line-height:35px;
-           
-
-
-           
-           
-            }
-        }
+ 
     
 
  
