@@ -12,6 +12,9 @@ import FooterSellerSpecs from "../FooterSellerSpecs";
 import { ModalGeneralMultiLang } from "../ModalGeneralMultiLang";
 import { ModalGeneralSandwichMenu } from "../ModalGeneralSandwichMenu";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const FooterComponent = ({
   generalComponentsTranslation,
   colorThemes,

@@ -18,7 +18,7 @@ const BoxSandwichMenuContent = ({
   function redirect(url) {
     window.location.href = url;
   }
-  console.log(generalComponentsTranslation);
+
   return (
     <>
       <S.menu>

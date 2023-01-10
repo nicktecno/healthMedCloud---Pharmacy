@@ -17,6 +17,7 @@ const HeaderMenu = ({ menu, menuState, setMenuState, setModal }) => {
   function redirect(url) {
     window.location.href = url;
   }
+
   const menuFiltered = menu.filter((filt) => filt.name !== "Root").slice(0, 4);
   return (
     <>

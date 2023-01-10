@@ -8,12 +8,14 @@ import HeaderMenu from "../HeaderMenu";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import api from "../../services/api";
-
 import { ModalGeneralMultiLang } from "../ModalGeneralMultiLang";
 import { ModalGeneralSandwichMenu } from "../ModalGeneralSandwichMenu";
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const HeaderComponent = ({
+  api,
   openMenu,
   setOpenMenu,
   cartLength,
@@ -66,10 +68,6 @@ const HeaderComponent = ({
     setOpenMenu(false);
   }
 
-  function abreMenu() {
-    setMenuState(false);
-  }
-
   async function getMenu() {
     try {
       const { data: response } = await api.get("/descendant-categories");
@@ -102,6 +100,16 @@ const HeaderComponent = ({
     setWindowWidth(window.innerWidth);
   }, []);
 
+  function handleModal() {
+    if (openMenu) {
+      document.body.style.overflow = "auto";
+      setOpenMenu(false);
+    } else {
+      document.body.style.overflow = "hidden";
+      setOpenMenu(true);
+    }
+  }
+
   return (
     <>
       {generalComponentsTranslation !== false && (
@@ -122,6 +130,7 @@ const HeaderComponent = ({
                 <S.transparente onClick={() => fechaModal()} />
 
                 <ModalGeneralLocation
+                  api={api}
                   logged={logged}
                   localizado={localizado}
                   modalState={modal}
@@ -140,16 +149,13 @@ const HeaderComponent = ({
               </S.local>
             </S.modal1>
           )}
-          {openMenu &&
-            generalComponentsTranslation !== false &&
-            generalComponentsTranslation !== undefined &&
-            menu.length > 0 && (
-              <ModalGeneralSandwichMenu
-                setOpenMenu={setOpenMenu}
-                menu={menu}
-                generalComponentsTranslation={generalComponentsTranslation}
-              />
-            )}
+
+          <ModalGeneralSandwichMenu
+            openMenu={openMenu}
+            setOpenMenu={setOpenMenu}
+            menu={menu}
+            generalComponentsTranslation={generalComponentsTranslation}
+          />
 
           <S.box>
             <S.imagens>
@@ -301,7 +307,7 @@ const HeaderComponent = ({
               <S.MenuIconGray
                 onClick={() => {
                   setMenuState(false);
-                  setOpenMenu(openMenu ? false : true);
+                  handleModal();
                 }}
                 className="imgresponsiva menu"
                 alt="Menu"
@@ -310,6 +316,7 @@ const HeaderComponent = ({
                 className="menuLabel"
                 onClick={() => {
                   setMenuState(false);
+
                   setOpenMenu(openMenu ? false : true);
                 }}
               >
@@ -392,6 +399,7 @@ const HeaderComponent = ({
           </S.modal2>
         </>
       )}
+      <ToastContainer />
     </>
   );
 };

@@ -4,7 +4,7 @@ import * as S from "./style";
 import axios from "axios";
 import notification from "../../services/notification";
 import ReactInputMask from "react-input-mask";
-import api from "../../services/api";
+
 import msLocation from "../../services/msLocation";
 
 import { Marker } from "@styled-icons/foundation/Marker";
@@ -12,6 +12,7 @@ import { Marker } from "@styled-icons/foundation/Marker";
 import Geocode from "react-geocode";
 
 function ModalGeneralLocation({
+  api,
   logged,
   localizacao,
   setLocalizacao,
