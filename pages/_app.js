@@ -1,8 +1,6 @@
 import GlobalStyles from "../styles/globals";
 import { defaultLayout } from "../jover.json";
 
-import Header from "../components/Header";
-import Footer from "../components/Footer";
 import { LangProvider } from "../Context/LangContext";
 import { AuthProvider } from "../Context/AuthContext";
 import { CartLengthProvider } from "../Context/CartLengthContext";
@@ -28,9 +26,7 @@ function MyApp({ Component, pageProps }) {
                   }
                 />
 
-                <Header />
                 <Component {...pageProps} />
-                <Footer />
               </MenuProvider>
             </LocationProvider>
           </ColorThemeProvider>

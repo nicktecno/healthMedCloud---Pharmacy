@@ -281,23 +281,37 @@ export const slider = styled.div`
   .slick-prev {
     left: 18px !important;
     color: var(--font-color);
-    border-left: 2px solid var(--font-color);
-    border-top: 2px solid var(--font-color);
+
     height: 30px;
     width: 30px;
     margin-right: 20px;
     margin-bottom: 30px;
     z-index: 99;
+    :before {
+      display: flex;
+      width: 20px;
+      height: 20px;
+      background-image: url("images/leftArrow.png");
+      background-size: 20px 20px;
+      content: "";
+    }
   }
   .slick-next {
     right: 7px !important;
     color: var(--font-color);
-    border-left: 2px solid var(--font-color);
-    border-top: 2px solid var(--font-color);
+
     height: 30px;
     width: 30px;
     margin-left: 20px;
     z-index: 99;
+    :before {
+      display: flex;
+      width: 20px;
+      height: 20px;
+      background-image: url("images/rightArrow.png");
+      background-size: 20px 20px;
+      content: "";
+    }
   }
 
   .produtos-txt {
@@ -415,6 +429,14 @@ export const sliderProduct = styled.div`
     height: 30px;
     width: 30px;
     margin-right: 20px;
+    .slick-prev:before {
+      display: flex;
+      width: 20px;
+      height: 20px;
+      background-image: url("images/leftArrow.png");
+      background-size: 20px 20px;
+      content: "";
+    }
     ${customMedia.lessThan("mobile")`
       display: none !important;
     `}

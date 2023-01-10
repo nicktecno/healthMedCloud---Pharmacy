@@ -329,29 +329,30 @@ function HomePage(props) {
           )}
         </S.BannerMobile>
       </S.SecondaryBanner>
-      {process.env.NEXT_PUBLIC_REACT_APP_DESCRIPTION}
-      <S.ConjuntoMid>
-        <S.BlocoExplore onClick={() => history.push("/inspire")}>
-          <div className="blocoImage">
-            <img
-              src="/images/fotooo.jpg"
-              loading="lazy"
-              alt="Sala com sofá azul no centro"
-            />
-          </div>
-          <span>Inspire-se</span>
-        </S.BlocoExplore>
-        <S.BlocoExplore onClick={() => history.push("/findpromoters")}>
-          <div className="blocoImage">
-            <img
-              loading="lazy"
-              src="/images/encontre.jpg"
-              alt="Arquiteto desenhando"
-            />
-          </div>
-          <span>Encontre profissionais</span>
-        </S.BlocoExplore>
-      </S.ConjuntoMid>
+      {process.env.NEXT_PUBLIC_REACT_APP_PHOTOBOOK_MODULE_ACTIVE === "true" && (
+        <S.ConjuntoMid>
+          <S.BlocoExplore onClick={() => history.push("/inspire")}>
+            <div className="blocoImage">
+              <img
+                src="/images/fotooo.jpg"
+                loading="lazy"
+                alt="Sala com sofá azul no centro"
+              />
+            </div>
+            <span>Inspire-se</span>
+          </S.BlocoExplore>
+          <S.BlocoExplore onClick={() => history.push("/findpromoters")}>
+            <div className="blocoImage">
+              <img
+                loading="lazy"
+                src="/images/encontre.jpg"
+                alt="Arquiteto desenhando"
+              />
+            </div>
+            <span>Encontre profissionais</span>
+          </S.BlocoExplore>
+        </S.ConjuntoMid>
+      )}
 
       <S.sliderProduct>
         <h2 className="produtos-txt">Recomendados</h2>
