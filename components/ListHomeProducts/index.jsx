@@ -2,9 +2,6 @@ import { connectHits } from "react-instantsearch-dom";
 import * as S from "./style";
 import CardHomeProduct from "../CardHomeProduct";
 
-// css slider itens
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
