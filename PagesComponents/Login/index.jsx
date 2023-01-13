@@ -1,5 +1,3 @@
-import "react-toastify/dist/ReactToastify.min.css";
-
 import { useCart } from "../../Context/CartLengthContext";
 
 import { useLang } from "../../Context/LangContext";

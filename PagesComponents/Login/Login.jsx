@@ -1,11 +1,12 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 
 import Link from "next/link";
 import notification from "../../services/notification";
 
 import * as S from "./style";
 
-//imagens
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import { Eye } from "@styled-icons/bootstrap/Eye";
 import { EyeSlash } from "@styled-icons/bootstrap/EyeSlash";
@@ -344,6 +345,7 @@ function LoginComponent({ setCartLength, validaLogin, mktName, api }) {
           </form>
         </S.form>
       </S.solicitarSenha>
+      <ToastContainer />
     </>
   );
 }
