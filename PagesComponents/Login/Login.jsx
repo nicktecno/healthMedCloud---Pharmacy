@@ -8,8 +8,8 @@ import * as S from "./style";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Eye } from "@styled-icons/bootstrap/Eye";
-import { EyeSlash } from "@styled-icons/bootstrap/EyeSlash";
+import { Eye } from "@styled-icons/ionicons-outline/Eye";
+import { EyeOff } from "@styled-icons/ionicons-outline/EyeOff";
 
 import { useRouter } from "next/router";
 
@@ -258,7 +258,7 @@ function LoginComponent({ setCartLength, validaLogin, mktName, api }) {
                 />
 
                 <span onClick={() => setPasswordOculto(!passwordOculto)}>
-                  {passwordOculto ? <EyeSlash /> : <Eye />}
+                  {passwordOculto ? <EyeOff /> : <Eye />}
                 </span>
               </div>
             </S.inputArea>
