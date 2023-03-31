@@ -22,6 +22,8 @@ const GlobalStyles = createGlobalStyle`
   :root {
 
     --input-border-color: ${(props) => props.colors[0]["input-border-color"]};
+
+    
     --input-border-color-hover: ${(props) =>
       props.colors[0]["input-border-color-hover"]};
     --menu-sandwich-header: ${(props) =>
@@ -42,6 +44,8 @@ const GlobalStyles = createGlobalStyle`
       props.colors[0]["profile-card-color-hover"]};
     --default-color: ${(props) => props.colors[0]["default-color"]};
     --default-color-hover: ${(props) => props.colors[0]["default-color-hover"]};
+    --default-contrast-color: ${(props) =>
+      props.colors[0]["default-contrast-color"]};
     --default-color-icons: ${(props) => props.colors[0]["default-color-icons"]}
     --title-color: ${(props) => props.colors[0]["title-color"]};
     --box-shadow:  ${(props) => props.colors[0]["box-shadow"]};
@@ -175,9 +179,7 @@ const GlobalStyles = createGlobalStyle`
         line-height: 1;
         width:100%;
         overflow-x: hidden;
-        padding-top: 60px;
-        padding-bottom: 50px;
-         margin:0px;
+        margin:0px;
         height:100%;
 
 

@@ -1,19 +1,13 @@
 import GlobalStyles from "../styles/globals";
-import { defaultLayout } from "../jover.json";
 
 import { ToastContainer } from "react-toastify";
+import defaultLayout from "../jover";
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
       <ToastContainer />
-      <GlobalStyles
-        colors={
-          process.env.NEXT_PUBLIC_REACT_APP_MMP_STATE === "true"
-            ? selectedMkt
-            : defaultLayout
-        }
-      />
+      <GlobalStyles colors={defaultLayout} />
 
       <Component {...pageProps} />
     </>

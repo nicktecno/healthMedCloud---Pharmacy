@@ -1,3 +1,5 @@
+import HomeComponent from "./HomeComponent";
+
 const Home = () => {
   return <HomeComponent />;
 };

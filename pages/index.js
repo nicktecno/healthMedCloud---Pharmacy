@@ -1,9 +1,5 @@
-import LoginPage from "../PagesComponents/Login/Login";
+import Home from "../PagesComponents/Home/index";
 
-export default function Home() {
-  return (
-    <>
-      <LoginPage />
-    </>
-  );
+export default function HomePage() {
+  return <Home />;
 }

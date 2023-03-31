@@ -40,7 +40,7 @@ const nextConfig = {
         remotes: {},
         filename: "static/chunks/remoteEntry.js",
         exposes: {
-          "./login": "./PagesComponents/Login/Login.jsx",
+          "./home": "./PagesComponents/Home/HomeComponent.jsx",
         },
 
         extraOptions: {
