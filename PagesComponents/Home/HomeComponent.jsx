@@ -12,8 +12,11 @@ import { PrescriptionBottleMedical } from "@styled-icons/fa-solid/PrescriptionBo
 import { Medication } from "@styled-icons/material/Medication";
 import { Pets } from "@styled-icons/material/Pets";
 import { Medical } from "@styled-icons/ionicons-solid/Medical";
+import { useRouter } from "next/router";
 
 function HomeComponent() {
+  const history = useRouter();
+
   return (
     <S.GeneralContainer>
       <S.LeftContainer>
@@ -23,19 +26,22 @@ function HomeComponent() {
         <S.ImageCover src="/images/Home-001.png" />
       </S.LeftContainer>
       <S.RightContainer>
-        <S.ButtonRedirect>
+        <S.ButtonRedirect onClick={() => history.push("/login/clinic")}>
           <Medical style={{ width: 30 }} />
           Clínica
         </S.ButtonRedirect>
-        <S.ButtonRedirect>
+
+        <S.ButtonRedirect onClick={() => history.push("/login/pharmacy")}>
           <Medication style={{ width: 30 }} />
           Farmácia
         </S.ButtonRedirect>
-        <S.ButtonRedirect>
+        <S.ButtonRedirect
+          onClick={() => history.push("/login/manipulationPharmacy")}
+        >
           <PrescriptionBottleMedical />
           Farmácia de Manipulação
         </S.ButtonRedirect>
-        <S.ButtonRedirect>
+        <S.ButtonRedirect onClick={() => history.push("/login/petPharmacy")}>
           <Pets style={{ width: 30 }} /> Farmácia Pet
         </S.ButtonRedirect>
       </S.RightContainer>
