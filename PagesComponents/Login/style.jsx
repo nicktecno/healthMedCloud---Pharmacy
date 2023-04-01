@@ -122,6 +122,15 @@ export const RightContainer = styled.div`
   flex-direction: column;
   gap: 20px;
 
+  form {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+  }
+
   ${customMedia.lessThan("notebook")`
   width:100%;
   margin-top:20px;
@@ -146,13 +155,15 @@ export const ButtonRedirect = styled.button`
   color: var(--bt-positive-text-color);
   ${customMedia.lessThan("notebook")`
   width:60%;
-
   `}
 
   ${customMedia.lessThan("mobile")`
   width:90%;
-
   `}
+
+  &.login {
+    margin-bottom: 20px;
+  }
 
   svg {
     width: 20px;
@@ -209,5 +220,17 @@ export const Input = styled.input`
 
   &.user {
     width: 100%;
+  }
+`;
+
+export const ForgotPassword = styled.div`
+  display: flex;
+  color: var(--font-color);
+  cursor: pointer;
+
+  transition: 0.3s;
+
+  :hover {
+    color: var(--bt-positive-color-hover);
   }
 `;
