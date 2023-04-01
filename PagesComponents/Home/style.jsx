@@ -11,12 +11,27 @@ const customMedia = generateMedia({
 
 export const GeneralContainer = styled.div`
   background: var(--default-color);
+  padding: 0px 12%;
+  align-self: center;
   min-height: 100vh;
   width: 100%;
   height: 100%;
   display: flex;
 
   align-items: center;
+
+  ${customMedia.lessThan("1920px")`
+    padding: 0px;
+  `}
+
+  ${customMedia.lessThan("notebook")`
+    flex-direction:column;
+    background-image: url("/images/Home-001-Transparent.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+  
+  `}
 `;
 
 export const LeftContainer = styled.aside`
@@ -24,27 +39,64 @@ export const LeftContainer = styled.aside`
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
+  width: 50%;
+
+  ${customMedia.lessThan("notebook")`
+  width:100%;
+  justify-content:center;
+  align-items:center;
+  margin-top:20px;
+  
+ 
+  `}
 `;
 
 export const TitleName = styled.div`
-  background: var(--default-contrast-color);
+  background-color: var(--default-contrast-color);
   color: var(--font-color);
+  display: flex;
+  align-items: center;
+  border-radius: 0px 10px 10px 0px;
   font-weight: bold;
-  padding: 4px;
-  font-size: 20px;
+  height: 100px;
+  font-size: 4.5rem;
   text-transform: uppercase;
-  width: max-content;
+  padding-right: 20px;
   padding-left: 50px;
+
+  ${customMedia.lessThan("1368px")`
+    font-size: 3.2rem;
+
+  `}
+
+  ${customMedia.lessThan("notebook")`
+    padding-left:20px;
+    height:70px;
+    border-radius:10px;
+    font-size:2rem;
+  `}
 `;
 
 export const TitleSlogan = styled.div`
-  font-size: 35px;
+  font-size: 4.7rem;
   color: var(--font-color);
   text-transform: uppercase;
   font-weight: 200;
-  margin-top: 7px;
-  line-height: 35px;
+  margin-top: 20px;
+  line-height: 1em;
   padding-left: 50px;
+
+  ${customMedia.lessThan("1368px")`
+    font-size: 3.4rem;
+  `}
+
+  ${customMedia.lessThan("notebook")`
+    padding-left:0px;
+    text-align:center;
+    font-size:2.4rem;
+  `}
+
+
 
   &.strong {
     font-weight: bold;
@@ -52,5 +104,63 @@ export const TitleSlogan = styled.div`
 `;
 
 export const ImageCover = styled.img`
-  width: 300px;
+  width: 50%;
+  ${customMedia.lessThan("1368px")`
+    width:60%;
+  `}
+
+  ${customMedia.lessThan("notebook")`
+  display:none;
+  `}
+`;
+
+export const RightContainer = styled.div`
+  display: flex;
+  width: 50%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+
+  ${customMedia.lessThan("notebook")`
+  width:100%;
+  margin-top:20px;
+  `}
+`;
+
+export const ButtonRedirect = styled.button`
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  width: 70%;
+  height: 80px;
+  background-color: var(--bt-positive-color);
+  border: 0px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  transition: 0.3s;
+  color: var(--bt-positive-text-color);
+  ${customMedia.lessThan("notebook")`
+  width:60%;
+
+  `}
+
+  ${customMedia.lessThan("mobile")`
+  width:90%;
+
+  `}
+
+  svg {
+    width: 20px;
+    margin-right: 10px;
+  }
+
+  :hover {
+    background-color: var(--bt-positive-color-hover);
+    color: var(--bt-positive-text-color-hover);
+  }
 `;
