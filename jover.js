@@ -1,22 +1,5 @@
 const defaultLayout = [
   {
-    "bt-negative-color": "#ffffff",
-    "bt-negative-color-hover": "#017ceb",
-    "bt-negative-text-color": "#017ceb",
-    "bt-negative-text-color-hover": "#ffffff",
-    "box-shadow": "0px 3px 6px #00000029;",
-
-    "bt-purchase-color": "#e0e566",
-    "bt-purchase-color-hover": "#e0e566",
-    "bt-purchase-text-color": "#204986",
-    "bt-purchase-text-color-hover": "#204986",
-    "card-background": "#ffffff",
-    "card-background-hover": "#ffffff",
-    "card-color-details": "#5a646e",
-    "card-color-details-hover": "#5a646e",
-    "card-color-price": "#231f20",
-    "card-color-price-hover": "#231f20",
-
     "bt-positive-color": "#cb5151",
     "bt-positive-color-hover": "#00646c",
     "bt-positive-text-color": "#ffff",
@@ -30,12 +13,28 @@ const defaultLayout = [
     "font-color-hover": "#ffffff",
     "font-color-opposite": "#000000",
 
+    //unused variables
+
+    "bt-negative-color": "#ffffff",
+    "bt-negative-color-hover": "#017ceb",
+    "bt-negative-text-color": "#017ceb",
+    "bt-negative-text-color-hover": "#ffffff",
+    "box-shadow": "0px 3px 6px #00000029;",
+    "bt-purchase-color": "#e0e566",
+    "bt-purchase-color-hover": "#e0e566",
+    "bt-purchase-text-color": "#204986",
+    "bt-purchase-text-color-hover": "#204986",
+    "card-background": "#ffffff",
+    "card-background-hover": "#ffffff",
+    "card-color-details": "#5a646e",
+    "card-color-details-hover": "#5a646e",
+    "card-color-price": "#231f20",
+    "card-color-price-hover": "#231f20",
     "default-color-icons": "#231f20",
     "explore-block-color": "#ffffff",
     "explore-block-color-hover": "#ffffff",
     "explore-block-text-color": "#000000",
     "explore-block-text-color-hover": "#000000",
-
     "footer-background-color": "#e8e8e8",
     "footer-text-color": "#231f20",
     "footer-title-color": "#231f20",

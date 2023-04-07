@@ -36,11 +36,12 @@ const nextConfig = {
     };
     config.plugins.push(
       new NextFederationPlugin({
-        name: "loginPage",
+        name: "dashboardPage",
         remotes: {},
         filename: "static/chunks/remoteEntry.js",
         exposes: {
           "./home": "./PagesComponents/Home/HomeComponent.jsx",
+          "./login": "./PagesComponents/Home/LoginComponent.jsx",
         },
 
         extraOptions: {
