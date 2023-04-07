@@ -182,12 +182,12 @@ export const ContainerInput = styled.div`
   font-size: 16px;
   width: 70%;
   height: 40px;
-  background-color: var(--bt-positive-color);
+  background-color: var(--card-background);
   border-bottom: 2px solid transparent;
   text-transform: uppercase;
   box-shadow: var(--box-shadow);
   transition: 0.3s;
-  color: var(--bt-positive-text-color);
+  color: var(--font-color-opposite);
   ${customMedia.lessThan("notebook")`
   width:60%;
 

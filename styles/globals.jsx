@@ -46,6 +46,8 @@ const GlobalStyles = createGlobalStyle`
     --default-color-hover: ${(props) => props.colors[0]["default-color-hover"]};
     --default-contrast-color: ${(props) =>
       props.colors[0]["default-contrast-color"]};
+    --default-high-contrast-color: ${(props) =>
+      props.colors[0]["default-high-contrast-color"]};
     --default-color-icons: ${(props) => props.colors[0]["default-color-icons"]}
     --title-color: ${(props) => props.colors[0]["title-color"]};
     --box-shadow:  ${(props) => props.colors[0]["box-shadow"]};
@@ -106,6 +108,7 @@ const GlobalStyles = createGlobalStyle`
       props.colors[0]["card-background-hover"]};
     --font-color: ${(props) => props.colors[0]["font-color"]};
     --font-color-hover:  ${(props) => props.colors[0]["font-color-hover"]};
+    --font-color-opposite: ${(props) => props.colors[0]["font-color-opposite"]};
     //fonts
     --main-font: 'Poppins', sans-serif;;
     --title-font: bold 'Poppins', sans-serif;
