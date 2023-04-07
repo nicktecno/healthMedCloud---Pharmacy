@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.0.0",
-    "@module-federation/nextjs-mf": "^6.0.1",
+    "@module-federation/nextjs-mf": "^6.2.2",
     "axios": "^1.2.2",
     "next": "^13.1.1",
     "next-images": "^1.8.4",
