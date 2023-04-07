@@ -19,6 +19,7 @@ function HomeComponent() {
 
   return (
     <S.GeneralContainer>
+      <title>HealthMedCloud - Sua saúde é nossa prioridade!</title>
       <S.LeftContainer>
         <S.TitleName>HEALTHMEDCLOUD</S.TitleName>
         <S.TitleSlogan>Sua saúde</S.TitleSlogan>

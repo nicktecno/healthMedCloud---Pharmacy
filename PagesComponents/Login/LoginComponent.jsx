@@ -63,6 +63,7 @@ function LoginComponent() {
   async function handleLogin() {}
   return (
     <S.GeneralContainer>
+      <title>Login - HealthMedCloud</title>
       <S.LeftContainer>
         <S.TitleName>HEALTHMEDCLOUD</S.TitleName>
 
