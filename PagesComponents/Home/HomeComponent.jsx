@@ -19,14 +19,17 @@ function HomeComponent() {
 
   return (
     <S.GeneralContainer>
-      <title>HealthMedCloud - Sua saúde é nossa prioridade!</title>
+      <title>HealthMedCloud - Farmácia de Manipulação</title>
       <S.LeftContainer>
         <S.TitleName>HEALTHMEDCLOUD</S.TitleName>
-        <S.TitleSlogan>Sua saúde</S.TitleSlogan>
-        <S.TitleSlogan className="strong">É nossa prioridade</S.TitleSlogan>
+        <S.TitleSlogan className="strong">
+          Farmácia de Manipulação
+        </S.TitleSlogan>
         <S.ImageCover src="/images/Home-001.png" />
       </S.LeftContainer>
       <S.RightContainer>
+        <S.TitleWelcome>Seja bem vindo</S.TitleWelcome>
+        <S.TitleWelcome className="strong">Juvenal!</S.TitleWelcome>
         <S.ButtonRedirect onClick={() => history.push("/login/clinic")}>
           <Medical style={{ width: 30 }} />
           Clínica

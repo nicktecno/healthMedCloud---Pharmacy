@@ -1,5 +1,11 @@
-import Home from "../PagesComponents/Home/index";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export default function HomePage() {
-  return <Home />;
+  const history = useRouter();
+
+  useEffect(() => {
+    history.push("/manipulationPharmacy");
+  }, []);
+  return <></>;
 }

@@ -3,6 +3,7 @@ import jover from "../jover";
 import { ToastContainer } from "react-toastify";
 import NextNProgress from "nextjs-progressbar";
 import defaultLayout from "../jover";
+import Header from "../PagesComponents/Header";
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -14,6 +15,7 @@ function MyApp({ Component, pageProps }) {
         height={3}
         showOnShallow={true}
       />
+      <Header />
       <ToastContainer />
       <GlobalStyles colors={defaultLayout} />
 

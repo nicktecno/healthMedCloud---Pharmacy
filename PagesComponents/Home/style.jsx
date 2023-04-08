@@ -12,13 +12,12 @@ const customMedia = generateMedia({
 export const GeneralContainer = styled.div`
   background: var(--default-color);
   padding: 0px 12%;
-  align-self: center;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
+  height: auto;
   width: 100%;
   height: 100%;
   display: flex;
-
-  align-items: center;
+  margin-top: 70px;
 
   ${customMedia.lessThan("1920px")`
     padding: 0px;
@@ -37,6 +36,7 @@ export const GeneralContainer = styled.div`
 export const LeftContainer = styled.aside`
   display: flex;
   flex-direction: column;
+  margin-top: 30px;
   align-items: flex-start;
   justify-content: flex-start;
   width: 50%;
@@ -46,6 +46,7 @@ export const LeftContainer = styled.aside`
   justify-content:center;
   align-items:center;
   margin-top:20px;
+
   
  
   `}
@@ -117,7 +118,7 @@ export const ImageCover = styled.img`
 export const RightContainer = styled.div`
   display: flex;
   width: 50%;
-  justify-content: center;
+  margin-top: 30px;
   align-items: center;
   flex-direction: column;
   gap: 20px;
@@ -125,7 +126,32 @@ export const RightContainer = styled.div`
   ${customMedia.lessThan("notebook")`
   width:100%;
   margin-top:20px;
+  margin-bottom:20px;
   `}
+`;
+
+export const TitleWelcome = styled.div`
+  font-size: 3.7rem;
+  color: var(--font-color);
+  text-transform: uppercase;
+  font-weight: 200;
+  line-height: 2rem;
+
+  ${customMedia.lessThan("1368px")`
+    font-size: 3rem;
+  `}
+
+  ${customMedia.lessThan("notebook")`
+    padding-left:0px;
+    text-align:center;
+    font-size:2.4rem;
+  `}
+
+
+
+  &.strong {
+    font-weight: bold;
+  }
 `;
 
 export const ButtonRedirect = styled.button`

@@ -36,7 +36,7 @@ const nextConfig = {
     };
     config.plugins.push(
       new NextFederationPlugin({
-        name: "dashboardPage",
+        name: "manipulationPharmacy",
         remotes: {},
         filename: "static/chunks/remoteEntry.js",
         exposes: {

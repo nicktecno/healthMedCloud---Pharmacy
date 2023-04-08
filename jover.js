@@ -1,5 +1,6 @@
 const defaultLayout = [
   {
+    "box-shadow": "0px 3px 6px #00000039;",
     "bt-positive-color": "#cb5151",
     "bt-positive-color-hover": "#00646c",
     "bt-positive-text-color": "#ffff",
@@ -8,10 +9,11 @@ const defaultLayout = [
     "default-color-hover": "#069da2",
     "default-contrast-color": "#cb5151",
     "default-high-contrast-color": "#701B13",
-    "box-shadow": "0px 3px 6px #00000039;",
     "font-color": "#ffffff",
     "font-color-hover": "#ffffff",
     "font-color-opposite": "#000000",
+    "header-color": "#00646c",
+    "header-font-color": "#ffff",
 
     //unused variables
 
@@ -39,8 +41,6 @@ const defaultLayout = [
     "footer-text-color": "#231f20",
     "footer-title-color": "#231f20",
     "footer-text-color-hover": "#231f20",
-    "header-color": "#ffffff",
-    "header-font-color": "#231f20",
     "logo-img": "/images/cieloLogo.png",
     "negative-button-border": "transparent",
     "profile-card-color": "#ffffff",
