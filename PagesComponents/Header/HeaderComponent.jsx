@@ -12,21 +12,33 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 
 import { AccountCircle } from "@styled-icons/material-rounded/AccountCircle";
+import { BagFill } from "@styled-icons/bootstrap/BagFill";
 
 function HeaderComponent() {
   const history = useRouter();
 
   return (
     <S.GeneralContainer>
-      <S.ContainerImage>
-        <img src={"/images/HeaderLogo.png"} />
-      </S.ContainerImage>
-      <S.ContainerFunctions>
-        <S.ContainerFunction>
-          <AccountCircle style={{ width: 40 }} />
-          <span>Juvenal</span>
-        </S.ContainerFunction>
-      </S.ContainerFunctions>
+      <S.GeneralContent>
+        <S.ContainerImage>
+          <img src={"/images/HeaderLogo.png"} />
+          <span>Healthmedcloud</span>
+        </S.ContainerImage>
+        <S.ContainerFunctions>
+          <S.ContainerFunction
+            onClick={() => history.push("/manipulationPharmacy/orders")}
+          >
+            <BagFill />
+            <span>Orçamentos</span>
+          </S.ContainerFunction>
+          <S.ContainerFunction
+            onClick={() => history.push("/manipulationPharmacy")}
+          >
+            <AccountCircle style={{ marginTop: 5, width: 40 }} />
+            <span>Juvenal</span>
+          </S.ContainerFunction>
+        </S.ContainerFunctions>
+      </S.GeneralContent>
     </S.GeneralContainer>
   );
 }

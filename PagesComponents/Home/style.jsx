@@ -10,19 +10,25 @@ const customMedia = generateMedia({
 });
 
 export const GeneralContainer = styled.div`
+  display: flex;
   background: var(--default-color);
   padding: 0px 12%;
+  justify-content: center;
+
+  ${customMedia.lessThan("1920px")`
+    padding: 0px;
+  `}
+`;
+
+export const GeneralContent = styled.div`
+  display: flex;
   min-height: calc(100vh - 70px);
   height: auto;
   width: 100%;
   height: 100%;
   display: flex;
   margin-top: 70px;
-
-  ${customMedia.lessThan("1920px")`
-    padding: 0px;
-  `}
-
+  max-width: 1920px;
   ${customMedia.lessThan("notebook")`
     flex-direction:column;
     background-image: url("/images/Home-001-Transparent.png");
@@ -39,10 +45,12 @@ export const LeftContainer = styled.aside`
   margin-top: 30px;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 50%;
+  width: 65%;
+  padding-right: 70px;
 
   ${customMedia.lessThan("notebook")`
   width:100%;
+  padding-right:0px;
   justify-content:center;
   align-items:center;
   margin-top:20px;
@@ -85,6 +93,7 @@ export const TitleSlogan = styled.div`
   font-weight: 200;
   margin-top: 20px;
   line-height: 1em;
+  padding-right: 30px;
   padding-left: 50px;
 
   ${customMedia.lessThan("1368px")`
@@ -93,6 +102,7 @@ export const TitleSlogan = styled.div`
 
   ${customMedia.lessThan("notebook")`
     padding-left:0px;
+    padding-right:0px;
     text-align:center;
     font-size:2.4rem;
   `}
@@ -105,9 +115,9 @@ export const TitleSlogan = styled.div`
 `;
 
 export const ImageCover = styled.img`
-  width: 50%;
+  width: 30%;
   ${customMedia.lessThan("1368px")`
-    width:60%;
+    width:50%;
   `}
 
   ${customMedia.lessThan("notebook")`
@@ -117,25 +127,38 @@ export const ImageCover = styled.img`
 
 export const RightContainer = styled.div`
   display: flex;
-  width: 50%;
+  width: 35%;
   margin-top: 30px;
-  align-items: center;
+  align-items: flex-end;
   flex-direction: column;
   gap: 20px;
+  margin-right: 50px;
 
   ${customMedia.lessThan("notebook")`
   width:100%;
   margin-top:20px;
   margin-bottom:20px;
+  align-items:center;
+  margin-right:0px;
   `}
 `;
 
+export const ContainerFunctions = styled.div`
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+`;
+
 export const TitleWelcome = styled.div`
-  font-size: 3.7rem;
+  font-size: 3.5rem;
   color: var(--font-color);
   text-transform: uppercase;
   font-weight: 200;
-  line-height: 2rem;
+  line-height: 3rem;
 
   ${customMedia.lessThan("1368px")`
     font-size: 3rem;
@@ -161,8 +184,8 @@ export const ButtonRedirect = styled.button`
   align-items: center;
   font-size: 16px;
   font-weight: bold;
-  width: 70%;
-  height: 80px;
+  width: 100%;
+  height: 70px;
   background-color: var(--bt-positive-color);
   border: 0px;
   text-transform: uppercase;
@@ -188,5 +211,9 @@ export const ButtonRedirect = styled.button`
   :hover {
     background-color: var(--bt-positive-color-hover);
     color: var(--bt-positive-text-color-hover);
+  }
+
+  &.logout {
+    margin-top: 30px;
   }
 `;
