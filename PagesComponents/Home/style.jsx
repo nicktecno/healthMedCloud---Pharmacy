@@ -31,10 +31,7 @@ export const GeneralContent = styled.div`
   max-width: 1920px;
   ${customMedia.lessThan("notebook")`
     flex-direction:column;
-    background-image: url("/images/Home-001-Transparent.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-
+  
   
   `}
 `;
@@ -122,6 +119,17 @@ export const ImageCover = styled.img`
 
   ${customMedia.lessThan("notebook")`
   display:none;
+  `}
+`;
+
+export const AnimationContainer = styled.div`
+  display: flex;
+  width: 300px;
+  height: 300px;
+
+  ${customMedia.lessThan("notebook")`
+    width:200px;
+    height:200px;
   `}
 `;
 

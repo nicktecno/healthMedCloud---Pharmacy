@@ -14,6 +14,7 @@ export const GeneralContainer = styled.header`
   position: fixed;
   display: flex;
   top: 0px;
+  z-index: 999;
   justify-content: center;
   width: 100%;
   padding: 0px 12%;

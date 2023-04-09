@@ -8,19 +8,23 @@ import * as S from "./style";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { PrescriptionBottleMedical } from "@styled-icons/fa-solid/PrescriptionBottleMedical";
-
-import { Pets } from "@styled-icons/material/Pets";
-
 import { BagFill } from "@styled-icons/bootstrap/BagFill";
 import { BagPlusFill } from "@styled-icons/bootstrap/BagPlusFill";
 import { UserPlus } from "@styled-icons/boxicons-regular/UserPlus";
 import { LogOut } from "@styled-icons/boxicons-regular/LogOut";
+import { PrescriptionBottleMedical } from "@styled-icons/fa-solid/PrescriptionBottleMedical";
 
 import { useRouter } from "next/router";
 
+import Lottie from "lottie-react";
+import medicineManipulation from "../../public/images/medicineManipulation.json";
+
 function HomeComponent() {
   const history = useRouter();
+
+  const styleAnimation = {
+    width: "100%",
+  };
 
   async function handleLogout() {
     history.push("/");
@@ -35,7 +39,13 @@ function HomeComponent() {
           <S.TitleSlogan className="strong">
             Farmácia de Manipulação
           </S.TitleSlogan>
-          <S.ImageCover src="/images/Home-001.png" />
+          <S.AnimationContainer>
+            <Lottie
+              animationData={medicineManipulation}
+              loop={false}
+              style={styleAnimation}
+            />
+          </S.AnimationContainer>
         </S.LeftContainer>
         <S.RightContainer>
           <S.ContainerFunctions>
