@@ -19,12 +19,14 @@ import { useRouter } from "next/router";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import InputMask from "react-input-mask";
 
 import Lottie from "lottie-react";
 import medicineManipulation from "../../public/images/medicineManipulation.json";
 
 function CreateClientComponent() {
   const history = useRouter();
+  const [documentSelected, setDocumentSelected] = useState("CPF");
 
   const schema = yup.object().shape({
     email: yup
@@ -87,20 +89,59 @@ function CreateClientComponent() {
               </S.ContainerInput>
               <S.ContainerChecks>
                 <S.ContainerCheck>
-                  <S.Checks />
+                  <S.Checks
+                    className={documentSelected === "CPF" && "selected"}
+                    onClick={() => setDocumentSelected("CPF")}
+                  />
                   CPF
                 </S.ContainerCheck>
                 <S.ContainerCheck>
-                  <S.Checks />
+                  <S.Checks
+                    className={documentSelected === "CNPJ" && "selected"}
+                    onClick={() => setDocumentSelected("CNPJ")}
+                  />
                   CNPJ
                 </S.ContainerCheck>
               </S.ContainerChecks>
               <S.ContainerInput
+                className={"doubleField"}
                 style={{
                   border: errors.cpf?.message && "2px solid #ce171f",
                 }}
               >
-                <S.Input placeholder="CPF*" {...register("cpf")} />
+                <InputMask
+                  mask={
+                    documentSelected === "CPF"
+                      ? "999.999.999-99"
+                      : "99.999.999/9999-99"
+                  }
+                  placeholder={documentSelected === "CPF" ? "CPF*" : "CNPJ*"}
+                  {...register("cpf")}
+                />
+              </S.ContainerInput>
+              <S.ContainerInput
+                className={"doubleField"}
+                style={{
+                  border: errors.documentNumber?.message && "2px solid #ce171f",
+                }}
+              >
+                <S.Input
+                  placeholder={
+                    documentSelected === "CPF" ? "RG" : "Inscrição estadual*"
+                  }
+                  {...register("documentNumber")}
+                />
+              </S.ContainerInput>
+              <S.ContainerInput
+                style={{
+                  border: errors.birth?.message && "2px solid #ce171f",
+                }}
+              >
+                <InputMask
+                  mask={"99/99/9999"}
+                  placeholder={"Data de nascimento"}
+                  {...register("birth")}
+                />
               </S.ContainerInput>
             </form>
           </S.BoxInputs>

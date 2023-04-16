@@ -84,9 +84,12 @@ export const BoxInputs = styled.div`
   form {
     display: flex;
     width: 100%;
-
     flex-wrap: wrap;
     gap: 2%;
+
+    ${customMedia.lessThan("625px")`
+    flex-direction:column;
+  `}
   }
 `;
 
@@ -105,13 +108,29 @@ export const ContainerInput = styled.div`
   transition: 0.3s;
   color: var(--font-color-opposite);
 
+  ${customMedia.lessThan("625px")`
+    width:100%;
+  `}
+
+  &.doubleField {
+    width: 49%;
+
+    ${customMedia.lessThan("625px")`
+    width:100%;
+  `}
+  }
+  input {
+    width: 95%;
+    border: 0px;
+  }
+
   :hover {
     border-bottom: 2px solid var(--bt-positive-color-hover);
   }
 `;
 
 export const Input = styled.input`
-  width: 90%;
+  width: 95%;
   border: 0px;
 `;
 
@@ -120,7 +139,7 @@ export const ContainerChecks = styled.div`
   gap: 10px;
   width: 100%;
   margin-bottom: 10px;
-  padding: 10px;
+  padding: 5px;
   border-radius: 10px;
 `;
 
@@ -136,4 +155,9 @@ export const Checks = styled.div`
   width: 30px;
   height: 30px;
   border: 2px solid var(--font-color);
+  cursor: pointer;
+
+  &.selected {
+    background-color: var(--default-contrast-color);
+  }
 `;
