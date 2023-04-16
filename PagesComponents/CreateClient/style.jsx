@@ -59,6 +59,7 @@ export const GeneralTitle = styled.div`
 export const Tabs = styled.div`
   display: flex;
   margin-top: 30px;
+  width: 100%;
   border-bottom: 2px solid var(--default-contrast-color);
 `;
 
@@ -68,11 +69,71 @@ export const ButtonTab = styled.div`
   color: var(--font-color);
 
   font-size: 18px;
-  padding: 10px;
+  padding: 10px 20px;
 
   &.active {
     background: var(--default-contrast-color);
   }
 `;
 
-export const BoxInputs = styled.div``;
+export const BoxInputs = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+
+  form {
+    display: flex;
+    width: 100%;
+
+    flex-wrap: wrap;
+    gap: 2%;
+  }
+`;
+
+export const ContainerInput = styled.div`
+  position: relative;
+  padding-left: 10px;
+  display: flex;
+  font-size: 16px;
+  width: 32%;
+  height: 40px;
+  margin-bottom: 10px;
+  background-color: var(--card-background);
+  border-bottom: 2px solid transparent;
+  text-transform: uppercase;
+  box-shadow: var(--box-shadow);
+  transition: 0.3s;
+  color: var(--font-color-opposite);
+
+  :hover {
+    border-bottom: 2px solid var(--bt-positive-color-hover);
+  }
+`;
+
+export const Input = styled.input`
+  width: 90%;
+  border: 0px;
+`;
+
+export const ContainerChecks = styled.div`
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 10px;
+`;
+
+export const ContainerCheck = styled.div`
+  display: flex;
+  gap: 10px;
+  color: var(--font-color);
+  align-items: center;
+`;
+
+export const Checks = styled.div`
+  border-radius: 60px;
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--font-color);
+`;
