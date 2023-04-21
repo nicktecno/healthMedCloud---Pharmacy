@@ -5,6 +5,10 @@ const defaultLayout = [
     "bt-positive-color-hover": "#00646c",
     "bt-positive-text-color": "#ffff",
     "bt-positive-text-color-hover": "#ffffff",
+    "bt-negative-color": "#8c3838",
+    "bt-negative-color-hover": "#00646c",
+    "bt-negative-text-color": "#ffff",
+    "bt-negative-text-color-hover": "#ffffff",
     "default-color": "#0db8bc",
     "default-color-hover": "#069da2",
     "default-contrast-color": "#cb5151",
@@ -17,10 +21,6 @@ const defaultLayout = [
 
     //unused variables
 
-    "bt-negative-color": "#ffffff",
-    "bt-negative-color-hover": "#017ceb",
-    "bt-negative-text-color": "#017ceb",
-    "bt-negative-text-color-hover": "#ffffff",
     "box-shadow": "0px 3px 6px #00000029;",
     "bt-purchase-color": "#e0e566",
     "bt-purchase-color-hover": "#e0e566",

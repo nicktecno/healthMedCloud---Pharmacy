@@ -95,7 +95,7 @@ export const BoxInputs = styled.div`
 
 export const ContainerInput = styled.div`
   position: relative;
-  padding-left: 10px;
+
   display: flex;
   font-size: 16px;
   width: 32%;
@@ -120,8 +120,26 @@ export const ContainerInput = styled.div`
   `}
   }
   input {
-    width: 95%;
+    padding: 0px 10px;
+    width: 100%;
     border: 0px;
+
+    ::placeholder {
+      color: var(--font-color-opposite);
+    }
+  }
+
+  select {
+    -webkit-appearance: none;
+    border: 0px;
+    padding: 0 10px;
+    -moz-appearance: none;
+    appearance: none;
+    width: 100%;
+    cursor: pointer !important;
+    background: url("/images/icon-arrow-down.png") 98% center no-repeat !important;
+    cursor: pointer;
+    background-color: var(--card-background);
   }
 
   :hover {
@@ -159,5 +177,103 @@ export const Checks = styled.div`
 
   &.selected {
     background-color: var(--default-contrast-color);
+  }
+`;
+
+export const ContainerButtons = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  gap: 10px;
+  margin-top: 10px;
+
+  ${customMedia.lessThan("625px")`
+  justify-content:center;
+  `}
+
+  button {
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    width: 25%;
+    max-width: 200px;
+    height: 50px;
+    background-color: var(--bt-positive-color);
+    border: 0px;
+    text-transform: uppercase;
+    border-radius: 5px;
+    box-shadow: var(--box-shadow);
+    transition: 0.3s;
+    color: var(--bt-positive-text-color);
+
+    &.negative {
+      background-color: var(--bt-negative-color);
+      color: var(--bt-negative-text-color);
+    }
+
+    /* ${customMedia.lessThan("tablet")`
+  width:60%;
+  `} */
+
+    ${customMedia.lessThan("625px")`
+  width:90%;
+
+  `}
+
+    svg {
+      width: 20px;
+      margin-right: 10px;
+    }
+
+    :hover {
+      background-color: var(--bt-positive-color-hover);
+      color: var(--bt-positive-text-color-hover);
+    }
+  }
+`;
+
+export const Button = styled.button`
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  width: 25%;
+  max-width: 200px;
+  height: 50px;
+  background-color: var(--bt-positive-color);
+  border: 0px;
+  text-transform: uppercase;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  transition: 0.3s;
+  color: var(--bt-positive-text-color);
+
+  &.negative {
+    background-color: var(--bt-negative-color);
+    color: var(--bt-negative-text-color);
+  }
+
+  /* ${customMedia.lessThan("tablet")`
+  width:60%;
+  `} */
+
+  ${customMedia.lessThan("625px")`
+  width:90%;
+
+  `}
+
+  svg {
+    width: 20px;
+    margin-right: 10px;
+  }
+
+  :hover {
+    background-color: var(--bt-positive-color-hover);
+    color: var(--bt-positive-text-color-hover);
   }
 `;
