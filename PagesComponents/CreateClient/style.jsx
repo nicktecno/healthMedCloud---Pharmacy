@@ -112,8 +112,27 @@ export const ContainerInput = styled.div`
     width:100%;
   `}
 
+  &.fullField {
+    width: 100%;
+  }
+
   &.doubleField {
     width: 49%;
+
+    ${customMedia.lessThan("625px")`
+    width:100%;
+  `}
+  }
+
+  &.doubleFieldMajor {
+    width: 70%;
+
+    ${customMedia.lessThan("625px")`
+    width:100%;
+  `}
+  }
+  &.doubleFieldMinor {
+    width: 28%;
 
     ${customMedia.lessThan("625px")`
     width:100%;
