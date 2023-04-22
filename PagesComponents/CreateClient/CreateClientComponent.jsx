@@ -44,24 +44,49 @@ function CreateClientComponent() {
           .replace(" ", "")
       ),
   });
+  const schemaAddress = yup.object().shape({
+    country: yup.string().required("País obrigatório"),
+    addressType: yup.string(),
+  });
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
+  const {
+    register: registerAddress,
+    handleSubmit: handleSubmitAddress,
+    setValue: setValueAddress,
+    formState: { errors: addressErrors },
+  } = useForm({
+    resolver: yupResolver(schemaAddress),
+  });
+
   async function handleRegister(e) {
     console.log(e);
+    setValueAddress("country", "");
     setStep((prev) => prev + 1);
+  }
+
+  async function handleRegisterAddress(e) {
+    console.log(e);
   }
 
   async function getAddress(cep) {
     await axios
       .get(`https://viacep.com.br/ws/${cep.replaceAll("_", "")}/json`)
       .then(function (response) {
+        setValueAddress("country", "BR", { shouldDirty: true });
+        setValueAddress("city", response.data.localidade);
+        setValueAddress("street", response.data.logradouro);
+        setValueAddress("neighborhood", response.data.bairro);
+        setValueAddress("state", response.data.uf);
+
         console.log(response.data);
       })
       .catch(function (error) {
@@ -279,13 +304,14 @@ function CreateClientComponent() {
                 </S.ContainerButtons>
               </form>
             ) : step === 2 ? (
-              <form onSubmit={handleSubmit(handleRegister)}>
+              <form onSubmit={handleSubmitAddress(handleRegisterAddress)}>
                 <S.ContainerInput
                   style={{
-                    border: errors.addressType?.message && "2px solid #ce171f",
+                    border:
+                      addressErrors.addressType?.message && "2px solid #ce171f",
                   }}
                 >
-                  <select {...register("addressType")}>
+                  <select {...registerAddress("addressType")}>
                     <option value="">Tipo de Endereço</option>
                     <option value="Cobrança">Cobrança</option>
                     <option value="Entrega">Entrega</option>
@@ -293,86 +319,103 @@ function CreateClientComponent() {
                 </S.ContainerInput>
                 <S.ContainerInput
                   style={{
-                    border: errors.postalCode?.message && "2px solid #ce171f",
+                    border:
+                      addressErrors.postalCode?.message && "2px solid #ce171f",
                   }}
                 >
                   <InputMask
                     mask={"99999-999"}
                     placeholder={"Cep"}
-                    {...register("postalCode")}
+                    {...registerAddress("postalCode")}
                     onBlur={(e) => getAddress(e.target.value)}
                   />
                 </S.ContainerInput>
 
                 <S.ContainerInput
                   style={{
-                    border: errors.country?.message && "2px solid #ce171f",
+                    border:
+                      addressErrors.country?.message && "2px solid #ce171f",
                   }}
                 >
-                  <InputMask
-                    mask={"aa"}
+                  <S.Input
+                    maxLength={"2"}
                     placeholder={"País"}
-                    {...register("Country")}
+                    {...registerAddress("country")}
                   />
                 </S.ContainerInput>
                 <S.ContainerInput
-                  className="doubleFieldMinor"
+                  className="doubleField"
                   style={{
-                    border: errors.state?.message && "2px solid #ce171f",
+                    border: addressErrors.state?.message && "2px solid #ce171f",
                   }}
                 >
-                  <InputMask
-                    mask={"aa"}
+                  <S.Input
+                    maxLength={"2"}
                     placeholder={"Estado"}
-                    {...register("state")}
-                    onBlur={(e) => getAddress(e.target.value)}
+                    {...registerAddress("state")}
                   />
                 </S.ContainerInput>
                 <S.ContainerInput
-                  className="doubleFieldMajor"
+                  className="doubleField"
                   style={{
-                    border: errors.street?.message && "2px solid #ce171f",
+                    border: addressErrors.city?.message && "2px solid #ce171f",
+                  }}
+                >
+                  <S.Input
+                    placeholder={"Cidade"}
+                    {...registerAddress("city")}
+                  />
+                </S.ContainerInput>
+                <S.ContainerInput
+                  className="fullField"
+                  style={{
+                    border:
+                      addressErrors.street?.message && "2px solid #ce171f",
                   }}
                 >
                   <S.Input
                     maxLength={"60"}
                     placeholder="Rua"
-                    {...register("street")}
+                    {...registerAddress("street")}
                   />
                 </S.ContainerInput>
                 <S.ContainerInput
                   style={{
                     border:
-                      errors.addressNumber?.message && "2px solid #ce171f",
+                      addressErrors.addressNumber?.message &&
+                      "2px solid #ce171f",
                   }}
                 >
                   <S.Input
                     maxLength={"5"}
                     placeholder="Número"
-                    {...register("addressNumber")}
+                    {...registerAddress("addressNumber")}
                   />
                 </S.ContainerInput>
                 <S.ContainerInput
                   style={{
                     border:
-                      errors.addressComplement?.message && "2px solid #ce171f",
+                      addressErrors.addressComplement?.message &&
+                      "2px solid #ce171f",
                   }}
                 >
                   <S.Input
                     maxLength={"25"}
                     placeholder="Complemento"
-                    {...register("addressComplement")}
+                    {...registerAddress("addressComplement")}
                   />
                 </S.ContainerInput>
                 <S.ContainerInput
                   style={{
-                    border: errors.neighborhood?.message && "2px solid #ce171f",
+                    border:
+                      addressErrors.neighborhood?.message &&
+                      "2px solid #ce171f",
                   }}
                 >
                   <S.Input
                     maxLength={"25"}
                     placeholder="Bairro"
-                    {...register("neighborhood")}
+                    {...registerAddress("neighborhood")}
                   />
                 </S.ContainerInput>
 
