@@ -48,7 +48,8 @@ const GlobalStyles = createGlobalStyle`
       props.colors[0]["default-contrast-color"]};
     --default-high-contrast-color: ${(props) =>
       props.colors[0]["default-high-contrast-color"]};
-    --default-color-icons: ${(props) => props.colors[0]["default-color-icons"]}
+    --default-color-icons: ${(props) => props.colors[0]["default-color-icons"]};
+    --error-color: ${(props) => props.colors[0]["error-color"]};
     --title-color: ${(props) => props.colors[0]["title-color"]};
     --box-shadow:  ${(props) => props.colors[0]["box-shadow"]};
     --input-background: #f4f3f4;

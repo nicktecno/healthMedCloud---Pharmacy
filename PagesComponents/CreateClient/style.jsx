@@ -93,20 +93,15 @@ export const BoxInputs = styled.div`
   }
 `;
 
-export const ContainerInput = styled.div`
+export const ContainerInputMessage = styled.div`
+  display: flex;
+  flex-direction: column;
   position: relative;
 
-  display: flex;
-  font-size: 16px;
+  font-size: 12px;
   width: 32%;
-  height: 40px;
+
   margin-bottom: 10px;
-  background-color: var(--card-background);
-  border-bottom: 2px solid transparent;
-  text-transform: uppercase;
-  box-shadow: var(--box-shadow);
-  transition: 0.3s;
-  color: var(--font-color-opposite);
 
   ${customMedia.lessThan("625px")`
     width:100%;
@@ -138,6 +133,22 @@ export const ContainerInput = styled.div`
     width:100%;
   `}
   }
+`;
+
+export const ContainerInput = styled.div`
+  position: relative;
+
+  display: flex;
+  font-size: 16px;
+  width: 100%;
+  height: 40px;
+  background-color: var(--card-background);
+  border-bottom: 2px solid transparent;
+  text-transform: uppercase;
+  box-shadow: var(--box-shadow);
+  transition: 0.3s;
+  color: var(--font-color-opposite);
+
   input {
     padding: 0px 10px;
     width: 100%;
@@ -295,4 +306,12 @@ export const Button = styled.button`
     background-color: var(--bt-positive-color-hover);
     color: var(--bt-positive-text-color-hover);
   }
+`;
+
+export const ContainerErrorMessage = styled.div`
+  display: flex;
+  font-size: 13px;
+  color: var(--error-color);
+  padding: 3px;
+  font-weight: bold;
 `;

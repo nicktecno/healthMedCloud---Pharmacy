@@ -16,6 +16,7 @@ const defaultLayout = [
     "font-color": "#ffffff",
     "font-color-hover": "#ffffff",
     "font-color-opposite": "#000000",
+    "error-color": "#ce171f",
     "header-color": "#00646c",
     "header-font-color": "#ffff",
 
