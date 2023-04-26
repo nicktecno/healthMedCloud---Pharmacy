@@ -11,6 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BagFill } from "@styled-icons/bootstrap/BagFill";
 import { BagPlusFill } from "@styled-icons/bootstrap/BagPlusFill";
 import { UserPlus } from "@styled-icons/boxicons-regular/UserPlus";
+import { UserDoctor } from "@styled-icons/fa-solid/UserDoctor";
 import { LogOut } from "@styled-icons/boxicons-regular/LogOut";
 import { PrescriptionBottleMedical } from "@styled-icons/fa-solid/PrescriptionBottleMedical";
 
@@ -51,7 +52,20 @@ function HomeComponent() {
           <S.ContainerFunctions>
             <S.TitleWelcome>Seja bem vindo</S.TitleWelcome>
             <S.TitleWelcome className="strong">Juvenal!</S.TitleWelcome>
-
+            <S.ButtonRedirect
+              onClick={() => history.push("/manipulationPharmacy/createClient")}
+            >
+              <UserPlus style={{ width: 40 }} />
+              Cadastrar Cliente
+            </S.ButtonRedirect>
+            <S.ButtonRedirect
+              onClick={() =>
+                history.push("/manipulationPharmacy/createPrescriber")
+              }
+            >
+              <UserDoctor style={{ width: 28 }} />
+              Cadastrar Prescritor
+            </S.ButtonRedirect>
             <S.ButtonRedirect
               onClick={() => history.push("/manipulationPharmacy/createOrder")}
             >
@@ -65,12 +79,7 @@ function HomeComponent() {
               <BagFill style={{ width: 30 }} />
               Consultar Orçamentos
             </S.ButtonRedirect>
-            <S.ButtonRedirect
-              onClick={() => history.push("/manipulationPharmacy/createClient")}
-            >
-              <UserPlus style={{ width: 40 }} />
-              Cadastrar Cliente
-            </S.ButtonRedirect>
+
             <S.ButtonRedirect
               onClick={() =>
                 history.push("/manipulationPharmacy/createFormula")

@@ -193,7 +193,7 @@ export const ButtonRedirect = styled.button`
   font-size: 16px;
   font-weight: bold;
   width: 100%;
-  height: 70px;
+  height: 60px;
   background-color: var(--bt-positive-color);
   border: 0px;
   text-transform: uppercase;
