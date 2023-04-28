@@ -60,7 +60,7 @@ export const Tabs = styled.div`
   display: flex;
   margin-top: 30px;
   width: 100%;
-  border-bottom: 2px solid var(--default-contrast-color);
+  border-bottom: 2px solid var(--bt-positive-color);
 `;
 
 export const ButtonTab = styled.div`
@@ -72,7 +72,7 @@ export const ButtonTab = styled.div`
   padding: 10px 20px;
 
   &.active {
-    background: var(--default-contrast-color);
+    background: var(--bt-positive-color);
   }
 `;
 
@@ -206,7 +206,7 @@ export const Checks = styled.div`
   cursor: pointer;
 
   &.selected {
-    background-color: var(--default-contrast-color);
+    background-color: var(--bt-positive-color);
   }
 `;
 
@@ -314,4 +314,12 @@ export const ContainerErrorMessage = styled.div`
   color: var(--error-color);
   padding: 3px;
   font-weight: bold;
+`;
+
+export const Label = styled.div`
+  display: flex;
+
+  color: var(--bt-positive-text-color);
+  font-size: 15px;
+  margin-bottom: 2px;
 `;

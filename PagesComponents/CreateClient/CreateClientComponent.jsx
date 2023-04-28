@@ -122,6 +122,7 @@ function CreateClientComponent() {
             {step === 1 ? (
               <form onSubmit={handleSubmit(handleRegister)}>
                 <S.ContainerInputMessage>
+                  <S.Label>Tratamento</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -142,6 +143,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Nome</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.name?.message && "2px solid #ce171f",
@@ -158,6 +160,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Sobrenome</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.lastName?.message && "2px solid #ce171f",
@@ -174,6 +177,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Apelido</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.nickName?.message && "2px solid #ce171f",
@@ -190,13 +194,13 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Sexo</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.sex?.message && "2px solid #ce171f",
                     }}
                   >
                     <select {...register("sex")}>
-                      <option value="">Sexo</option>
                       <option value="Masculino">Masculino</option>
                       <option value="Feminino">Feminino</option>
                       <option value="Não Definido">Não definido</option>
@@ -207,13 +211,13 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Etnia</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.ethnicity?.message && "2px solid #ce171f",
                     }}
                   >
                     <select {...register("ethnicity")}>
-                      <option value="">Etnia</option>
                       <option value="Asiático">Asiático</option>
                       <option value="Branco">Branco</option>
                       <option value="Indígena">Indígena</option>
@@ -242,6 +246,9 @@ function CreateClientComponent() {
                   </S.ContainerCheck>
                 </S.ContainerChecks>
                 <S.ContainerInputMessage className={"doubleField"}>
+                  <S.Label>
+                    {documentSelected === "CPF" ? "CPF" : "CNPJ"}
+                  </S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.document?.message && "2px solid #ce171f",
@@ -264,6 +271,9 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage className={"doubleField"}>
+                  <S.Label>
+                    {documentSelected === "CPF" ? "RG" : "Inscrição Estadual"}
+                  </S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -286,6 +296,11 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>
+                    {documentSelected === "CPF"
+                      ? "Data de nascimento"
+                      : "Data de fundação"}
+                  </S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.birth?.message && "2px solid #ce171f",
@@ -305,7 +320,9 @@ function CreateClientComponent() {
                     {errors.birth?.message && errors.birth.message}
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
+
                 <S.ContainerInputMessage>
+                  <S.Label>Estado civil</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -313,7 +330,6 @@ function CreateClientComponent() {
                     }}
                   >
                     <select {...register("civilStatus")}>
-                      <option value="">Estado civil</option>
                       <option value="Masculino">Casado</option>
                       <option value="Feminino">Solteiro</option>
                       <option value="Não Definido">Divorciado</option>
@@ -324,6 +340,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Restrições de venda</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -342,6 +359,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage className={"doubleField"}>
+                  <S.Label>Telefone</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.phone?.message && "2px solid #ce171f",
@@ -358,6 +376,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage className={"doubleField"}>
+                  <S.Label>Email</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.email?.message && "2px solid #ce171f",
@@ -386,6 +405,7 @@ function CreateClientComponent() {
             ) : step === 2 ? (
               <form onSubmit={handleSubmitAddress(handleRegisterAddress)}>
                 <S.ContainerInputMessage>
+                  <S.Label>Tipo de endereço</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -394,7 +414,6 @@ function CreateClientComponent() {
                     }}
                   >
                     <select {...registerAddress("addressType")}>
-                      <option value="">Tipo de endereço</option>
                       <option value="Cobrança">Cobrança</option>
                       <option value="Entrega">Entrega</option>
                     </select>
@@ -405,6 +424,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Cep</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -425,6 +445,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>País</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -443,6 +464,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage className="doubleField">
+                  <S.Label>Estado</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -461,6 +483,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage className="doubleField">
+                  <S.Label>Cidade</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -478,6 +501,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage className="fullField">
+                  <S.Label>Rua</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -496,6 +520,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Número</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -515,6 +540,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Bairro</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
@@ -534,6 +560,7 @@ function CreateClientComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Complemento</S.Label>
                   <S.ContainerInput
                     style={{
                       border:

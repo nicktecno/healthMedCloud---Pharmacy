@@ -1,5 +1,5 @@
-import CreatePrescriber from "../../PagesComponents/CreatePrescriber/index";
+import CreateClient from "../../PagesComponents/CreateClient/index";
 
-export default function CreateOrderPage() {
-  return <CreatePrescriber />;
+export default function CreateClientPage() {
+  return <CreateClient />;
 }

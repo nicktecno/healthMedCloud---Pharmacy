@@ -15,25 +15,28 @@ import notification from "../../services/notification";
 
 function CreatePrescriberComponent() {
   const history = useRouter();
-  const [documentSelected, setDocumentSelected] = useState("CPF");
   const [step, setStep] = useState(1);
 
   const schema = yup.object().shape({
+    job: yup.string().required("Função obrigatória"),
     name: yup.string().required("Nome obrigatório"),
     lastName: yup.string().required("Sobrenome obrigatório"),
     email: yup.string().email("Digite um e-mail valido"),
-    sex: yup.string().required("Selecione o sexo"),
+    registerCode: yup.string().required("Registro obrigatório"),
     document: yup
       .string()
       .required("Documento obrigatório")
-      .min(
-        documentSelected === "CPF" ? 11 : 14,
-        "Digite a quantidade certa de caracteres do documento"
-      )
+      .min(11, "Digite a quantidade certa de caracteres do documento")
       .transform((value) => value.split(/[-._/]/).join("")),
-    documentNumber: yup.string(),
-    phone: yup
+    birth: yup
       .string()
+      .required("Data de nascimento obrigatória")
+      .min(8, "Digite uma data válida")
+      .transform((value) => value.split(/[-._/]/).join("")),
+
+    workPhone: yup
+      .string()
+      .required("Telefone de trabalho obrigatório")
       .transform((value) =>
         value
           .replace("(", "")
@@ -122,14 +125,13 @@ function CreatePrescriberComponent() {
             {step === 1 ? (
               <form onSubmit={handleSubmit(handleRegister)}>
                 <S.ContainerInputMessage>
+                  <S.Label>Função</S.Label>
                   <S.ContainerInput
                     style={{
-                      border:
-                        errors.treatmentPronoun?.message && "2px solid #ce171f",
+                      border: errors.job?.message && "2px solid #ce171f",
                     }}
                   >
                     <select {...register("job")}>
-                      <option value="">Função</option>
                       <option value="Dentista">Dentista</option>
                       <option value="Farmaceutico">Farmacêutico</option>
                       <option value="Medico">Médico</option>
@@ -137,11 +139,11 @@ function CreatePrescriberComponent() {
                     </select>
                   </S.ContainerInput>
                   <S.ContainerErrorMessage>
-                    {errors.treatmentPronoun?.message &&
-                      errors.treatmentPronoun.message}
+                    {errors.job !== undefined && errors.job.message}
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Nome</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.name?.message && "2px solid #ce171f",
@@ -158,6 +160,7 @@ function CreatePrescriberComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Sobrenome</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.lastName?.message && "2px solid #ce171f",
@@ -174,88 +177,15 @@ function CreatePrescriberComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.nickName?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"25"}
-                      placeholder="Apelido"
-                      {...register("nickName")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.nickName?.message && errors.nickName.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.sex?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <select {...register("sex")}>
-                      <option value="">Sexo</option>
-                      <option value="Masculino">Masculino</option>
-                      <option value="Feminino">Feminino</option>
-                      <option value="Não Definido">Não definido</option>
-                    </select>
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.sex?.message && errors.sex.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.ethnicity?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <select {...register("ethnicity")}>
-                      <option value="">Etnia</option>
-                      <option value="Asiático">Asiático</option>
-                      <option value="Branco">Branco</option>
-                      <option value="Indígena">Indígena</option>
-                      <option value="Negro">Negro</option>
-                      <option value="Pardo">Pardo</option>
-                    </select>
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.ethnicity?.message && errors.ethnicity.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerChecks>
-                  <S.ContainerCheck>
-                    <S.Checks
-                      className={documentSelected === "CPF" && "selected"}
-                      onClick={() => setDocumentSelected("CPF")}
-                    />
-                    CPF
-                  </S.ContainerCheck>
-                  <S.ContainerCheck>
-                    <S.Checks
-                      className={documentSelected === "CNPJ" && "selected"}
-                      onClick={() => setDocumentSelected("CNPJ")}
-                    />
-                    CNPJ
-                  </S.ContainerCheck>
-                </S.ContainerChecks>
-                <S.ContainerInputMessage className={"doubleField"}>
+                  <S.Label>CPF</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.document?.message && "2px solid #ce171f",
                     }}
                   >
                     <InputMask
-                      mask={
-                        documentSelected === "CPF"
-                          ? "999.999.999-99"
-                          : "99.999.999/9999-99"
-                      }
-                      placeholder={
-                        documentSelected === "CPF" ? "CPF*" : "CNPJ*"
-                      }
+                      mask={"999.999.999-99"}
+                      placeholder={"CPF*"}
                       {...register("document")}
                     />
                   </S.ContainerInput>
@@ -263,29 +193,43 @@ function CreatePrescriberComponent() {
                     {errors.document?.message && errors.document.message}
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
-                <S.ContainerInputMessage className={"doubleField"}>
+                <S.ContainerInputMessage>
+                  <S.Label>Registro</S.Label>
                   <S.ContainerInput
                     style={{
                       border:
-                        errors.registerDocument?.message && "2px solid #ce171f",
+                        errors.registerCode?.message && "2px solid #ce171f",
                     }}
                   >
                     <S.Input
-                      maxLength={"25"}
-                      placeholder={
-                        documentSelected === "CPF"
-                          ? "RG"
-                          : "Inscrição estadual*"
-                      }
-                      {...register("registerDocument")}
+                      maxLength={"11"}
+                      placeholder="Registro*"
+                      {...register("registerCode")}
                     />
                   </S.ContainerInput>
                   <S.ContainerErrorMessage>
-                    {errors.registerDocument?.message &&
-                      errors.registerDocument.message}
+                    {errors.registerCode?.message &&
+                      errors.registerCode.message}
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Livre para consultas</S.Label>
+                  <S.ContainerInput
+                    style={{
+                      border: errors.ethnicity?.message && "2px solid #ce171f",
+                    }}
+                  >
+                    <select {...register("available")}>
+                      <option value="Sim">Sim</option>
+                      <option value="Nao">Não</option>
+                    </select>
+                  </S.ContainerInput>
+                  <S.ContainerErrorMessage>
+                    {errors.ethnicity?.message && errors.ethnicity.message}
+                  </S.ContainerErrorMessage>
+                </S.ContainerInputMessage>
+                <S.ContainerInputMessage>
+                  <S.Label>Data de nascimento</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.birth?.message && "2px solid #ce171f",
@@ -293,11 +237,7 @@ function CreatePrescriberComponent() {
                   >
                     <InputMask
                       mask={"99/99/9999"}
-                      placeholder={
-                        documentSelected === "CPF"
-                          ? "Data de nascimento"
-                          : "Data de fundação"
-                      }
+                      placeholder={"Data de nascimento*"}
                       {...register("birth")}
                     />
                   </S.ContainerInput>
@@ -306,67 +246,108 @@ function CreatePrescriberComponent() {
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
                 <S.ContainerInputMessage>
+                  <S.Label>Telefone trabalho</S.Label>
                   <S.ContainerInput
                     style={{
-                      border:
-                        errors.civilStatus?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <select {...register("civilStatus")}>
-                      <option value="">Estado civil</option>
-                      <option value="Masculino">Casado</option>
-                      <option value="Feminino">Solteiro</option>
-                      <option value="Não Definido">Divorciado</option>
-                    </select>
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.civilStatus?.message && errors.civilStatus.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        errors.restrictions?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"45"}
-                      placeholder="Restrições de venda"
-                      {...register("restrictions")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.restrictions?.message &&
-                      errors.restrictions.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage className={"doubleField"}>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.phone?.message && "2px solid #ce171f",
+                      border: errors.workPhone?.message && "2px solid #ce171f",
                     }}
                   >
                     <InputMask
                       mask={"(99)99999-9999"}
-                      placeholder={"Telefone"}
-                      {...register("phone")}
+                      placeholder={"Telefone trabalho*"}
+                      {...register("workPhone")}
                     />
                   </S.ContainerInput>
                   <S.ContainerErrorMessage>
-                    {errors.phone?.message && errors.phone.message}
+                    {errors.workPhone?.message && errors.workPhone.message}
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
-                <S.ContainerInputMessage className={"doubleField"}>
+                <S.ContainerInputMessage>
+                  <S.Label>Celular</S.Label>
+                  <S.ContainerInput
+                    style={{
+                      border: errors.celPhone?.message && "2px solid #ce171f",
+                    }}
+                  >
+                    <InputMask
+                      mask={"(99)99999-9999"}
+                      placeholder={"Celular"}
+                      {...register("celPhone")}
+                    />
+                  </S.ContainerInput>
+                  <S.ContainerErrorMessage>
+                    {errors.celhone?.message && errors.celPhone.message}
+                  </S.ContainerErrorMessage>
+                </S.ContainerInputMessage>
+
+                <S.ContainerInputMessage className="doubleField">
+                  <S.Label>Telefone residencial</S.Label>
+                  <S.ContainerInput
+                    style={{
+                      border: errors.homePhone?.message && "2px solid #ce171f",
+                    }}
+                  >
+                    <InputMask
+                      mask={"(99)99999-9999"}
+                      placeholder={"Telefone residencial"}
+                      {...register("homePhone")}
+                    />
+                  </S.ContainerInput>
+                  <S.ContainerErrorMessage>
+                    {errors.homePhone?.message && errors.homePhone.message}
+                  </S.ContainerErrorMessage>
+                </S.ContainerInputMessage>
+
+                <S.ContainerInputMessage className="doubleField">
+                  <S.Label>Email</S.Label>
                   <S.ContainerInput
                     style={{
                       border: errors.email?.message && "2px solid #ce171f",
                     }}
                   >
-                    <S.Input placeholder={"Email"} {...register("email")} />
+                    <S.Input placeholder={"Email*"} {...register("email")} />
                   </S.ContainerInput>
                   <S.ContainerErrorMessage>
                     {errors.email?.message && errors.email.message}
+                  </S.ContainerErrorMessage>
+                </S.ContainerInputMessage>
+                <S.ContainerInputMessage className={"doubleField"}>
+                  <S.Label>Nome da secretária</S.Label>
+                  <S.ContainerInput
+                    style={{
+                      border:
+                        errors.assistantName?.message && "2px solid #ce171f",
+                    }}
+                  >
+                    <S.Input
+                      maxLength={"100"}
+                      placeholder="Nome da secretária"
+                      {...register("assistantName")}
+                    />
+                  </S.ContainerInput>
+                  <S.ContainerErrorMessage>
+                    {errors.assistantName?.message &&
+                      errors.assistantName.message}
+                  </S.ContainerErrorMessage>
+                </S.ContainerInputMessage>
+
+                <S.ContainerInputMessage className={"doubleField"}>
+                  <S.Label>Telefone da secretária</S.Label>
+                  <S.ContainerInput
+                    style={{
+                      border:
+                        errors.assistantPhone?.message && "2px solid #ce171f",
+                    }}
+                  >
+                    <InputMask
+                      mask={"(99)99999-9999"}
+                      placeholder={"Telefone da secretária"}
+                      {...register("assistantPhone")}
+                    />
+                  </S.ContainerInput>
+                  <S.ContainerErrorMessage>
+                    {errors.assistantPhone?.message &&
+                      errors.assistantPhone.message}
                   </S.ContainerErrorMessage>
                 </S.ContainerInputMessage>
 

@@ -1,11 +1,11 @@
 const defaultLayout = [
   {
     "box-shadow": "0px 3px 6px #00000039;",
-    "bt-positive-color": "#cb5151",
-    "bt-positive-color-hover": "#00646c",
+    "bt-positive-color": "#003438",
+    "bt-positive-color-hover": "#287E84",
     "bt-positive-text-color": "#ffff",
     "bt-positive-text-color-hover": "#ffffff",
-    "bt-negative-color": "#8c3838",
+    "bt-negative-color": "#00646c",
     "bt-negative-color-hover": "#00646c",
     "bt-negative-text-color": "#ffff",
     "bt-negative-text-color-hover": "#ffffff",

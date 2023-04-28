@@ -14,6 +14,7 @@ import { UserPlus } from "@styled-icons/boxicons-regular/UserPlus";
 import { UserDoctor } from "@styled-icons/fa-solid/UserDoctor";
 import { LogOut } from "@styled-icons/boxicons-regular/LogOut";
 import { PrescriptionBottleMedical } from "@styled-icons/fa-solid/PrescriptionBottleMedical";
+import { PersonEdit } from "@styled-icons/fluentui-system-filled/PersonEdit";
 
 import { useRouter } from "next/router";
 
@@ -63,8 +64,16 @@ function HomeComponent() {
                 history.push("/manipulationPharmacy/createPrescriber")
               }
             >
-              <UserDoctor style={{ width: 28 }} />
+              <UserDoctor style={{ width: 26 }} />
               Cadastrar Prescritor
+            </S.ButtonRedirect>
+            <S.ButtonRedirect
+              onClick={() =>
+                history.push("/manipulationPharmacy/createPrescriber")
+              }
+            >
+              <PersonEdit style={{ width: 28 }} />
+              Atualizar Cliente / Prescritor
             </S.ButtonRedirect>
             <S.ButtonRedirect
               onClick={() => history.push("/manipulationPharmacy/createOrder")}
