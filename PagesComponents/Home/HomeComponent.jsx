@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import Link from "next/link";
-import notification from "../../services/notification";
-
 import * as S from "./style";
 
 import { ToastContainer } from "react-toastify";
@@ -10,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { BagFill } from "@styled-icons/bootstrap/BagFill";
 import { BagPlusFill } from "@styled-icons/bootstrap/BagPlusFill";
-import { UserPlus } from "@styled-icons/boxicons-regular/UserPlus";
+import { User } from "@styled-icons/fa-solid/User";
 import { UserDoctor } from "@styled-icons/fa-solid/UserDoctor";
 import { LogOut } from "@styled-icons/boxicons-regular/LogOut";
 import { PrescriptionBottleMedical } from "@styled-icons/fa-solid/PrescriptionBottleMedical";
@@ -56,7 +53,7 @@ function HomeComponent() {
             <S.ButtonRedirect
               onClick={() => history.push("/manipulationPharmacy/createClient")}
             >
-              <UserPlus style={{ width: 40 }} />
+              <User style={{ width: 25 }} />
               Cadastrar Cliente
             </S.ButtonRedirect>
             <S.ButtonRedirect
@@ -69,11 +66,11 @@ function HomeComponent() {
             </S.ButtonRedirect>
             <S.ButtonRedirect
               onClick={() =>
-                history.push("/manipulationPharmacy/createPrescriber")
+                history.push("/manipulationPharmacy/updateRegister")
               }
             >
-              <PersonEdit style={{ width: 28 }} />
-              Atualizar Cliente / Prescritor
+              <PersonEdit style={{ width: 30 }} />
+              Atualizar cadastro
             </S.ButtonRedirect>
             <S.ButtonRedirect
               onClick={() => history.push("/manipulationPharmacy/createOrder")}

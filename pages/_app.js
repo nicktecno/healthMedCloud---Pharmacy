@@ -4,7 +4,16 @@ import { ToastContainer } from "react-toastify";
 import NextNProgress from "nextjs-progressbar";
 import defaultLayout from "../jover";
 
+const HeaderMicro = dynamic(() => import("header/header"), { ssr: false });
+
+import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
+
 function MyApp({ Component, pageProps }) {
+  const history = useRouter();
+  const filterAppLogged = history.asPath.includes("/manipulationPharmacy");
+  const filterLoginPage = history.asPath.includes("/login");
+
   return (
     <>
       <NextNProgress
@@ -16,6 +25,7 @@ function MyApp({ Component, pageProps }) {
       />
 
       <ToastContainer />
+      {!filterLoginPage && filterAppLogged && <HeaderMicro />}
       <GlobalStyles colors={defaultLayout} />
 
       <Component {...pageProps} />

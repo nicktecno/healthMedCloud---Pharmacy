@@ -130,6 +130,7 @@ const GlobalStyles = createGlobalStyle`
         overflow-x: hidden;
         margin:0px;
         height:100%;
+        background-color:var(--default-color;)
     }
 
     input,button,textarea,html,body{

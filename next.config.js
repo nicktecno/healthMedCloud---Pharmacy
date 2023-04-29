@@ -37,7 +37,11 @@ const nextConfig = {
     config.plugins.push(
       new NextFederationPlugin({
         name: "manipulationPharmacy",
-        remotes: {},
+        remotes: {
+          header: `header@https://health-med-cloud-header.vercel.app///_next/static/${
+            isServer ? "ssr" : "chunks"
+          }/remoteEntry.js`,
+        },
         filename: "static/chunks/remoteEntry.js",
         exposes: {
           "./home": "./PagesComponents/Home/HomeComponent.jsx",
