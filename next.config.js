@@ -49,6 +49,8 @@ const nextConfig = {
             "./PagesComponents/CreateClient/CreateClientComponent.jsx",
           "./createPrescriber":
             "./PagesComponents/CreatePrescriber/CreatePrescriberComponent.jsx",
+          "./updateRegister":
+            "./PagesComponents/UpdateRegister/UpdateRegisterComponent.jsx",
         },
 
         extraOptions: {
