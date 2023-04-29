@@ -1,4 +1,4 @@
-import UpdateRegisterComponent from "./UpdateRegister";
+import UpdateRegisterComponent from "./UpdateRegisterComponent";
 
 const UpdateRegister = () => {
   return <UpdateRegisterComponent />;
