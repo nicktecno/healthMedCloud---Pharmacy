@@ -20,62 +20,20 @@ import { User } from "@styled-icons/fa-solid/User";
 import { UserDoctor } from "@styled-icons/fa-solid/UserDoctor";
 import { LogOut } from "@styled-icons/boxicons-regular/LogOut";
 import { SearchAlt } from "@styled-icons/boxicons-regular/SearchAlt";
+import { ArrowRightSquareFill } from "@styled-icons/bootstrap/ArrowRightSquareFill";
 
 function UpdateRegisterComponent() {
   const history = useRouter();
-  const [step, setStep] = useState(1);
   const [typeSelected, setTypeSelected] = useState("none");
   const [filter, setFilter] = useState("name");
+  const [peopleData, setPeopleData] = useState(false);
 
   const styleAnimation = {
     width: "100%",
   };
 
   const schema = yup.object().shape({
-    job: yup.string().required("Função obrigatória"),
-    name: yup.string().required("Nome obrigatório"),
-    lastName: yup.string().required("Sobrenome obrigatório"),
-    email: yup.string().email("Digite um e-mail valido"),
-    registerCode: yup.string().required("Registro obrigatório"),
-    document: yup
-      .string()
-      .required("Documento obrigatório")
-      .min(11, "Digite a quantidade certa de caracteres do documento")
-      .transform((value) => value.split(/[-._/]/).join("")),
-    birth: yup
-      .string()
-      .required("Data de nascimento obrigatória")
-      .min(8, "Digite uma data válida")
-      .transform((value) => value.split(/[-._/]/).join("")),
-
-    workPhone: yup
-      .string()
-      .required("Telefone de trabalho obrigatório")
-      .transform((value) =>
-        value
-          .replace("(", "")
-          .replace(")", "")
-          .replace("-", "")
-          .replace(" ", "")
-      ),
-  });
-  const schemaAddress = yup.object().shape({
-    country: yup
-      .string()
-      .required("País obrigatório")
-      .min(2, "Digite 2 caracteres da sigla")
-      .transform((value) => value.split(/[-._/]/).join("")),
-    addressType: yup.string().required("Selecione o tipo de endereço"),
-    postalCode: yup
-      .string()
-      .required("Cep Obrigatório")
-      .min(8, "Digite a quantidade certa de caracteres do Cep")
-      .transform((value) => value.split(/[-._/]/).join("")),
-    state: yup.string().required("Estado obrigatório"),
-    city: yup.string().required("Cidade obrigatória"),
-    street: yup.string().required("Rua obrigatória"),
-    addressNumber: yup.string().required("Número obrigatório"),
-    neighborhood: yup.string().required("Bairro obrigatório"),
+    search: yup.string().required("Preenchimento obrigatório"),
   });
 
   const {
@@ -87,40 +45,9 @@ function UpdateRegisterComponent() {
     resolver: yupResolver(schema),
   });
 
-  const {
-    register: registerAddress,
-    handleSubmit: handleSubmitAddress,
-    setValue: setValueAddress,
-    formState: { errors: addressErrors },
-  } = useForm({
-    resolver: yupResolver(schemaAddress),
-  });
-
-  async function handleRegister(e) {
+  async function handleSearch(e) {
     console.log(e);
-    setValueAddress("country", "");
-    setStep((prev) => prev + 1);
-  }
-
-  async function handleRegisterAddress(e) {
-    console.log(e);
-    setStep((prev) => prev + 1);
-  }
-
-  async function getAddress(cep) {
-    await axios
-      .get(`https://viacep.com.br/ws/${cep.replaceAll("_", "")}/json`)
-      .then(function (response) {
-        setValueAddress("country", "BR", { shouldDirty: true });
-        setValueAddress("city", response.data.localidade);
-        setValueAddress("street", response.data.logradouro);
-        setValueAddress("neighborhood", response.data.bairro);
-        setValueAddress("state", response.data.uf);
-      })
-      .catch(function (error) {
-        console.log(error);
-        notification("Cep inválido", "error");
-      });
+    setPeopleData(e);
   }
 
   return (
@@ -145,31 +72,71 @@ function UpdateRegisterComponent() {
             </>
           ) : (
             <S.ContainerInputMessage>
-              <S.Label>
-                Procurando por{" "}
-                {filter === "name"
-                  ? "nome"
-                  : filter === "cpf"
-                  ? "CPF"
-                  : filter === "cnpj"
-                  ? "CNPJ"
-                  : "registro"}
-              </S.Label>
-              <S.ContainerInput
-                style={{
-                  border: errors.homePhone?.message && "2px solid #ce171f",
-                }}
-              >
-                <InputMask
-                  mask={"(99)99999-9999"}
-                  placeholder={"Pesquisar"}
-                  {...register("homePhone")}
-                />
-                <span>
-                  <SearchAlt />
-                </span>
-              </S.ContainerInput>
+              <form onSubmit={handleSubmit(handleSearch)}>
+                <S.Label>
+                  Procurando por{" "}
+                  {filter === "name"
+                    ? "nome"
+                    : filter === "cpf"
+                    ? "CPF"
+                    : filter === "cnpj"
+                    ? "CNPJ"
+                    : "registro"}
+                </S.Label>
+                <S.ContainerInput
+                  style={{
+                    border: errors.search?.message && "2px solid #ce171f",
+                  }}
+                >
+                  {filter === "name" || filter === "register" ? (
+                    <input
+                      type="text"
+                      placeholder={"Pesquisar"}
+                      {...register("search")}
+                    />
+                  ) : (
+                    <InputMask
+                      mask={
+                        filter === "cpf"
+                          ? "999.999.999-99"
+                          : filter === "cnpj"
+                          ? "99.999.999/9999-99"
+                          : false
+                      }
+                      placeholder={"Pesquisar"}
+                      {...register("search")}
+                    />
+                  )}
+
+                  <button type="submit">
+                    <SearchAlt />
+                  </button>
+                </S.ContainerInput>
+              </form>
+              <S.ContainerErrorMessage>
+                {errors.search?.message && errors.search.message}
+              </S.ContainerErrorMessage>
             </S.ContainerInputMessage>
+          )}
+          {peopleData !== false && (
+            <S.ContainerPeople>
+              <S.ContainerPerson>
+                <span>Juninho Castanharo Silva</span>
+                <ArrowRightSquareFill />
+              </S.ContainerPerson>
+              <S.ContainerPerson>
+                <span>Juninho Castanharo Silva</span>
+                <ArrowRightSquareFill />
+              </S.ContainerPerson>
+              <S.ContainerPerson>
+                <span>Juninho Castanharo Silva</span>
+                <ArrowRightSquareFill />
+              </S.ContainerPerson>
+              <S.ContainerPerson>
+                <span>Juninho Castanharo Silva</span>
+                <ArrowRightSquareFill />
+              </S.ContainerPerson>
+            </S.ContainerPeople>
           )}
         </S.LeftContainer>
         <S.RightContainer>
@@ -197,20 +164,29 @@ function UpdateRegisterComponent() {
               <>
                 <S.ButtonRedirect
                   className={filter === "name" && "active"}
-                  onClick={() => setFilter("name")}
+                  onClick={() => {
+                    setValue("search", "");
+                    setFilter("name");
+                  }}
                 >
                   Nome
                 </S.ButtonRedirect>
                 <S.ButtonRedirect
                   className={filter === "cpf" && "active"}
-                  onClick={() => setFilter("cpf")}
+                  onClick={() => {
+                    setValue("search", "");
+                    setFilter("cpf");
+                  }}
                 >
                   CPF
                 </S.ButtonRedirect>
                 {typeSelected === "client" && (
                   <S.ButtonRedirect
                     className={filter === "cnpj" && "active"}
-                    onClick={() => setFilter("cnpj")}
+                    onClick={() => {
+                      setValue("search", "");
+                      setFilter("cnpj");
+                    }}
                   >
                     CNPJ
                   </S.ButtonRedirect>
@@ -218,7 +194,10 @@ function UpdateRegisterComponent() {
                 {typeSelected === "prescriber" && (
                   <S.ButtonRedirect
                     className={filter === "register" && "active"}
-                    onClick={() => setFilter("register")}
+                    onClick={() => {
+                      setValue("search", "");
+                      setFilter("register");
+                    }}
                   >
                     Registro
                   </S.ButtonRedirect>

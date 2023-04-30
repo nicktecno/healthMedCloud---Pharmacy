@@ -293,7 +293,9 @@ export const ContainerInput = styled.div`
       color: var(--font-color-opposite);
     }
   }
-  span {
+  button {
+    min-width: 80px;
+    border: 0px;
     width: 20%;
     display: flex;
     justify-content: center;
@@ -329,4 +331,80 @@ export const ContainerInput = styled.div`
 export const Input = styled.input`
   width: 95%;
   border: 0px;
+`;
+
+export const ContainerErrorMessage = styled.div`
+  display: flex;
+  font-size: 13px;
+  color: var(--error-color);
+  padding: 3px;
+  font-weight: bold;
+`;
+
+export const ContainerPeople = styled.div`
+  display: flex;
+  min-height: 50px;
+  flex-direction: column;
+  position: relative;
+  margin-left: 20px;
+  margin-top: 20px;
+  font-size: 12px;
+  width: 80%;
+  border: 2px solid var(--bt-positive-color);
+  max-height: 200px;
+  overflow: auto;
+
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #f4f4f5;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--bt-positive-color);
+  }
+
+  ${customMedia.lessThan("notebook")`
+  margin-left:0px;
+    width:60%;
+  `}
+  ${customMedia.lessThan("mobile")`
+    width:90%;
+  `}
+`;
+
+export const ContainerPerson = styled.div`
+  display: flex;
+  width: 100%;
+  font-size: 20px;
+  color: var(--font-color);
+  transition: 0.3s;
+  justify-content: space-between;
+  cursor: pointer;
+  align-items: center;
+  padding: 15px 10px;
+  span {
+    width: 80%;
+    line-height: 22px;
+  }
+
+  :hover {
+    background-color: var(--bt-positive-color);
+  }
+
+  svg {
+    width: 30px;
+  }
 `;
