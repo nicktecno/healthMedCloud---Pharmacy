@@ -120,19 +120,41 @@ function UpdateRegisterComponent() {
           )}
           {peopleData !== false && (
             <S.ContainerPeople>
-              <S.ContainerPerson>
+              <S.ContainerPerson
+                onClick={() =>
+                  history.push(
+                    `/manipulationPharmacy/${
+                      typeSelected === "client"
+                        ? "updateClient"
+                        : "updatePrescriber"
+                    }/1`
+                  )
+                }
+              >
                 <span>Juninho Castanharo Silva</span>
                 <ArrowRightSquareFill />
               </S.ContainerPerson>
-              <S.ContainerPerson>
+              <S.ContainerPerson
+                onClick={() =>
+                  history.push("/manipulationPharmacy/updateClient/1")
+                }
+              >
                 <span>Juninho Castanharo Silva</span>
                 <ArrowRightSquareFill />
               </S.ContainerPerson>
-              <S.ContainerPerson>
+              <S.ContainerPerson
+                onClick={() =>
+                  history.push("/manipulationPharmacy/updateClient/1")
+                }
+              >
                 <span>Juninho Castanharo Silva</span>
                 <ArrowRightSquareFill />
               </S.ContainerPerson>
-              <S.ContainerPerson>
+              <S.ContainerPerson
+                onClick={() =>
+                  history.push("/manipulationPharmacy/updateClient/1")
+                }
+              >
                 <span>Juninho Castanharo Silva</span>
                 <ArrowRightSquareFill />
               </S.ContainerPerson>

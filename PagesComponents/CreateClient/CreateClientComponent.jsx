@@ -13,10 +13,19 @@ import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import notification from "../../services/notification";
 
+import Lottie from "lottie-react";
+import loadingAnimation from "../../public/images/loading.json";
+
 function CreateClientComponent() {
   const history = useRouter();
+  const { slug } = history.query;
   const [documentSelected, setDocumentSelected] = useState("CPF");
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(true);
+
+  const styleAnimation = {
+    width: "100%",
+  };
 
   const schema = yup.object().shape({
     name: yup.string().required("Nome obrigatório"),
@@ -106,517 +115,542 @@ function CreateClientComponent() {
       });
   }
 
+  const filterPathname = history.pathname.includes("/updateClient");
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
   return (
     <S.GeneralContainer>
       <title>HealthMedCloud - Farmácia de Manipulação</title>
       <S.GeneralContent>
-        <S.ContainerRegister>
-          <S.GeneralTitle>Cadastro do Cliente</S.GeneralTitle>
-          <S.Tabs>
-            <S.ButtonTab className={step === 1 && "active"}>Básico</S.ButtonTab>
-            <S.ButtonTab className={step !== 2 && step !== 3 ? "" : "active"}>
-              Endereço
-            </S.ButtonTab>
-          </S.Tabs>
-          <S.BoxInputs>
-            {step === 1 ? (
-              <form onSubmit={handleSubmit(handleRegister)}>
-                <S.ContainerInputMessage>
-                  <S.Label>Tratamento</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        errors.treatmentPronoun?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <select {...register("treatmentPronoun")}>
-                      <option value="">Tratamento</option>
-                      <option value="Senhor">Srº.</option>
-                      <option value="Senhora">Srª</option>
-                      <option value="Doutor">Drº</option>
-                      <option value="Doutora">Drª</option>
-                    </select>
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.treatmentPronoun?.message &&
-                      errors.treatmentPronoun.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>Nome</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.name?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"25"}
-                      placeholder="Nome*"
-                      {...register("name")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.name?.message && errors.name.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>Sobrenome</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.lastName?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"35"}
-                      placeholder="Sobrenome*"
-                      {...register("lastName")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.lastName?.message && errors.lastName.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>Apelido</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.nickName?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"25"}
-                      placeholder="Apelido"
-                      {...register("nickName")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.nickName?.message && errors.nickName.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>Sexo</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.sex?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <select {...register("sex")}>
-                      <option value="Masculino">Masculino</option>
-                      <option value="Feminino">Feminino</option>
-                      <option value="Não Definido">Não definido</option>
-                    </select>
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.sex?.message && errors.sex.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>Etnia</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.ethnicity?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <select {...register("ethnicity")}>
-                      <option value="Asiático">Asiático</option>
-                      <option value="Branco">Branco</option>
-                      <option value="Indígena">Indígena</option>
-                      <option value="Negro">Negro</option>
-                      <option value="Pardo">Pardo</option>
-                    </select>
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.ethnicity?.message && errors.ethnicity.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerChecks>
-                  <S.ContainerCheck>
-                    <S.Checks
-                      className={documentSelected === "CPF" && "selected"}
-                      onClick={() => setDocumentSelected("CPF")}
-                    />
-                    CPF
-                  </S.ContainerCheck>
-                  <S.ContainerCheck>
-                    <S.Checks
-                      className={documentSelected === "CNPJ" && "selected"}
-                      onClick={() => setDocumentSelected("CNPJ")}
-                    />
-                    CNPJ
-                  </S.ContainerCheck>
-                </S.ContainerChecks>
-                <S.ContainerInputMessage className={"doubleField"}>
-                  <S.Label>
-                    {documentSelected === "CPF" ? "CPF" : "CNPJ"}
-                  </S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.document?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <InputMask
-                      mask={
-                        documentSelected === "CPF"
-                          ? "999.999.999-99"
-                          : "99.999.999/9999-99"
-                      }
-                      placeholder={
-                        documentSelected === "CPF" ? "CPF*" : "CNPJ*"
-                      }
-                      {...register("document")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.document?.message && errors.document.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage className={"doubleField"}>
-                  <S.Label>
-                    {documentSelected === "CPF" ? "RG" : "Inscrição Estadual"}
-                  </S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        errors.registerDocument?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"25"}
-                      placeholder={
-                        documentSelected === "CPF"
-                          ? "RG"
-                          : "Inscrição estadual*"
-                      }
-                      {...register("registerDocument")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.registerDocument?.message &&
-                      errors.registerDocument.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>
-                    {documentSelected === "CPF"
-                      ? "Data de nascimento"
-                      : "Data de fundação"}
-                  </S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.birth?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <InputMask
-                      mask={"99/99/9999"}
-                      placeholder={
-                        documentSelected === "CPF"
-                          ? "Data de nascimento"
-                          : "Data de fundação"
-                      }
-                      {...register("birth")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.birth?.message && errors.birth.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
+        {loading ? (
+          <Lottie
+            animationData={loadingAnimation}
+            loop={false}
+            style={styleAnimation}
+          />
+        ) : (
+          <S.ContainerRegister>
+            <S.GeneralTitle>
+              {filterPathname && slug !== undefined && slug.length > 0
+                ? "Atualizar Cliente"
+                : "Cadastro do Cliente"}
+            </S.GeneralTitle>
+            <S.Tabs>
+              <S.ButtonTab className={step === 1 && "active"}>
+                Básico
+              </S.ButtonTab>
+              <S.ButtonTab className={step !== 2 && step !== 3 ? "" : "active"}>
+                Endereço
+              </S.ButtonTab>
+            </S.Tabs>
+            <S.BoxInputs>
+              {step === 1 ? (
+                <form onSubmit={handleSubmit(handleRegister)}>
+                  <S.ContainerInputMessage>
+                    <S.Label>Tratamento</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          errors.treatmentPronoun?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <select {...register("treatmentPronoun")}>
+                        <option value="">Tratamento</option>
+                        <option value="Senhor">Srº.</option>
+                        <option value="Senhora">Srª</option>
+                        <option value="Doutor">Drº</option>
+                        <option value="Doutora">Drª</option>
+                      </select>
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.treatmentPronoun?.message &&
+                        errors.treatmentPronoun.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Nome</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border: errors.name?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"25"}
+                        placeholder="Nome*"
+                        {...register("name")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.name?.message && errors.name.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Sobrenome</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border: errors.lastName?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"35"}
+                        placeholder="Sobrenome*"
+                        {...register("lastName")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.lastName?.message && errors.lastName.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Apelido</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border: errors.nickName?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"25"}
+                        placeholder="Apelido"
+                        {...register("nickName")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.nickName?.message && errors.nickName.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Sexo</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border: errors.sex?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <select {...register("sex")}>
+                        <option value="Masculino">Masculino</option>
+                        <option value="Feminino">Feminino</option>
+                        <option value="Não Definido">Não definido</option>
+                      </select>
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.sex?.message && errors.sex.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Etnia</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          errors.ethnicity?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <select {...register("ethnicity")}>
+                        <option value="Asiático">Asiático</option>
+                        <option value="Branco">Branco</option>
+                        <option value="Indígena">Indígena</option>
+                        <option value="Negro">Negro</option>
+                        <option value="Pardo">Pardo</option>
+                      </select>
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.ethnicity?.message && errors.ethnicity.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerChecks>
+                    <S.ContainerCheck>
+                      <S.Checks
+                        className={documentSelected === "CPF" && "selected"}
+                        onClick={() => setDocumentSelected("CPF")}
+                      />
+                      CPF
+                    </S.ContainerCheck>
+                    <S.ContainerCheck>
+                      <S.Checks
+                        className={documentSelected === "CNPJ" && "selected"}
+                        onClick={() => setDocumentSelected("CNPJ")}
+                      />
+                      CNPJ
+                    </S.ContainerCheck>
+                  </S.ContainerChecks>
+                  <S.ContainerInputMessage className={"doubleField"}>
+                    <S.Label>
+                      {documentSelected === "CPF" ? "CPF" : "CNPJ"}
+                    </S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border: errors.document?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <InputMask
+                        mask={
+                          documentSelected === "CPF"
+                            ? "999.999.999-99"
+                            : "99.999.999/9999-99"
+                        }
+                        placeholder={
+                          documentSelected === "CPF" ? "CPF*" : "CNPJ*"
+                        }
+                        {...register("document")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.document?.message && errors.document.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage className={"doubleField"}>
+                    <S.Label>
+                      {documentSelected === "CPF" ? "RG" : "Inscrição Estadual"}
+                    </S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          errors.registerDocument?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"25"}
+                        placeholder={
+                          documentSelected === "CPF"
+                            ? "RG"
+                            : "Inscrição estadual*"
+                        }
+                        {...register("registerDocument")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.registerDocument?.message &&
+                        errors.registerDocument.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>
+                      {documentSelected === "CPF"
+                        ? "Data de nascimento"
+                        : "Data de fundação"}
+                    </S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border: errors.birth?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <InputMask
+                        mask={"99/99/9999"}
+                        placeholder={
+                          documentSelected === "CPF"
+                            ? "Data de nascimento"
+                            : "Data de fundação"
+                        }
+                        {...register("birth")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.birth?.message && errors.birth.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
 
-                <S.ContainerInputMessage>
-                  <S.Label>Estado civil</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        errors.civilStatus?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <select {...register("civilStatus")}>
-                      <option value="Masculino">Casado</option>
-                      <option value="Feminino">Solteiro</option>
-                      <option value="Não Definido">Divorciado</option>
-                    </select>
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.civilStatus?.message && errors.civilStatus.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>Restrições de venda</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        errors.restrictions?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"45"}
-                      placeholder="Restrições de venda"
-                      {...register("restrictions")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.restrictions?.message &&
-                      errors.restrictions.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage className={"doubleField"}>
-                  <S.Label>Telefone</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.phone?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <InputMask
-                      mask={"(99)99999-9999"}
-                      placeholder={"Telefone"}
-                      {...register("phone")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.phone?.message && errors.phone.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage className={"doubleField"}>
-                  <S.Label>Email</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border: errors.email?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input placeholder={"Email"} {...register("email")} />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {errors.email?.message && errors.email.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Estado civil</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          errors.civilStatus?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <select {...register("civilStatus")}>
+                        <option value="Masculino">Casado</option>
+                        <option value="Feminino">Solteiro</option>
+                        <option value="Não Definido">Divorciado</option>
+                      </select>
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.civilStatus?.message &&
+                        errors.civilStatus.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Restrições de venda</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          errors.restrictions?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"45"}
+                        placeholder="Restrições de venda"
+                        {...register("restrictions")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.restrictions?.message &&
+                        errors.restrictions.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage className={"doubleField"}>
+                    <S.Label>Telefone</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border: errors.phone?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <InputMask
+                        mask={"(99)99999-9999"}
+                        placeholder={"Telefone"}
+                        {...register("phone")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.phone?.message && errors.phone.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage className={"doubleField"}>
+                    <S.Label>Email</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border: errors.email?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input placeholder={"Email"} {...register("email")} />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {errors.email?.message && errors.email.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
 
+                  <S.ContainerButtons>
+                    <S.Button
+                      type="button"
+                      className="negative"
+                      onClick={() => {
+                        history.push("/manipulationPharmacy");
+                      }}
+                    >
+                      Voltar
+                    </S.Button>
+                    <S.Button type="submit">Avançar</S.Button>
+                  </S.ContainerButtons>
+                </form>
+              ) : step === 2 ? (
+                <form onSubmit={handleSubmitAddress(handleRegisterAddress)}>
+                  <S.ContainerInputMessage>
+                    <S.Label>Tipo de endereço</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          addressErrors.addressType?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <select {...registerAddress("addressType")}>
+                        <option value="Cobrança">Cobrança</option>
+                        <option value="Entrega">Entrega</option>
+                      </select>
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {addressErrors.addressType?.message &&
+                        addressErrors.addressType.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Cep</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          addressErrors.postalCode?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <InputMask
+                        mask={"99999-999"}
+                        placeholder={"Cep"}
+                        {...registerAddress("postalCode")}
+                        onBlur={(e) => getAddress(e.target.value)}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {addressErrors.postalCode?.message &&
+                        addressErrors.postalCode.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>País</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          addressErrors.country?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"2"}
+                        placeholder={"País"}
+                        {...registerAddress("country")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {addressErrors.country?.message &&
+                        addressErrors.country.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage className="doubleField">
+                    <S.Label>Estado</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          addressErrors.state?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"2"}
+                        placeholder={"Estado"}
+                        {...registerAddress("state")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {addressErrors.state?.message &&
+                        addressErrors.state.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage className="doubleField">
+                    <S.Label>Cidade</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          addressErrors.city?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"100"}
+                        placeholder={"Cidade"}
+                        {...registerAddress("city")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {addressErrors.city?.message &&
+                        addressErrors.city.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage className="fullField">
+                    <S.Label>Rua</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          addressErrors.street?.message && "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"60"}
+                        placeholder="Rua"
+                        {...registerAddress("street")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {addressErrors.street?.message &&
+                        addressErrors.street.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Número</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          addressErrors.addressNumber?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"5"}
+                        placeholder="Número"
+                        {...registerAddress("addressNumber")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {addressErrors.addressNumber?.message &&
+                        addressErrors.addressNumber.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Bairro</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          addressErrors.neighborhood?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"25"}
+                        placeholder="Bairro"
+                        {...registerAddress("neighborhood")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {addressErrors.neighborhood?.message &&
+                        addressErrors.neighborhood.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Complemento</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          addressErrors.addressComplement?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"25"}
+                        placeholder="Complemento"
+                        {...registerAddress("addressComplement")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {addressErrors.addressComplement?.message &&
+                        addressErrors.addressComplement.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+
+                  <S.ContainerButtons>
+                    <S.Button
+                      type="button"
+                      className="negative"
+                      onClick={() => {
+                        history.push("/manipulationPharmacy");
+                      }}
+                    >
+                      Pular Etapa
+                    </S.Button>
+                    <S.Button type="submit">Salvar</S.Button>
+                  </S.ContainerButtons>
+                </form>
+              ) : step === 3 ? (
                 <S.ContainerButtons>
                   <S.Button
                     type="button"
                     className="negative"
                     onClick={() => {
-                      history.push("/manipulationPharmacy");
+                      setStep((prev) => prev - 1);
                     }}
                   >
-                    Voltar
+                    Adicionar outro endereço
                   </S.Button>
-                  <S.Button type="submit">Avançar</S.Button>
-                </S.ContainerButtons>
-              </form>
-            ) : step === 2 ? (
-              <form onSubmit={handleSubmitAddress(handleRegisterAddress)}>
-                <S.ContainerInputMessage>
-                  <S.Label>Tipo de endereço</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        addressErrors.addressType?.message &&
-                        "2px solid #ce171f",
-                    }}
-                  >
-                    <select {...registerAddress("addressType")}>
-                      <option value="Cobrança">Cobrança</option>
-                      <option value="Entrega">Entrega</option>
-                    </select>
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {addressErrors.addressType?.message &&
-                      addressErrors.addressType.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>Cep</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        addressErrors.postalCode?.message &&
-                        "2px solid #ce171f",
-                    }}
-                  >
-                    <InputMask
-                      mask={"99999-999"}
-                      placeholder={"Cep"}
-                      {...registerAddress("postalCode")}
-                      onBlur={(e) => getAddress(e.target.value)}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {addressErrors.postalCode?.message &&
-                      addressErrors.postalCode.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>País</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        addressErrors.country?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"2"}
-                      placeholder={"País"}
-                      {...registerAddress("country")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {addressErrors.country?.message &&
-                      addressErrors.country.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage className="doubleField">
-                  <S.Label>Estado</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        addressErrors.state?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"2"}
-                      placeholder={"Estado"}
-                      {...registerAddress("state")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {addressErrors.state?.message &&
-                      addressErrors.state.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage className="doubleField">
-                  <S.Label>Cidade</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        addressErrors.city?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"100"}
-                      placeholder={"Cidade"}
-                      {...registerAddress("city")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {addressErrors.city?.message && addressErrors.city.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage className="fullField">
-                  <S.Label>Rua</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        addressErrors.street?.message && "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"60"}
-                      placeholder="Rua"
-                      {...registerAddress("street")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {addressErrors.street?.message &&
-                      addressErrors.street.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>Número</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        addressErrors.addressNumber?.message &&
-                        "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"5"}
-                      placeholder="Número"
-                      {...registerAddress("addressNumber")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {addressErrors.addressNumber?.message &&
-                      addressErrors.addressNumber.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>Bairro</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        addressErrors.neighborhood?.message &&
-                        "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"25"}
-                      placeholder="Bairro"
-                      {...registerAddress("neighborhood")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {addressErrors.neighborhood?.message &&
-                      addressErrors.neighborhood.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-                <S.ContainerInputMessage>
-                  <S.Label>Complemento</S.Label>
-                  <S.ContainerInput
-                    style={{
-                      border:
-                        addressErrors.addressComplement?.message &&
-                        "2px solid #ce171f",
-                    }}
-                  >
-                    <S.Input
-                      maxLength={"25"}
-                      placeholder="Complemento"
-                      {...registerAddress("addressComplement")}
-                    />
-                  </S.ContainerInput>
-                  <S.ContainerErrorMessage>
-                    {addressErrors.addressComplement?.message &&
-                      addressErrors.addressComplement.message}
-                  </S.ContainerErrorMessage>
-                </S.ContainerInputMessage>
-
-                <S.ContainerButtons>
                   <S.Button
-                    type="button"
-                    className="negative"
                     onClick={() => {
                       history.push("/manipulationPharmacy");
                     }}
                   >
-                    Pular Etapa
+                    Finalizar Cadastro
                   </S.Button>
-                  <S.Button type="submit">Salvar</S.Button>
                 </S.ContainerButtons>
-              </form>
-            ) : step === 3 ? (
-              <S.ContainerButtons>
-                <S.Button
-                  type="button"
-                  className="negative"
-                  onClick={() => {
-                    setStep((prev) => prev - 1);
-                  }}
-                >
-                  Adicionar outro endereço
-                </S.Button>
-                <S.Button
-                  onClick={() => {
-                    history.push("/manipulationPharmacy");
-                  }}
-                >
-                  Finalizar Cadastro
-                </S.Button>
-              </S.ContainerButtons>
-            ) : (
-              <></>
-            )}
-          </S.BoxInputs>
-        </S.ContainerRegister>
+              ) : (
+                <></>
+              )}
+            </S.BoxInputs>
+          </S.ContainerRegister>
+        )}
       </S.GeneralContent>
       <ToastContainer />
     </S.GeneralContainer>
