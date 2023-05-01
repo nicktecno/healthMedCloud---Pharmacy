@@ -16,6 +16,10 @@ import notification from "../../services/notification";
 import Lottie from "lottie-react";
 import loadingAnimation from "../../public/images/loading.json";
 
+import { Edit } from "@styled-icons/boxicons-solid/Edit";
+import { Delete } from "@styled-icons/fluentui-system-filled/Delete";
+import { SearchAlt } from "@styled-icons/boxicons-regular/SearchAlt";
+
 function CreateClientComponent() {
   const history = useRouter();
   const { slug } = history.query;
@@ -24,8 +28,11 @@ function CreateClientComponent() {
   const [loading, setLoading] = useState(true);
 
   const styleAnimation = {
-    width: "100%",
+    minWidth: "250px",
+    width: "30%",
   };
+
+  const filterPathname = history.pathname.includes("/updateClient");
 
   const schema = yup.object().shape({
     name: yup.string().required("Nome obrigatório"),
@@ -70,6 +77,17 @@ function CreateClientComponent() {
     neighborhood: yup.string().required("Bairro obrigatório"),
   });
 
+  const schemaMedicalHistory = yup.object().shape({
+    religionSchool: yup.string().required("Campo obrigatório"),
+    work: yup.string().required("Campo obrigatório"),
+    location: yup.string().required("Campo obrigatório"),
+    religionSchool: yup.string().required("Campo obrigatório"),
+    complaint: yup.string().required("Campo obrigatório"),
+    reason: yup.string().required("Campo obrigatório"),
+    notes: yup.string().required("Campo obrigatório"),
+    description: yup.string().required("Campo obrigatório"),
+  });
+
   const {
     register,
     handleSubmit,
@@ -77,6 +95,15 @@ function CreateClientComponent() {
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
+  });
+
+  const {
+    register: registerMedicalHistory,
+    handleSubmit: handleSubmitMedicalHistory,
+    setValue: setValueMedicalHistory,
+    formState: { errors: medicalHistoryErrors },
+  } = useForm({
+    resolver: yupResolver(schemaMedicalHistory),
   });
 
   const {
@@ -91,12 +118,21 @@ function CreateClientComponent() {
   async function handleRegister(e) {
     console.log(e);
     setValueAddress("country", "");
-    setStep((prev) => prev + 1);
+    if (filterPathname && slug !== undefined && slug.length > 0) {
+      setStep((prev) => prev + 2);
+    } else {
+      setStep((prev) => prev + 1);
+    }
   }
 
   async function handleRegisterAddress(e) {
     console.log(e);
     setStep((prev) => prev + 1);
+  }
+
+  async function handleRegisterMedicalHistory(e) {
+    console.log(e);
+    history.push("/manipulationPharmacy");
   }
 
   async function getAddress(cep) {
@@ -115,8 +151,6 @@ function CreateClientComponent() {
       });
   }
 
-  const filterPathname = history.pathname.includes("/updateClient");
-
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -126,11 +160,13 @@ function CreateClientComponent() {
       <title>HealthMedCloud - Farmácia de Manipulação</title>
       <S.GeneralContent>
         {loading ? (
-          <Lottie
-            animationData={loadingAnimation}
-            loop={false}
-            style={styleAnimation}
-          />
+          <S.ContainerLoading>
+            <Lottie
+              animationData={loadingAnimation}
+              loop={true}
+              style={styleAnimation}
+            />
+          </S.ContainerLoading>
         ) : (
           <S.ContainerRegister>
             <S.GeneralTitle>
@@ -142,8 +178,11 @@ function CreateClientComponent() {
               <S.ButtonTab className={step === 1 && "active"}>
                 Básico
               </S.ButtonTab>
-              <S.ButtonTab className={step !== 2 && step !== 3 ? "" : "active"}>
+              <S.ButtonTab className={step === 2 || step === 3 ? "active" : ""}>
                 Endereço
+              </S.ButtonTab>
+              <S.ButtonTab className={step === 4 || step === 5 ? "active" : ""}>
+                Histórico Médico
               </S.ButtonTab>
             </S.Tabs>
             <S.BoxInputs>
@@ -618,12 +657,16 @@ function CreateClientComponent() {
                       type="button"
                       className="negative"
                       onClick={() => {
-                        history.push("/manipulationPharmacy");
+                        setStep((prev) => prev + 2);
                       }}
                     >
                       Pular Etapa
                     </S.Button>
-                    <S.Button type="submit">Salvar</S.Button>
+                    <S.Button type="submit">
+                      {filterPathname && slug !== undefined && slug.length > 0
+                        ? "Avançar"
+                        : "Salvar"}
+                    </S.Button>
                   </S.ContainerButtons>
                 </form>
               ) : step === 3 ? (
@@ -635,18 +678,237 @@ function CreateClientComponent() {
                       setStep((prev) => prev - 1);
                     }}
                   >
-                    Adicionar outro endereço
+                    Adicionar novo endereço
                   </S.Button>
                   <S.Button
                     onClick={() => {
-                      history.push("/manipulationPharmacy");
+                      setStep((prev) => prev + 1);
                     }}
                   >
-                    Finalizar Cadastro
+                    Avançar
                   </S.Button>
                 </S.ContainerButtons>
+              ) : step === 4 ? (
+                <S.ContainerGeneralFunctions>
+                  <S.ContainerCards>
+                    <S.Card>
+                      <div className="data">
+                        <strong>Dr. Gamaliel</strong>
+                        <span>01/05/21</span>
+                      </div>
+                      <div className="functions">
+                        <SearchAlt />
+                        <Edit />
+                        <Delete />
+                      </div>
+                    </S.Card>
+                    <S.Card>
+                      <div className="data">
+                        <strong>Dr. Gamaliel</strong>
+                        <span>01/05/21</span>
+                      </div>
+                      <div className="functions">
+                        <SearchAlt />
+                        <Edit />
+                        <Delete />
+                      </div>
+                    </S.Card>
+                    <S.Card>
+                      <div className="data">
+                        <strong>Dr. Gamaliel</strong>
+                        <span>01/05/21</span>
+                      </div>
+                      <div className="functions">
+                        <SearchAlt />
+                        <Edit />
+                        <Delete />
+                      </div>
+                    </S.Card>
+                  </S.ContainerCards>
+                  <S.ContainerButtons>
+                    <S.Button
+                      type="button"
+                      className="negative"
+                      onClick={() => {
+                        setStep((prev) => prev + 1);
+                      }}
+                    >
+                      Adicionar histórico médico
+                    </S.Button>
+                    <S.Button
+                      onClick={() => {
+                        history.push("/manipulationPharmacy");
+                      }}
+                    >
+                      {filterPathname && slug !== undefined && slug.length > 0
+                        ? "Finalizar atualização"
+                        : "Finalizar cadastro"}
+                    </S.Button>
+                  </S.ContainerButtons>
+                </S.ContainerGeneralFunctions>
               ) : (
-                <></>
+                <form
+                  onSubmit={handleSubmitMedicalHistory(
+                    handleRegisterMedicalHistory
+                  )}
+                >
+                  <S.ContainerInputMessage>
+                    <S.Label>Religião e escolaridade</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          medicalHistoryErrors.religionSchool?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"150"}
+                        placeholder="Religião e escolaridade"
+                        {...registerMedicalHistory("religionSchool")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {medicalHistoryErrors.religionSchool?.message &&
+                        medicalHistoryErrors.religionSchool.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage>
+                    <S.Label>Profissão</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          medicalHistoryErrors.work?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"100"}
+                        placeholder="Profissão"
+                        {...registerMedicalHistory("work")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {medicalHistoryErrors.work?.message &&
+                        medicalHistoryErrors.work.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+
+                  <S.ContainerInputMessage>
+                    <S.Label>Onde Nasceu e mora</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          medicalHistoryErrors.location?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"150"}
+                        placeholder="Onde nasceu e mora"
+                        {...registerMedicalHistory("location")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {medicalHistoryErrors.location?.message &&
+                        medicalHistoryErrors.location.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage className="doubleField">
+                    <S.Label>Queixa principal</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          medicalHistoryErrors.complaint?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"200"}
+                        placeholder="Queixa principal"
+                        {...registerMedicalHistory("complaint")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {medicalHistoryErrors.complaint?.message &&
+                        medicalHistoryErrors.complaint.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage className="doubleField">
+                    <S.Label>Motivo da consulta</S.Label>
+                    <S.ContainerInput
+                      style={{
+                        border:
+                          medicalHistoryErrors.reason?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <S.Input
+                        maxLength={"200"}
+                        placeholder="Motivo da consulta"
+                        {...registerMedicalHistory("reason")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {medicalHistoryErrors.reason?.message &&
+                        medicalHistoryErrors.reason.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage className="doubleField">
+                    <S.Label>Anotações</S.Label>
+                    <S.ContainerInput
+                      className="textArea"
+                      style={{
+                        border:
+                          medicalHistoryErrors.notes?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <S.TextArea
+                        maxLength={"2500"}
+                        placeholder="Anotações"
+                        {...registerMedicalHistory("notes")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {medicalHistoryErrors.notes?.message &&
+                        medicalHistoryErrors.notes.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+                  <S.ContainerInputMessage className="doubleField">
+                    <S.Label>Descrição da doença atual</S.Label>
+                    <S.ContainerInput
+                      className="textArea"
+                      style={{
+                        border:
+                          medicalHistoryErrors.description?.message &&
+                          "2px solid #ce171f",
+                      }}
+                    >
+                      <S.TextArea
+                        maxLength={"2500"}
+                        placeholder="Descrição da doença atual"
+                        {...registerMedicalHistory("description")}
+                      />
+                    </S.ContainerInput>
+                    <S.ContainerErrorMessage>
+                      {medicalHistoryErrors.description?.message &&
+                        medicalHistoryErrors.description.message}
+                    </S.ContainerErrorMessage>
+                  </S.ContainerInputMessage>
+
+                  <S.ContainerButtons>
+                    <S.Button
+                      type="button"
+                      className="negative"
+                      onClick={() => {
+                        setStep((prev) => prev - 1);
+                      }}
+                    >
+                      Cancelar
+                    </S.Button>
+                    <S.Button type="submit">Salvar</S.Button>
+                  </S.ContainerButtons>
+                </form>
               )}
             </S.BoxInputs>
           </S.ContainerRegister>

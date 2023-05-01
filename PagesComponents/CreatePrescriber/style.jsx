@@ -9,6 +9,13 @@ const customMedia = generateMedia({
   mobile: "576px",
 });
 
+export const ContainerLoading = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 50px;
+`;
+
 export const GeneralContainer = styled.div`
   display: flex;
   background: var(--default-color);
@@ -243,10 +250,6 @@ export const ContainerButtons = styled.div`
       background-color: var(--bt-negative-color);
       color: var(--bt-negative-text-color);
     }
-
-    /* ${customMedia.lessThan("tablet")`
-  width:60%;
-  `} */
 
     ${customMedia.lessThan("625px")`
   width:90%;

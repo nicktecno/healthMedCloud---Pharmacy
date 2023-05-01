@@ -23,9 +23,11 @@ function CreatePrescriberComponent() {
   const [loading, setLoading] = useState(true);
 
   const styleAnimation = {
+    minWidth: "250px",
     width: "30%",
   };
 
+  const filterPathname = history.pathname.includes("/updatePrescriber");
   const schema = yup.object().shape({
     job: yup.string().required("Função obrigatória"),
     name: yup.string().required("Nome obrigatório"),
@@ -94,7 +96,11 @@ function CreatePrescriberComponent() {
   async function handleRegister(e) {
     console.log(e);
     setValueAddress("country", "");
-    setStep((prev) => prev + 1);
+    if (filterPathname && slug !== undefined && slug.length > 0) {
+      setStep((prev) => prev + 2);
+    } else {
+      setStep((prev) => prev + 1);
+    }
   }
 
   async function handleRegisterAddress(e) {
@@ -118,8 +124,6 @@ function CreatePrescriberComponent() {
       });
   }
 
-  const filterPathname = history.pathname.includes("/updatePrescriber");
-
   useEffect(() => {
     setLoading(false);
   }, []);
@@ -129,11 +133,13 @@ function CreatePrescriberComponent() {
       <title>HealthMedCloud - Farmácia de Manipulação</title>
       <S.GeneralContent>
         {loading ? (
-          <Lottie
-            animationData={loadingAnimation}
-            loop={true}
-            style={styleAnimation}
-          />
+          <S.ContainerLoading>
+            <Lottie
+              animationData={loadingAnimation}
+              loop={true}
+              style={styleAnimation}
+            />
+          </S.ContainerLoading>
         ) : (
           <S.ContainerRegister>
             <S.GeneralTitle>
@@ -437,6 +443,7 @@ function CreatePrescriberComponent() {
                     </S.ContainerErrorMessage>
                   </S.ContainerInputMessage>
                   <S.ContainerInputMessage>
+                    <S.Label>País</S.Label>
                     <S.ContainerInput
                       style={{
                         border:
@@ -455,6 +462,7 @@ function CreatePrescriberComponent() {
                     </S.ContainerErrorMessage>
                   </S.ContainerInputMessage>
                   <S.ContainerInputMessage className="doubleField">
+                    <S.Label>Estado</S.Label>
                     <S.ContainerInput
                       style={{
                         border:
@@ -473,6 +481,7 @@ function CreatePrescriberComponent() {
                     </S.ContainerErrorMessage>
                   </S.ContainerInputMessage>
                   <S.ContainerInputMessage className="doubleField">
+                    <S.Label>Cidade</S.Label>
                     <S.ContainerInput
                       style={{
                         border:
@@ -491,6 +500,7 @@ function CreatePrescriberComponent() {
                     </S.ContainerErrorMessage>
                   </S.ContainerInputMessage>
                   <S.ContainerInputMessage className="fullField">
+                    <S.Label>Rua</S.Label>
                     <S.ContainerInput
                       style={{
                         border:
@@ -509,6 +519,7 @@ function CreatePrescriberComponent() {
                     </S.ContainerErrorMessage>
                   </S.ContainerInputMessage>
                   <S.ContainerInputMessage>
+                    <S.Label>Número</S.Label>
                     <S.ContainerInput
                       style={{
                         border:
@@ -528,6 +539,7 @@ function CreatePrescriberComponent() {
                     </S.ContainerErrorMessage>
                   </S.ContainerInputMessage>
                   <S.ContainerInputMessage>
+                    <S.Label>Bairro</S.Label>
                     <S.ContainerInput
                       style={{
                         border:
@@ -547,6 +559,7 @@ function CreatePrescriberComponent() {
                     </S.ContainerErrorMessage>
                   </S.ContainerInputMessage>
                   <S.ContainerInputMessage>
+                    <S.Label>Complemento</S.Label>
                     <S.ContainerInput
                       style={{
                         border:
@@ -579,25 +592,6 @@ function CreatePrescriberComponent() {
                     <S.Button type="submit">Salvar</S.Button>
                   </S.ContainerButtons>
                 </form>
-              ) : step === 3 ? (
-                <S.ContainerButtons>
-                  <S.Button
-                    type="button"
-                    className="negative"
-                    onClick={() => {
-                      setStep((prev) => prev - 1);
-                    }}
-                  >
-                    Adicionar outro endereço
-                  </S.Button>
-                  <S.Button
-                    onClick={() => {
-                      history.push("/manipulationPharmacy");
-                    }}
-                  >
-                    Finalizar Cadastro
-                  </S.Button>
-                </S.ContainerButtons>
               ) : (
                 <></>
               )}

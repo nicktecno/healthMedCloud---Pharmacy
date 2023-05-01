@@ -9,6 +9,13 @@ const customMedia = generateMedia({
   mobile: "576px",
 });
 
+export const ContainerLoading = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 50px;
+`;
+
 export const GeneralContainer = styled.div`
   display: flex;
   background: var(--default-color);
@@ -70,6 +77,11 @@ export const ButtonTab = styled.div`
 
   font-size: 18px;
   padding: 10px 20px;
+
+  ${customMedia.lessThan("mobile")`
+    font-size:14px;
+    padding:10px;
+  `}
 
   &.active {
     background: var(--bt-positive-color);
@@ -149,6 +161,10 @@ export const ContainerInput = styled.div`
   transition: 0.3s;
   color: var(--font-color-opposite);
 
+  &.textArea {
+    height: 155px;
+  }
+
   input {
     padding: 0px 10px;
     width: 100%;
@@ -180,6 +196,37 @@ export const ContainerInput = styled.div`
 export const Input = styled.input`
   width: 95%;
   border: 0px;
+`;
+
+export const TextArea = styled.textarea`
+  width: 100%;
+  border: 0px;
+  height: 148px;
+  ::placeholder {
+    color: var(--font-color-opposite);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #f4f4f5;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--font-color);
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--bt-positive-color);
+  }
 `;
 
 export const ContainerChecks = styled.div`
@@ -244,12 +291,9 @@ export const ContainerButtons = styled.div`
       color: var(--bt-negative-text-color);
     }
 
-    /* ${customMedia.lessThan("tablet")`
-  width:60%;
-  `} */
-
     ${customMedia.lessThan("625px")`
   width:90%;
+  font-size:13px;
 
   `}
 
@@ -322,4 +366,79 @@ export const Label = styled.div`
   color: var(--bt-positive-text-color);
   font-size: 15px;
   margin-bottom: 2px;
+`;
+
+export const ContainerGeneralFunctions = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+`;
+
+export const ContainerCards = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100px;
+  max-height: 200px;
+  overflow: auto;
+  gap: 10px;
+
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #f4f4f5;
+    border-radius: 10px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: var(--font-color);
+    border-radius: 5px;
+    transition: 0.3s;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--bt-positive-color);
+  }
+`;
+
+export const Card = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 15px;
+  justify-content: space-between;
+  background-color: var(--card-background);
+  border-radius: 10px;
+
+  .data {
+    display: flex;
+    width: 80%;
+    color: var(--font-color);
+    font-size: 20px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .functions {
+    display: flex;
+    width: 20%;
+    gap: 10px;
+    justify-content: flex-end;
+    align-items: center;
+
+    svg {
+      width: 40px;
+      cursor: pointer;
+      color: var(--font-color);
+      transition: 0.3s;
+
+      :hover {
+        color: var(--default-color-hover);
+      }
+    }
+  }
 `;

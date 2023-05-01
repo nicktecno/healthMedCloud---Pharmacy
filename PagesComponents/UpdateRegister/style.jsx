@@ -355,7 +355,7 @@ export const ContainerPeople = styled.div`
   overflow: auto;
 
   ::-webkit-scrollbar {
-    width: 15px;
+    width: 10px;
   }
 
   /* Track */
@@ -366,7 +366,7 @@ export const ContainerPeople = styled.div`
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: #ccc;
+    background: var(--font-color);
     border-radius: 5px;
     transition: 0.3s;
   }

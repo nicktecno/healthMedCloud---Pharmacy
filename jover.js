@@ -9,6 +9,7 @@ const defaultLayout = [
     "bt-negative-color-hover": "#00646c",
     "bt-negative-text-color": "#ffff",
     "bt-negative-text-color-hover": "#ffffff",
+    "card-background": "#00646c",
     "default-color": "#0db8bc",
     "default-color-hover": "#069da2",
     "default-contrast-color": "#cb5151",
@@ -27,7 +28,7 @@ const defaultLayout = [
     "bt-purchase-color-hover": "#e0e566",
     "bt-purchase-text-color": "#204986",
     "bt-purchase-text-color-hover": "#204986",
-    "card-background": "#ffffff",
+
     "card-background-hover": "#ffffff",
     "card-color-details": "#5a646e",
     "card-color-details-hover": "#5a646e",
