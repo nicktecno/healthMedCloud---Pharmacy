@@ -154,7 +154,7 @@ export const ContainerInput = styled.div`
   font-size: 16px;
   width: 100%;
   height: 40px;
-  background-color: var(--card-background);
+  background-color: #ffff;
   border-bottom: 2px solid transparent;
   text-transform: uppercase;
   box-shadow: var(--box-shadow);
@@ -185,7 +185,7 @@ export const ContainerInput = styled.div`
     cursor: pointer !important;
     background: url("/images/icon-arrow-down.png") 98% center no-repeat !important;
     cursor: pointer;
-    background-color: var(--card-background);
+    background-color: #ffff;
   }
 
   :hover {

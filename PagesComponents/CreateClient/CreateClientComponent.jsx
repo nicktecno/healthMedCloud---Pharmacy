@@ -690,41 +690,43 @@ function CreateClientComponent() {
                 </S.ContainerButtons>
               ) : step === 4 ? (
                 <S.ContainerGeneralFunctions>
-                  <S.ContainerCards>
-                    <S.Card>
-                      <div className="data">
-                        <strong>Dr. Gamaliel</strong>
-                        <span>01/05/21</span>
-                      </div>
-                      <div className="functions">
-                        <SearchAlt />
-                        <Edit />
-                        <Delete />
-                      </div>
-                    </S.Card>
-                    <S.Card>
-                      <div className="data">
-                        <strong>Dr. Gamaliel</strong>
-                        <span>01/05/21</span>
-                      </div>
-                      <div className="functions">
-                        <SearchAlt />
-                        <Edit />
-                        <Delete />
-                      </div>
-                    </S.Card>
-                    <S.Card>
-                      <div className="data">
-                        <strong>Dr. Gamaliel</strong>
-                        <span>01/05/21</span>
-                      </div>
-                      <div className="functions">
-                        <SearchAlt />
-                        <Edit />
-                        <Delete />
-                      </div>
-                    </S.Card>
-                  </S.ContainerCards>
+                  {filterPathname && slug !== undefined && slug.length > 0 && (
+                    <S.ContainerCards>
+                      <S.Card>
+                        <div className="data">
+                          <strong>Dr. Gamaliel</strong>
+                          <span>01/05/21</span>
+                        </div>
+                        <div className="functions">
+                          <SearchAlt />
+                          <Edit />
+                          <Delete />
+                        </div>
+                      </S.Card>
+                      <S.Card>
+                        <div className="data">
+                          <strong>Dr. Gamaliel</strong>
+                          <span>01/05/21</span>
+                        </div>
+                        <div className="functions">
+                          <SearchAlt />
+                          <Edit />
+                          <Delete />
+                        </div>
+                      </S.Card>
+                      <S.Card>
+                        <div className="data">
+                          <strong>Dr. Gamaliel</strong>
+                          <span>01/05/21</span>
+                        </div>
+                        <div className="functions">
+                          <SearchAlt />
+                          <Edit />
+                          <Delete />
+                        </div>
+                      </S.Card>
+                    </S.ContainerCards>
+                  )}
                   <S.ContainerButtons>
                     <S.Button
                       type="button"
