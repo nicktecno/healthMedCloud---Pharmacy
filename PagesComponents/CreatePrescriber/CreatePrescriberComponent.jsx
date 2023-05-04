@@ -96,6 +96,7 @@ function CreatePrescriberComponent() {
   async function handleRegister(e) {
     console.log(e);
     setValueAddress("country", "");
+    setValueAddress("city", "");
     if (filterPathname && slug !== undefined && slug.length > 0) {
       setStep((prev) => prev + 2);
     } else {
@@ -404,6 +405,7 @@ function CreatePrescriberComponent() {
               ) : step === 2 ? (
                 <form onSubmit={handleSubmitAddress(handleRegisterAddress)}>
                   <S.ContainerInputMessage>
+                    <S.Label>Tipo de endereço</S.Label>
                     <S.ContainerInput
                       style={{
                         border:
@@ -423,6 +425,7 @@ function CreatePrescriberComponent() {
                     </S.ContainerErrorMessage>
                   </S.ContainerInputMessage>
                   <S.ContainerInputMessage>
+                    <S.Label>Cep</S.Label>
                     <S.ContainerInput
                       style={{
                         border:

@@ -20,7 +20,7 @@ import { User } from "@styled-icons/fa-solid/User";
 import { UserDoctor } from "@styled-icons/fa-solid/UserDoctor";
 import { LogOut } from "@styled-icons/boxicons-regular/LogOut";
 import { SearchAlt } from "@styled-icons/boxicons-regular/SearchAlt";
-import { ArrowRightSquareFill } from "@styled-icons/bootstrap/ArrowRightSquareFill";
+import { Edit } from "@styled-icons/boxicons-solid/Edit";
 
 function UpdateRegisterComponent() {
   const history = useRouter();
@@ -118,45 +118,63 @@ function UpdateRegisterComponent() {
               </S.ContainerErrorMessage>
             </S.ContainerInputMessage>
           )}
-          {peopleData !== false && (
+          {peopleData !== false && typeSelected !== "none" && (
             <S.ContainerPeople>
-              <S.ContainerPerson
-                onClick={() =>
-                  history.push(
-                    `/manipulationPharmacy/${
-                      typeSelected === "client"
-                        ? "updateClient"
-                        : "updatePrescriber"
-                    }/1`
-                  )
-                }
-              >
+              <S.ContainerPerson>
                 <span>Juninho Castanharo Silva</span>
-                <ArrowRightSquareFill />
+                <Edit
+                  onClick={() =>
+                    history.push(
+                      `/manipulationPharmacy/${
+                        typeSelected === "client"
+                          ? "updateClient"
+                          : "updatePrescriber"
+                      }/1`
+                    )
+                  }
+                />
               </S.ContainerPerson>
-              <S.ContainerPerson
-                onClick={() =>
-                  history.push("/manipulationPharmacy/updateClient/1")
-                }
-              >
+              <S.ContainerPerson>
                 <span>Juninho Castanharo Silva</span>
-                <ArrowRightSquareFill />
+                <Edit
+                  onClick={() =>
+                    history.push(
+                      `/manipulationPharmacy/${
+                        typeSelected === "client"
+                          ? "updateClient"
+                          : "updatePrescriber"
+                      }/1`
+                    )
+                  }
+                />
               </S.ContainerPerson>
-              <S.ContainerPerson
-                onClick={() =>
-                  history.push("/manipulationPharmacy/updateClient/1")
-                }
-              >
+              <S.ContainerPerson>
                 <span>Juninho Castanharo Silva</span>
-                <ArrowRightSquareFill />
+                <Edit
+                  onClick={() =>
+                    history.push(
+                      `/manipulationPharmacy/${
+                        typeSelected === "client"
+                          ? "updateClient"
+                          : "updatePrescriber"
+                      }/1`
+                    )
+                  }
+                />
               </S.ContainerPerson>
-              <S.ContainerPerson
-                onClick={() =>
-                  history.push("/manipulationPharmacy/updateClient/1")
-                }
-              >
+              <S.ContainerPerson>
                 <span>Juninho Castanharo Silva</span>
-                <ArrowRightSquareFill />
+                <Edit
+                  onClick={() =>
+                    history.push(
+                      `/manipulationPharmacy/${
+                        typeSelected === "client"
+                          ? "updateClient"
+                          : "updatePrescriber"
+                      }/1`
+                    )
+                  }
+                />
               </S.ContainerPerson>
             </S.ContainerPeople>
           )}
@@ -189,6 +207,7 @@ function UpdateRegisterComponent() {
                   onClick={() => {
                     setValue("search", "");
                     setFilter("name");
+                    setPeopleData(false);
                   }}
                 >
                   Nome
@@ -198,6 +217,7 @@ function UpdateRegisterComponent() {
                   onClick={() => {
                     setValue("search", "");
                     setFilter("cpf");
+                    setPeopleData(false);
                   }}
                 >
                   CPF
@@ -208,6 +228,7 @@ function UpdateRegisterComponent() {
                     onClick={() => {
                       setValue("search", "");
                       setFilter("cnpj");
+                      setPeopleData(false);
                     }}
                   >
                     CNPJ
@@ -219,6 +240,7 @@ function UpdateRegisterComponent() {
                     onClick={() => {
                       setValue("search", "");
                       setFilter("register");
+                      setPeopleData(false);
                     }}
                   >
                     Registro

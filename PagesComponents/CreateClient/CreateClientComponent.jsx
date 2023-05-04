@@ -26,6 +26,7 @@ function CreateClientComponent() {
   const [documentSelected, setDocumentSelected] = useState("CPF");
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [subItemUpdate, setSubItemUpdate] = useState("none");
 
   const styleAnimation = {
     minWidth: "250px",
@@ -118,16 +119,16 @@ function CreateClientComponent() {
   async function handleRegister(e) {
     console.log(e);
     setValueAddress("country", "");
-    if (filterPathname && slug !== undefined && slug.length > 0) {
-      setStep((prev) => prev + 2);
-    } else {
-      setStep((prev) => prev + 1);
-    }
+
+    setStep((prev) => prev + 2);
   }
 
   async function handleRegisterAddress(e) {
     console.log(e);
-    setStep((prev) => prev + 1);
+
+    subItemUpdate !== "none"
+      ? setStep((prev) => prev - 1)
+      : setStep((prev) => prev + 1);
   }
 
   async function handleRegisterMedicalHistory(e) {
@@ -149,6 +150,26 @@ function CreateClientComponent() {
         console.log(error);
         notification("Cep inválido", "error");
       });
+  }
+
+  async function handleUpdateAddress() {
+    setStep((prev) => prev - 1);
+    setSubItemUpdate("edit");
+  }
+
+  async function handleUpdateMedicalHistory() {
+    setStep((prev) => prev + 1);
+    setSubItemUpdate("edit");
+  }
+
+  async function handleViewAddress() {
+    setStep((prev) => prev - 1);
+    setSubItemUpdate("view");
+  }
+
+  async function handleViewMedicalHistory() {
+    setStep((prev) => prev + 1);
+    setSubItemUpdate("view");
   }
 
   useEffect(() => {
@@ -657,37 +678,125 @@ function CreateClientComponent() {
                       type="button"
                       className="negative"
                       onClick={() => {
-                        setStep((prev) => prev + 2);
+                        if (subItemUpdate !== "none") {
+                          setStep((prev) => prev + 1);
+                        } else {
+                          setStep((prev) => prev + 2);
+                        }
                       }}
                     >
-                      Pular Etapa
+                      {subItemUpdate !== "none" ? "Voltar" : "Pular Etapa"}
                     </S.Button>
-                    <S.Button type="submit">
-                      {filterPathname && slug !== undefined && slug.length > 0
-                        ? "Avançar"
-                        : "Salvar"}
-                    </S.Button>
+                    {subItemUpdate !== "view" && (
+                      <S.Button type="submit">Salvar</S.Button>
+                    )}
                   </S.ContainerButtons>
                 </form>
               ) : step === 3 ? (
-                <S.ContainerButtons>
-                  <S.Button
-                    type="button"
-                    className="negative"
-                    onClick={() => {
-                      setStep((prev) => prev - 1);
-                    }}
-                  >
-                    Adicionar novo endereço
-                  </S.Button>
-                  <S.Button
-                    onClick={() => {
-                      setStep((prev) => prev + 1);
-                    }}
-                  >
-                    Avançar
-                  </S.Button>
-                </S.ContainerButtons>
+                <S.ContainerGeneralFunctions>
+                  {filterPathname && slug !== undefined && slug.length > 0 && (
+                    <S.ContainerCards>
+                      <S.Card>
+                        <div className="data">
+                          <strong>
+                            Rua Pirapora 101, Jardim Cascalho, São Paulo
+                          </strong>
+                        </div>
+                        <div className="functions">
+                          <SearchAlt
+                            onClick={() => {
+                              handleViewAddress();
+                            }}
+                          />
+                          <Edit
+                            onClick={() => {
+                              handleUpdateAddress();
+                            }}
+                          />
+                          <Delete />
+                        </div>
+                      </S.Card>
+                      <S.Card>
+                        <div className="data">
+                          <strong>
+                            Rua Pirapora 101, Jardim Cascalho, São Paulo
+                          </strong>
+                        </div>
+                        <div className="functions">
+                          <SearchAlt
+                            onClick={() => {
+                              handleViewAddress();
+                            }}
+                          />
+                          <Edit
+                            onClick={() => {
+                              handleUpdateAddress();
+                            }}
+                          />
+                          <Delete />
+                        </div>
+                      </S.Card>
+                      <S.Card>
+                        <div className="data">
+                          <strong>
+                            Rua Pirapora 101, Jardim Cascalho, São Paulo
+                          </strong>
+                        </div>
+                        <div className="functions">
+                          <SearchAlt
+                            onClick={() => {
+                              handleViewAddress();
+                            }}
+                          />
+                          <Edit
+                            onClick={() => {
+                              handleUpdateAddress();
+                            }}
+                          />
+                          <Delete />
+                        </div>
+                      </S.Card>
+                    </S.ContainerCards>
+                  )}
+                  <S.ContainerButtons>
+                    {filterPathname &&
+                      slug !== undefined &&
+                      slug.length > 0 && (
+                        <S.Button
+                          type="button"
+                          className="negative"
+                          onClick={() => {
+                            setStep((prev) => prev - 2);
+                          }}
+                        >
+                          Voltar
+                        </S.Button>
+                      )}
+                    <S.Button
+                      type="button"
+                      className="negative"
+                      onClick={() => {
+                        setStep((prev) => prev - 1);
+                        if (
+                          filterPathname &&
+                          slug !== undefined &&
+                          slug.length > 0
+                        ) {
+                          setSubItemUpdate("create");
+                        }
+                      }}
+                    >
+                      Adicionar endereço
+                    </S.Button>
+                    <S.Button
+                      onClick={() => {
+                        setStep((prev) => prev + 1);
+                      }}
+                    >
+                      Avançar
+                    </S.Button>
+                  </S.ContainerButtons>
+                </S.ContainerGeneralFunctions>
               ) : step === 4 ? (
                 <S.ContainerGeneralFunctions>
                   {filterPathname && slug !== undefined && slug.length > 0 && (
@@ -698,8 +807,16 @@ function CreateClientComponent() {
                           <span>01/05/21</span>
                         </div>
                         <div className="functions">
-                          <SearchAlt />
-                          <Edit />
+                          <SearchAlt
+                            onClick={() => {
+                              handleViewMedicalHistory();
+                            }}
+                          />
+                          <Edit
+                            onClick={() => {
+                              handleUpdateMedicalHistory();
+                            }}
+                          />
                           <Delete />
                         </div>
                       </S.Card>
@@ -709,8 +826,16 @@ function CreateClientComponent() {
                           <span>01/05/21</span>
                         </div>
                         <div className="functions">
-                          <SearchAlt />
-                          <Edit />
+                          <SearchAlt
+                            onClick={() => {
+                              handleViewMedicalHistory();
+                            }}
+                          />
+                          <Edit
+                            onClick={() => {
+                              handleUpdateMedicalHistory();
+                            }}
+                          />
                           <Delete />
                         </div>
                       </S.Card>
@@ -720,14 +845,35 @@ function CreateClientComponent() {
                           <span>01/05/21</span>
                         </div>
                         <div className="functions">
-                          <SearchAlt />
-                          <Edit />
+                          <SearchAlt
+                            onClick={() => {
+                              handleViewMedicalHistory();
+                            }}
+                          />
+                          <Edit
+                            onClick={() => {
+                              handleUpdateMedicalHistory();
+                            }}
+                          />
                           <Delete />
                         </div>
                       </S.Card>
                     </S.ContainerCards>
                   )}
                   <S.ContainerButtons>
+                    {filterPathname &&
+                      slug !== undefined &&
+                      slug.length > 0 && (
+                        <S.Button
+                          type="button"
+                          className="negative"
+                          onClick={() => {
+                            setStep((prev) => prev - 1);
+                          }}
+                        >
+                          Voltar
+                        </S.Button>
+                      )}
                     <S.Button
                       type="button"
                       className="negative"
@@ -735,7 +881,7 @@ function CreateClientComponent() {
                         setStep((prev) => prev + 1);
                       }}
                     >
-                      Adicionar histórico médico
+                      Adicionar histórico
                     </S.Button>
                     <S.Button
                       onClick={() => {
@@ -906,9 +1052,11 @@ function CreateClientComponent() {
                         setStep((prev) => prev - 1);
                       }}
                     >
-                      Cancelar
+                      {subItemUpdate !== "view" ? "Cancelar" : "Voltar"}
                     </S.Button>
-                    <S.Button type="submit">Salvar</S.Button>
+                    {subItemUpdate !== "view" && (
+                      <S.Button type="submit">Salvar</S.Button>
+                    )}
                   </S.ContainerButtons>
                 </form>
               )}

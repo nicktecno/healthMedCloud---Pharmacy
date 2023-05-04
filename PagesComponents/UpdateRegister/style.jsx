@@ -350,7 +350,7 @@ export const ContainerPeople = styled.div`
   margin-top: 20px;
   font-size: 12px;
   width: 80%;
-  border: 2px solid var(--bt-positive-color);
+  gap: 5px;
   max-height: 200px;
   overflow: auto;
 
@@ -387,12 +387,14 @@ export const ContainerPeople = styled.div`
 
 export const ContainerPerson = styled.div`
   display: flex;
-  width: 100%;
+  width: 98%;
   font-size: 20px;
+  border-radius: 10px;
   color: var(--font-color);
-  transition: 0.3s;
+
+  background-color: var(--card-background);
   justify-content: space-between;
-  cursor: pointer;
+
   align-items: center;
   padding: 15px 10px;
   span {
@@ -400,11 +402,12 @@ export const ContainerPerson = styled.div`
     line-height: 22px;
   }
 
-  :hover {
-    background-color: var(--bt-positive-color);
-  }
-
   svg {
-    width: 30px;
+    width: 35px;
+    cursor: pointer;
+    transition: 0.3s;
+    :hover {
+      color: var(--default-color-hover);
+    }
   }
 `;

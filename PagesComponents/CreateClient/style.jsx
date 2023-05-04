@@ -267,46 +267,6 @@ export const ContainerButtons = styled.div`
   ${customMedia.lessThan("625px")`
   justify-content:center;
   `}
-
-  button {
-    display: flex;
-    cursor: pointer;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    font-weight: bold;
-    width: 25%;
-    max-width: 200px;
-    height: 50px;
-    background-color: var(--bt-positive-color);
-    border: 0px;
-    text-transform: uppercase;
-    border-radius: 5px;
-    box-shadow: var(--box-shadow);
-    transition: 0.3s;
-    color: var(--bt-positive-text-color);
-
-    &.negative {
-      background-color: var(--bt-negative-color);
-      color: var(--bt-negative-text-color);
-    }
-
-    ${customMedia.lessThan("625px")`
-  width:90%;
-  font-size:13px;
-
-  `}
-
-    svg {
-      width: 20px;
-      margin-right: 10px;
-    }
-
-    :hover {
-      background-color: var(--bt-positive-color-hover);
-      color: var(--bt-positive-text-color-hover);
-    }
-  }
 `;
 
 export const Button = styled.button`
@@ -332,12 +292,15 @@ export const Button = styled.button`
     color: var(--bt-negative-text-color);
   }
 
-  /* ${customMedia.lessThan("tablet")`
-  width:60%;
-  `} */
-
   ${customMedia.lessThan("625px")`
   width:90%;
+  font-size:13px;
+
+  `}
+
+  ${customMedia.lessThan("mobile")`
+  
+  font-size:11px;
 
   `}
 
@@ -378,8 +341,8 @@ export const ContainerCards = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  min-height: 100px;
-  max-height: 200px;
+  min-height: 350px;
+  max-height: 350px;
   overflow: auto;
   gap: 10px;
 
@@ -421,11 +384,19 @@ export const Card = styled.div`
     font-size: 20px;
     align-items: center;
     justify-content: space-between;
+    margin-right: 10px;
+    gap: 5px;
+
+    ${customMedia.lessThan("mobile")`
+  font-size:15px;
+
+  `}
   }
 
   .functions {
     display: flex;
     width: 20%;
+    min-width: 100px;
     gap: 10px;
     justify-content: flex-end;
     align-items: center;
