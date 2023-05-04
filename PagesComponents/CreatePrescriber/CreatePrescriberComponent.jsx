@@ -97,11 +97,8 @@ function CreatePrescriberComponent() {
     console.log(e);
     setValueAddress("country", "");
     setValueAddress("city", "");
-    if (filterPathname && slug !== undefined && slug.length > 0) {
-      setStep((prev) => prev + 2);
-    } else {
-      setStep((prev) => prev + 1);
-    }
+
+    setStep((prev) => prev + 1);
   }
 
   async function handleRegisterAddress(e) {
@@ -587,10 +584,20 @@ function CreatePrescriberComponent() {
                       type="button"
                       className="negative"
                       onClick={() => {
-                        history.push("/manipulationPharmacy");
+                        if (
+                          filterPathname &&
+                          slug !== undefined &&
+                          slug.length > 0
+                        ) {
+                          setStep((prev) => prev - 1);
+                        } else {
+                          history.push("/manipulationPharmacy");
+                        }
                       }}
                     >
-                      Pular Etapa
+                      {filterPathname && slug !== undefined && slug.length > 0
+                        ? "Voltar"
+                        : "Pular Etapa"}
                     </S.Button>
                     <S.Button type="submit">Salvar</S.Button>
                   </S.ContainerButtons>
