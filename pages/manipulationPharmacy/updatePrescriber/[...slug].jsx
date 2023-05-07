@@ -1,5 +1,9 @@
-import CreatePrescriber from "../../../PagesComponents/CreatePrescriber/index";
+import dynamic from "next/dynamic";
+const CreatePrescriberMicro = dynamic(
+  () => import("userGeneralFunctions/createPrescriber"),
+  { ssr: false }
+);
 
 export default function CreatePrescriberPage() {
-  return <CreatePrescriber />;
+  return <CreatePrescriberMicro nameRoute="manipulationPharmacy" />;
 }

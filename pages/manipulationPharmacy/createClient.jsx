@@ -1,5 +1,10 @@
-import CreateClient from "../../PagesComponents/CreateClient/index";
+import dynamic from "next/dynamic";
+const CreateClientMicro = dynamic(
+  () => import("userGeneralFunctions/createClient"),
+  { ssr: false }
+);
 
-export default function CreateClientPage() {
-  return <CreateClient />;
-}
+const CreateClientPage = () => {
+  return <CreateClientMicro nameRoute="manipulationPharmacy" />;
+};
+export default CreateClientPage;

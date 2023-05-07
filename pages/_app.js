@@ -3,10 +3,9 @@ import jover from "../jover";
 import { ToastContainer } from "react-toastify";
 import NextNProgress from "nextjs-progressbar";
 import defaultLayout from "../jover";
-
+import dynamic from "next/dynamic";
 const HeaderMicro = dynamic(() => import("header/header"), { ssr: false });
 
-import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
