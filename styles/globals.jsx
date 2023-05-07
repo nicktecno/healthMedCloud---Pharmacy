@@ -30,6 +30,7 @@ const GlobalStyles = createGlobalStyle`
       props.colors[0]["menu-sandwich-header"]};
     --menu-sandwich-body: ${(props) => props.colors[0]["menu-sandwich-body"]};
     --title-modal-color: ${(props) => props.colors[0]["title-modal-color"]};
+    --modal-color: ${(props) => props.colors[0]["modal-color"]};
     --header-color: ${(props) => props.colors[0]["header-color"]};
     --header-font-color:${(props) => props.colors[0]["header-font-color"]};
     --card-background:${(props) => props.colors[0]["card-background"]};

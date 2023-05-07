@@ -20,6 +20,8 @@ const defaultLayout = [
     "error-color": "#ce171f",
     "header-color": "#00646c",
     "header-font-color": "#ffff",
+    "title-modal-color": "#ffffff",
+    "modal-color": "#ffffff",
 
     //unused variables
 
@@ -48,7 +50,7 @@ const defaultLayout = [
     "profile-card-color": "#ffffff",
     "profile-card-color-hover": "#00aeef",
     "title-color": "#231f20",
-    "title-modal-color": "#ffffff",
+
     "menu-sandwich-body": "#ffffff",
     "menu-sandwich-header": "#ffffff",
     "input-border-color": "#204986",

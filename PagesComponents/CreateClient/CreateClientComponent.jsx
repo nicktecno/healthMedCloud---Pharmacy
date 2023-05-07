@@ -19,6 +19,7 @@ import loadingAnimation from "../../public/images/loading.json";
 import { Edit } from "@styled-icons/boxicons-solid/Edit";
 import { Delete } from "@styled-icons/fluentui-system-filled/Delete";
 import { SearchAlt } from "@styled-icons/boxicons-regular/SearchAlt";
+import ModalGeneralDelete from "../../components/ModalGeneralDelete";
 
 function CreateClientComponent() {
   const history = useRouter();
@@ -27,6 +28,9 @@ function CreateClientComponent() {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(true);
   const [subItemUpdate, setSubItemUpdate] = useState("none");
+  const [openModalAddressDelete, setOpenModalAddressDelete] = useState(false);
+  const [openModalMedicalHistoryDelete, setOpenModalMedicalHistoryDelete] =
+    useState(false);
 
   const styleAnimation = {
     minWidth: "250px",
@@ -172,900 +176,977 @@ function CreateClientComponent() {
     setSubItemUpdate("view");
   }
 
+  function handleOpenModalAddressDelete() {
+    document.body.style.overflow = "hidden";
+    setOpenModalAddressDelete(true);
+  }
+
+  function handleOpenModalMedicalHistoryDelete() {
+    document.body.style.overflow = "hidden";
+    setOpenModalMedicalHistoryDelete(true);
+  }
+
+  async function handleDeleteAddress() {
+    document.body.style.overflow = "auto";
+    setOpenModalAddressDelete(false);
+  }
+
+  async function handleDeleteMedicalHistory() {
+    document.body.style.overflow = "auto";
+    setOpenModalMedicalHistoryDelete(false);
+  }
+
   useEffect(() => {
     setLoading(false);
   }, []);
 
   return (
-    <S.GeneralContainer>
-      <title>HealthMedCloud - Farmácia de Manipulação</title>
-      <S.GeneralContent>
-        {loading ? (
-          <S.ContainerLoading>
-            <Lottie
-              animationData={loadingAnimation}
-              loop={true}
-              style={styleAnimation}
-            />
-          </S.ContainerLoading>
-        ) : (
-          <S.ContainerRegister>
-            <S.GeneralTitle>
-              {filterPathname && slug !== undefined && slug.length > 0
-                ? "Atualizar Cliente"
-                : "Cadastro do Cliente"}
-            </S.GeneralTitle>
-            <S.Tabs>
-              <S.ButtonTab className={step === 1 && "active"}>
-                Básico
-              </S.ButtonTab>
-              <S.ButtonTab className={step === 2 || step === 3 ? "active" : ""}>
-                Endereço
-              </S.ButtonTab>
-              <S.ButtonTab className={step === 4 || step === 5 ? "active" : ""}>
-                Histórico Médico
-              </S.ButtonTab>
-            </S.Tabs>
-            <S.BoxInputs>
-              {step === 1 ? (
-                <form onSubmit={handleSubmit(handleRegister)}>
-                  <S.ContainerInputMessage>
-                    <S.Label>Tratamento</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          errors.treatmentPronoun?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <select {...register("treatmentPronoun")}>
-                        <option value="">Tratamento</option>
-                        <option value="Senhor">Srº.</option>
-                        <option value="Senhora">Srª</option>
-                        <option value="Doutor">Drº</option>
-                        <option value="Doutora">Drª</option>
-                      </select>
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.treatmentPronoun?.message &&
-                        errors.treatmentPronoun.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>Nome</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border: errors.name?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"25"}
-                        placeholder="Nome*"
-                        {...register("name")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.name?.message && errors.name.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>Sobrenome</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border: errors.lastName?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"35"}
-                        placeholder="Sobrenome*"
-                        {...register("lastName")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.lastName?.message && errors.lastName.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>Apelido</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border: errors.nickName?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"25"}
-                        placeholder="Apelido"
-                        {...register("nickName")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.nickName?.message && errors.nickName.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>Sexo</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border: errors.sex?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <select {...register("sex")}>
-                        <option value="Masculino">Masculino</option>
-                        <option value="Feminino">Feminino</option>
-                        <option value="Não Definido">Não definido</option>
-                      </select>
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.sex?.message && errors.sex.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>Etnia</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          errors.ethnicity?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <select {...register("ethnicity")}>
-                        <option value="Asiático">Asiático</option>
-                        <option value="Branco">Branco</option>
-                        <option value="Indígena">Indígena</option>
-                        <option value="Negro">Negro</option>
-                        <option value="Pardo">Pardo</option>
-                      </select>
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.ethnicity?.message && errors.ethnicity.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerChecks>
-                    <S.ContainerCheck>
-                      <S.Checks
-                        className={documentSelected === "CPF" && "selected"}
-                        onClick={() => setDocumentSelected("CPF")}
-                      />
-                      CPF
-                    </S.ContainerCheck>
-                    <S.ContainerCheck>
-                      <S.Checks
-                        className={documentSelected === "CNPJ" && "selected"}
-                        onClick={() => setDocumentSelected("CNPJ")}
-                      />
-                      CNPJ
-                    </S.ContainerCheck>
-                  </S.ContainerChecks>
-                  <S.ContainerInputMessage className={"doubleField"}>
-                    <S.Label>
-                      {documentSelected === "CPF" ? "CPF" : "CNPJ"}
-                    </S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border: errors.document?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <InputMask
-                        mask={
-                          documentSelected === "CPF"
-                            ? "999.999.999-99"
-                            : "99.999.999/9999-99"
-                        }
-                        placeholder={
-                          documentSelected === "CPF" ? "CPF*" : "CNPJ*"
-                        }
-                        {...register("document")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.document?.message && errors.document.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage className={"doubleField"}>
-                    <S.Label>
-                      {documentSelected === "CPF" ? "RG" : "Inscrição Estadual"}
-                    </S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          errors.registerDocument?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"25"}
-                        placeholder={
-                          documentSelected === "CPF"
-                            ? "RG"
-                            : "Inscrição estadual*"
-                        }
-                        {...register("registerDocument")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.registerDocument?.message &&
-                        errors.registerDocument.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>
-                      {documentSelected === "CPF"
-                        ? "Data de nascimento"
-                        : "Data de fundação"}
-                    </S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border: errors.birth?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <InputMask
-                        mask={"99/99/9999"}
-                        placeholder={
-                          documentSelected === "CPF"
-                            ? "Data de nascimento"
-                            : "Data de fundação"
-                        }
-                        {...register("birth")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.birth?.message && errors.birth.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-
-                  <S.ContainerInputMessage>
-                    <S.Label>Estado civil</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          errors.civilStatus?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <select {...register("civilStatus")}>
-                        <option value="Masculino">Casado</option>
-                        <option value="Feminino">Solteiro</option>
-                        <option value="Não Definido">Divorciado</option>
-                      </select>
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.civilStatus?.message &&
-                        errors.civilStatus.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>Restrições de venda</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          errors.restrictions?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"45"}
-                        placeholder="Restrições de venda"
-                        {...register("restrictions")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.restrictions?.message &&
-                        errors.restrictions.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage className={"doubleField"}>
-                    <S.Label>Telefone</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border: errors.phone?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <InputMask
-                        mask={"(99)99999-9999"}
-                        placeholder={"Telefone"}
-                        {...register("phone")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.phone?.message && errors.phone.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage className={"doubleField"}>
-                    <S.Label>Email</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border: errors.email?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input placeholder={"Email"} {...register("email")} />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {errors.email?.message && errors.email.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-
-                  <S.ContainerButtons>
-                    <S.Button
-                      type="button"
-                      className="negative"
-                      onClick={() => {
-                        history.push("/manipulationPharmacy");
-                      }}
-                    >
-                      Voltar
-                    </S.Button>
-                    <S.Button type="submit">Avançar</S.Button>
-                  </S.ContainerButtons>
-                </form>
-              ) : step === 2 ? (
-                <form onSubmit={handleSubmitAddress(handleRegisterAddress)}>
-                  <S.ContainerInputMessage>
-                    <S.Label>Tipo de endereço</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          addressErrors.addressType?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <select {...registerAddress("addressType")}>
-                        <option value="Cobrança">Cobrança</option>
-                        <option value="Entrega">Entrega</option>
-                      </select>
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {addressErrors.addressType?.message &&
-                        addressErrors.addressType.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>Cep</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          addressErrors.postalCode?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <InputMask
-                        mask={"99999-999"}
-                        placeholder={"Cep"}
-                        {...registerAddress("postalCode")}
-                        onBlur={(e) => getAddress(e.target.value)}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {addressErrors.postalCode?.message &&
-                        addressErrors.postalCode.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>País</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          addressErrors.country?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"2"}
-                        placeholder={"País"}
-                        {...registerAddress("country")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {addressErrors.country?.message &&
-                        addressErrors.country.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage className="doubleField">
-                    <S.Label>Estado</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          addressErrors.state?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"2"}
-                        placeholder={"Estado"}
-                        {...registerAddress("state")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {addressErrors.state?.message &&
-                        addressErrors.state.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage className="doubleField">
-                    <S.Label>Cidade</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          addressErrors.city?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"100"}
-                        placeholder={"Cidade"}
-                        {...registerAddress("city")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {addressErrors.city?.message &&
-                        addressErrors.city.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage className="fullField">
-                    <S.Label>Rua</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          addressErrors.street?.message && "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"60"}
-                        placeholder="Rua"
-                        {...registerAddress("street")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {addressErrors.street?.message &&
-                        addressErrors.street.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>Número</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          addressErrors.addressNumber?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"5"}
-                        placeholder="Número"
-                        {...registerAddress("addressNumber")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {addressErrors.addressNumber?.message &&
-                        addressErrors.addressNumber.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>Bairro</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          addressErrors.neighborhood?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"25"}
-                        placeholder="Bairro"
-                        {...registerAddress("neighborhood")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {addressErrors.neighborhood?.message &&
-                        addressErrors.neighborhood.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>Complemento</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          addressErrors.addressComplement?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"25"}
-                        placeholder="Complemento"
-                        {...registerAddress("addressComplement")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {addressErrors.addressComplement?.message &&
-                        addressErrors.addressComplement.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-
-                  <S.ContainerButtons>
-                    <S.Button
-                      type="button"
-                      className="negative"
-                      onClick={() => {
-                        if (subItemUpdate !== "none") {
-                          setStep((prev) => prev + 1);
-                        } else {
-                          setStep((prev) => prev + 2);
-                        }
-                      }}
-                    >
-                      {subItemUpdate !== "none" ? "Voltar" : "Pular Etapa"}
-                    </S.Button>
-                    {subItemUpdate !== "view" && (
-                      <S.Button type="submit">Salvar</S.Button>
-                    )}
-                  </S.ContainerButtons>
-                </form>
-              ) : step === 3 ? (
-                <S.ContainerGeneralFunctions>
-                  {filterPathname && slug !== undefined && slug.length > 0 && (
-                    <S.ContainerCards>
-                      <S.Card>
-                        <div className="data">
-                          <strong>
-                            Rua Pirapora 101, Jardim Cascalho, São Paulo
-                          </strong>
-                        </div>
-                        <div className="functions">
-                          <SearchAlt
-                            onClick={() => {
-                              handleViewAddress();
-                            }}
-                          />
-                          <Edit
-                            onClick={() => {
-                              handleUpdateAddress();
-                            }}
-                          />
-                          <Delete />
-                        </div>
-                      </S.Card>
-                      <S.Card>
-                        <div className="data">
-                          <strong>
-                            Rua Pirapora 101, Jardim Cascalho, São Paulo
-                          </strong>
-                        </div>
-                        <div className="functions">
-                          <SearchAlt
-                            onClick={() => {
-                              handleViewAddress();
-                            }}
-                          />
-                          <Edit
-                            onClick={() => {
-                              handleUpdateAddress();
-                            }}
-                          />
-                          <Delete />
-                        </div>
-                      </S.Card>
-                      <S.Card>
-                        <div className="data">
-                          <strong>
-                            Rua Pirapora 101, Jardim Cascalho, São Paulo
-                          </strong>
-                        </div>
-                        <div className="functions">
-                          <SearchAlt
-                            onClick={() => {
-                              handleViewAddress();
-                            }}
-                          />
-                          <Edit
-                            onClick={() => {
-                              handleUpdateAddress();
-                            }}
-                          />
-                          <Delete />
-                        </div>
-                      </S.Card>
-                    </S.ContainerCards>
-                  )}
-                  <S.ContainerButtons>
-                    {filterPathname &&
-                      slug !== undefined &&
-                      slug.length > 0 && (
-                        <S.Button
-                          type="button"
-                          className="negative"
-                          onClick={() => {
-                            setStep((prev) => prev - 2);
-                          }}
-                        >
-                          Voltar
-                        </S.Button>
-                      )}
-                    <S.Button
-                      type="button"
-                      className="negative"
-                      onClick={() => {
-                        setStep((prev) => prev - 1);
-                        if (
-                          filterPathname &&
-                          slug !== undefined &&
-                          slug.length > 0
-                        ) {
-                          setSubItemUpdate("create");
-                        }
-                      }}
-                    >
-                      Adicionar endereço
-                    </S.Button>
-                    <S.Button
-                      onClick={() => {
-                        setStep((prev) => prev + 1);
-                      }}
-                    >
-                      Avançar
-                    </S.Button>
-                  </S.ContainerButtons>
-                </S.ContainerGeneralFunctions>
-              ) : step === 4 ? (
-                <S.ContainerGeneralFunctions>
-                  {filterPathname && slug !== undefined && slug.length > 0 && (
-                    <S.ContainerCards>
-                      <S.Card>
-                        <div className="data">
-                          <strong>Dr. Gamaliel</strong>
-                          <span>01/05/21</span>
-                        </div>
-                        <div className="functions">
-                          <SearchAlt
-                            onClick={() => {
-                              handleViewMedicalHistory();
-                            }}
-                          />
-                          <Edit
-                            onClick={() => {
-                              handleUpdateMedicalHistory();
-                            }}
-                          />
-                          <Delete />
-                        </div>
-                      </S.Card>
-                      <S.Card>
-                        <div className="data">
-                          <strong>Dr. Gamaliel</strong>
-                          <span>01/05/21</span>
-                        </div>
-                        <div className="functions">
-                          <SearchAlt
-                            onClick={() => {
-                              handleViewMedicalHistory();
-                            }}
-                          />
-                          <Edit
-                            onClick={() => {
-                              handleUpdateMedicalHistory();
-                            }}
-                          />
-                          <Delete />
-                        </div>
-                      </S.Card>
-                      <S.Card>
-                        <div className="data">
-                          <strong>Dr. Gamaliel</strong>
-                          <span>01/05/21</span>
-                        </div>
-                        <div className="functions">
-                          <SearchAlt
-                            onClick={() => {
-                              handleViewMedicalHistory();
-                            }}
-                          />
-                          <Edit
-                            onClick={() => {
-                              handleUpdateMedicalHistory();
-                            }}
-                          />
-                          <Delete />
-                        </div>
-                      </S.Card>
-                    </S.ContainerCards>
-                  )}
-                  <S.ContainerButtons>
-                    {filterPathname &&
-                      slug !== undefined &&
-                      slug.length > 0 && (
-                        <S.Button
-                          type="button"
-                          className="negative"
-                          onClick={() => {
-                            setStep((prev) => prev - 1);
-                          }}
-                        >
-                          Voltar
-                        </S.Button>
-                      )}
-                    <S.Button
-                      type="button"
-                      className="negative"
-                      onClick={() => {
-                        setStep((prev) => prev + 1);
-                      }}
-                    >
-                      Adicionar histórico
-                    </S.Button>
-                    <S.Button
-                      onClick={() => {
-                        history.push("/manipulationPharmacy");
-                      }}
-                    >
-                      {filterPathname && slug !== undefined && slug.length > 0
-                        ? "Finalizar atualização"
-                        : "Finalizar cadastro"}
-                    </S.Button>
-                  </S.ContainerButtons>
-                </S.ContainerGeneralFunctions>
-              ) : (
-                <form
-                  onSubmit={handleSubmitMedicalHistory(
-                    handleRegisterMedicalHistory
-                  )}
+    <>
+      <ModalGeneralDelete
+        openModal={openModalAddressDelete}
+        setOpenModal={setOpenModalAddressDelete}
+        handleFunction={handleDeleteAddress}
+        data={{
+          title: "Deseja remover o endereço?",
+          body: "Se você excluir o endereço Rua Pirapora esta ação não poderá ser revertida!",
+          buttonPositive: "Excluir",
+          buttonNegative: "Cancelar",
+        }}
+      />
+      <ModalGeneralDelete
+        openModal={openModalMedicalHistoryDelete}
+        setOpenModal={setOpenModalMedicalHistoryDelete}
+        handleFunction={handleDeleteMedicalHistory}
+        data={{
+          title: "Deseja remover esse histórico médico?",
+          body: "Se você excluir o histórico médico do Dr.Gamaliel de 01/05/21 esta ação não poderá ser revertida!",
+          buttonPositive: "Excluir",
+          buttonNegative: "Cancelar",
+        }}
+      />
+      <S.GeneralContainer>
+        <title>HealthMedCloud - Farmácia de Manipulação</title>
+        <S.GeneralContent>
+          {loading ? (
+            <S.ContainerLoading>
+              <Lottie
+                animationData={loadingAnimation}
+                loop={true}
+                style={styleAnimation}
+              />
+            </S.ContainerLoading>
+          ) : (
+            <S.ContainerRegister>
+              <S.GeneralTitle>
+                {filterPathname && slug !== undefined && slug.length > 0
+                  ? "Atualizar Cliente"
+                  : "Cadastro do Cliente"}
+              </S.GeneralTitle>
+              <S.Tabs>
+                <S.ButtonTab className={step === 1 && "active"}>
+                  Básico
+                </S.ButtonTab>
+                <S.ButtonTab
+                  className={step === 2 || step === 3 ? "active" : ""}
                 >
-                  <S.ContainerInputMessage>
-                    <S.Label>Religião e escolaridade</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          medicalHistoryErrors.religionSchool?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"150"}
-                        placeholder="Religião e escolaridade"
-                        {...registerMedicalHistory("religionSchool")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {medicalHistoryErrors.religionSchool?.message &&
-                        medicalHistoryErrors.religionSchool.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage>
-                    <S.Label>Profissão</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          medicalHistoryErrors.work?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"100"}
-                        placeholder="Profissão"
-                        {...registerMedicalHistory("work")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {medicalHistoryErrors.work?.message &&
-                        medicalHistoryErrors.work.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
+                  Endereço
+                </S.ButtonTab>
+                <S.ButtonTab
+                  className={step === 4 || step === 5 ? "active" : ""}
+                >
+                  Histórico Médico
+                </S.ButtonTab>
+              </S.Tabs>
+              <S.BoxInputs>
+                {step === 1 ? (
+                  <form onSubmit={handleSubmit(handleRegister)}>
+                    <S.ContainerInputMessage>
+                      <S.Label>Tratamento</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            errors.treatmentPronoun?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <select {...register("treatmentPronoun")}>
+                          <option value="">Tratamento</option>
+                          <option value="Senhor">Srº.</option>
+                          <option value="Senhora">Srª</option>
+                          <option value="Doutor">Drº</option>
+                          <option value="Doutora">Drª</option>
+                        </select>
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.treatmentPronoun?.message &&
+                          errors.treatmentPronoun.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Nome</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border: errors.name?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"25"}
+                          placeholder="Nome*"
+                          {...register("name")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.name?.message && errors.name.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Sobrenome</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            errors.lastName?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"35"}
+                          placeholder="Sobrenome*"
+                          {...register("lastName")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.lastName?.message && errors.lastName.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Apelido</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            errors.nickName?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"25"}
+                          placeholder="Apelido"
+                          {...register("nickName")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.nickName?.message && errors.nickName.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Sexo</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border: errors.sex?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <select {...register("sex")}>
+                          <option value="Masculino">Masculino</option>
+                          <option value="Feminino">Feminino</option>
+                          <option value="Não Definido">Não definido</option>
+                        </select>
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.sex?.message && errors.sex.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Etnia</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            errors.ethnicity?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <select {...register("ethnicity")}>
+                          <option value="Asiático">Asiático</option>
+                          <option value="Branco">Branco</option>
+                          <option value="Indígena">Indígena</option>
+                          <option value="Negro">Negro</option>
+                          <option value="Pardo">Pardo</option>
+                        </select>
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.ethnicity?.message && errors.ethnicity.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerChecks>
+                      <S.ContainerCheck>
+                        <S.Checks
+                          className={documentSelected === "CPF" && "selected"}
+                          onClick={() => setDocumentSelected("CPF")}
+                        />
+                        CPF
+                      </S.ContainerCheck>
+                      <S.ContainerCheck>
+                        <S.Checks
+                          className={documentSelected === "CNPJ" && "selected"}
+                          onClick={() => setDocumentSelected("CNPJ")}
+                        />
+                        CNPJ
+                      </S.ContainerCheck>
+                    </S.ContainerChecks>
+                    <S.ContainerInputMessage className={"doubleField"}>
+                      <S.Label>
+                        {documentSelected === "CPF" ? "CPF" : "CNPJ"}
+                      </S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            errors.document?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <InputMask
+                          mask={
+                            documentSelected === "CPF"
+                              ? "999.999.999-99"
+                              : "99.999.999/9999-99"
+                          }
+                          placeholder={
+                            documentSelected === "CPF" ? "CPF*" : "CNPJ*"
+                          }
+                          {...register("document")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.document?.message && errors.document.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage className={"doubleField"}>
+                      <S.Label>
+                        {documentSelected === "CPF"
+                          ? "RG"
+                          : "Inscrição Estadual"}
+                      </S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            errors.registerDocument?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"25"}
+                          placeholder={
+                            documentSelected === "CPF"
+                              ? "RG"
+                              : "Inscrição estadual*"
+                          }
+                          {...register("registerDocument")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.registerDocument?.message &&
+                          errors.registerDocument.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>
+                        {documentSelected === "CPF"
+                          ? "Data de nascimento"
+                          : "Data de fundação"}
+                      </S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border: errors.birth?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <InputMask
+                          mask={"99/99/9999"}
+                          placeholder={
+                            documentSelected === "CPF"
+                              ? "Data de nascimento"
+                              : "Data de fundação"
+                          }
+                          {...register("birth")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.birth?.message && errors.birth.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
 
-                  <S.ContainerInputMessage>
-                    <S.Label>Onde Nasceu e mora</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          medicalHistoryErrors.location?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"150"}
-                        placeholder="Onde nasceu e mora"
-                        {...registerMedicalHistory("location")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {medicalHistoryErrors.location?.message &&
-                        medicalHistoryErrors.location.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage className="doubleField">
-                    <S.Label>Queixa principal</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          medicalHistoryErrors.complaint?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"200"}
-                        placeholder="Queixa principal"
-                        {...registerMedicalHistory("complaint")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {medicalHistoryErrors.complaint?.message &&
-                        medicalHistoryErrors.complaint.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage className="doubleField">
-                    <S.Label>Motivo da consulta</S.Label>
-                    <S.ContainerInput
-                      style={{
-                        border:
-                          medicalHistoryErrors.reason?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <S.Input
-                        maxLength={"200"}
-                        placeholder="Motivo da consulta"
-                        {...registerMedicalHistory("reason")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {medicalHistoryErrors.reason?.message &&
-                        medicalHistoryErrors.reason.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage className="doubleField">
-                    <S.Label>Anotações</S.Label>
-                    <S.ContainerInput
-                      className="textArea"
-                      style={{
-                        border:
-                          medicalHistoryErrors.notes?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <S.TextArea
-                        maxLength={"2500"}
-                        placeholder="Anotações"
-                        {...registerMedicalHistory("notes")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {medicalHistoryErrors.notes?.message &&
-                        medicalHistoryErrors.notes.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
-                  <S.ContainerInputMessage className="doubleField">
-                    <S.Label>Descrição da doença atual</S.Label>
-                    <S.ContainerInput
-                      className="textArea"
-                      style={{
-                        border:
-                          medicalHistoryErrors.description?.message &&
-                          "2px solid #ce171f",
-                      }}
-                    >
-                      <S.TextArea
-                        maxLength={"2500"}
-                        placeholder="Descrição da doença atual"
-                        {...registerMedicalHistory("description")}
-                      />
-                    </S.ContainerInput>
-                    <S.ContainerErrorMessage>
-                      {medicalHistoryErrors.description?.message &&
-                        medicalHistoryErrors.description.message}
-                    </S.ContainerErrorMessage>
-                  </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Estado civil</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            errors.civilStatus?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <select {...register("civilStatus")}>
+                          <option value="Masculino">Casado</option>
+                          <option value="Feminino">Solteiro</option>
+                          <option value="Não Definido">Divorciado</option>
+                        </select>
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.civilStatus?.message &&
+                          errors.civilStatus.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Restrições de venda</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            errors.restrictions?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"45"}
+                          placeholder="Restrições de venda"
+                          {...register("restrictions")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.restrictions?.message &&
+                          errors.restrictions.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage className={"doubleField"}>
+                      <S.Label>Telefone</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border: errors.phone?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <InputMask
+                          mask={"(99)99999-9999"}
+                          placeholder={"Telefone"}
+                          {...register("phone")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.phone?.message && errors.phone.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage className={"doubleField"}>
+                      <S.Label>Email</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border: errors.email?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input placeholder={"Email"} {...register("email")} />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {errors.email?.message && errors.email.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
 
-                  <S.ContainerButtons>
-                    <S.Button
-                      type="button"
-                      className="negative"
-                      onClick={() => {
-                        setStep((prev) => prev - 1);
-                      }}
-                    >
-                      {subItemUpdate !== "view" ? "Cancelar" : "Voltar"}
-                    </S.Button>
-                    {subItemUpdate !== "view" && (
-                      <S.Button type="submit">Salvar</S.Button>
+                    <S.ContainerButtons>
+                      <S.Button
+                        type="button"
+                        className="negative"
+                        onClick={() => {
+                          history.push("/manipulationPharmacy");
+                        }}
+                      >
+                        Voltar
+                      </S.Button>
+                      <S.Button type="submit">Avançar</S.Button>
+                    </S.ContainerButtons>
+                  </form>
+                ) : step === 2 ? (
+                  <form onSubmit={handleSubmitAddress(handleRegisterAddress)}>
+                    <S.ContainerInputMessage>
+                      <S.Label>Tipo de endereço</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            addressErrors.addressType?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <select {...registerAddress("addressType")}>
+                          <option value="Cobrança">Cobrança</option>
+                          <option value="Entrega">Entrega</option>
+                        </select>
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {addressErrors.addressType?.message &&
+                          addressErrors.addressType.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Cep</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            addressErrors.postalCode?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <InputMask
+                          mask={"99999-999"}
+                          placeholder={"Cep"}
+                          {...registerAddress("postalCode")}
+                          onBlur={(e) => getAddress(e.target.value)}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {addressErrors.postalCode?.message &&
+                          addressErrors.postalCode.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>País</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            addressErrors.country?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"2"}
+                          placeholder={"País"}
+                          {...registerAddress("country")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {addressErrors.country?.message &&
+                          addressErrors.country.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage className="doubleField">
+                      <S.Label>Estado</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            addressErrors.state?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"2"}
+                          placeholder={"Estado"}
+                          {...registerAddress("state")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {addressErrors.state?.message &&
+                          addressErrors.state.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage className="doubleField">
+                      <S.Label>Cidade</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            addressErrors.city?.message && "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"100"}
+                          placeholder={"Cidade"}
+                          {...registerAddress("city")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {addressErrors.city?.message &&
+                          addressErrors.city.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage className="fullField">
+                      <S.Label>Rua</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            addressErrors.street?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"60"}
+                          placeholder="Rua"
+                          {...registerAddress("street")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {addressErrors.street?.message &&
+                          addressErrors.street.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Número</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            addressErrors.addressNumber?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"5"}
+                          placeholder="Número"
+                          {...registerAddress("addressNumber")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {addressErrors.addressNumber?.message &&
+                          addressErrors.addressNumber.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Bairro</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            addressErrors.neighborhood?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"25"}
+                          placeholder="Bairro"
+                          {...registerAddress("neighborhood")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {addressErrors.neighborhood?.message &&
+                          addressErrors.neighborhood.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Complemento</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            addressErrors.addressComplement?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"25"}
+                          placeholder="Complemento"
+                          {...registerAddress("addressComplement")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {addressErrors.addressComplement?.message &&
+                          addressErrors.addressComplement.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+
+                    <S.ContainerButtons>
+                      <S.Button
+                        type="button"
+                        className="negative"
+                        onClick={() => {
+                          if (subItemUpdate !== "none") {
+                            setStep((prev) => prev + 1);
+                          } else {
+                            setStep((prev) => prev + 2);
+                          }
+                        }}
+                      >
+                        {subItemUpdate !== "none" ? "Voltar" : "Pular Etapa"}
+                      </S.Button>
+                      {subItemUpdate !== "view" && (
+                        <S.Button type="submit">Salvar</S.Button>
+                      )}
+                    </S.ContainerButtons>
+                  </form>
+                ) : step === 3 ? (
+                  <S.ContainerGeneralFunctions>
+                    {filterPathname &&
+                      slug !== undefined &&
+                      slug.length > 0 && (
+                        <S.ContainerCards>
+                          <S.Card>
+                            <div className="data">
+                              <strong>
+                                Rua Pirapora 101, Jardim Cascalho, São Paulo
+                              </strong>
+                            </div>
+                            <div className="functions">
+                              <SearchAlt
+                                onClick={() => {
+                                  handleViewAddress();
+                                }}
+                              />
+                              <Edit
+                                onClick={() => {
+                                  handleUpdateAddress();
+                                }}
+                              />
+                              <Delete
+                                onClick={() => handleOpenModalAddressDelete()}
+                              />
+                            </div>
+                          </S.Card>
+                          <S.Card>
+                            <div className="data">
+                              <strong>
+                                Rua Pirapora 101, Jardim Cascalho, São Paulo
+                              </strong>
+                            </div>
+                            <div className="functions">
+                              <SearchAlt
+                                onClick={() => {
+                                  handleViewAddress();
+                                }}
+                              />
+                              <Edit
+                                onClick={() => {
+                                  handleUpdateAddress();
+                                }}
+                              />
+                              <Delete
+                                onClick={() => handleOpenModalAddressDelete()}
+                              />
+                            </div>
+                          </S.Card>
+                          <S.Card>
+                            <div className="data">
+                              <strong>
+                                Rua Pirapora 101, Jardim Cascalho, São Paulo
+                              </strong>
+                            </div>
+                            <div className="functions">
+                              <SearchAlt
+                                onClick={() => {
+                                  handleViewAddress();
+                                }}
+                              />
+                              <Edit
+                                onClick={() => {
+                                  handleUpdateAddress();
+                                }}
+                              />
+                              <Delete
+                                onClick={() => handleOpenModalAddressDelete()}
+                              />
+                            </div>
+                          </S.Card>
+                        </S.ContainerCards>
+                      )}
+                    <S.ContainerButtons>
+                      {filterPathname &&
+                        slug !== undefined &&
+                        slug.length > 0 && (
+                          <S.Button
+                            type="button"
+                            className="negative"
+                            onClick={() => {
+                              setStep((prev) => prev - 2);
+                            }}
+                          >
+                            Voltar
+                          </S.Button>
+                        )}
+                      <S.Button
+                        type="button"
+                        className="negative"
+                        onClick={() => {
+                          setStep((prev) => prev - 1);
+                          if (
+                            filterPathname &&
+                            slug !== undefined &&
+                            slug.length > 0
+                          ) {
+                            setSubItemUpdate("create");
+                          }
+                        }}
+                      >
+                        Adicionar endereço
+                      </S.Button>
+                      <S.Button
+                        onClick={() => {
+                          setStep((prev) => prev + 1);
+                        }}
+                      >
+                        Avançar
+                      </S.Button>
+                    </S.ContainerButtons>
+                  </S.ContainerGeneralFunctions>
+                ) : step === 4 ? (
+                  <S.ContainerGeneralFunctions>
+                    {filterPathname &&
+                      slug !== undefined &&
+                      slug.length > 0 && (
+                        <S.ContainerCards>
+                          <S.Card>
+                            <div className="data">
+                              <strong>Dr. Gamaliel</strong>
+                              <span>01/05/21</span>
+                            </div>
+                            <div className="functions">
+                              <SearchAlt
+                                onClick={() => {
+                                  handleViewMedicalHistory();
+                                }}
+                              />
+                              <Edit
+                                onClick={() => {
+                                  handleUpdateMedicalHistory();
+                                }}
+                              />
+                              <Delete
+                                onClick={() =>
+                                  handleOpenModalMedicalHistoryDelete()
+                                }
+                              />
+                            </div>
+                          </S.Card>
+                          <S.Card>
+                            <div className="data">
+                              <strong>Dr. Gamaliel</strong>
+                              <span>01/05/21</span>
+                            </div>
+                            <div className="functions">
+                              <SearchAlt
+                                onClick={() => {
+                                  handleViewMedicalHistory();
+                                }}
+                              />
+                              <Edit
+                                onClick={() => {
+                                  handleUpdateMedicalHistory();
+                                }}
+                              />
+                              <Delete
+                                onClick={() =>
+                                  handleOpenModalMedicalHistoryDelete()
+                                }
+                              />
+                            </div>
+                          </S.Card>
+                          <S.Card>
+                            <div className="data">
+                              <strong>Dr. Gamaliel</strong>
+                              <span>01/05/21</span>
+                            </div>
+                            <div className="functions">
+                              <SearchAlt
+                                onClick={() => {
+                                  handleViewMedicalHistory();
+                                }}
+                              />
+                              <Edit
+                                onClick={() => {
+                                  handleUpdateMedicalHistory();
+                                }}
+                              />
+                              <Delete
+                                onClick={() =>
+                                  handleOpenModalMedicalHistoryDelete()
+                                }
+                              />
+                            </div>
+                          </S.Card>
+                        </S.ContainerCards>
+                      )}
+                    <S.ContainerButtons>
+                      {filterPathname &&
+                        slug !== undefined &&
+                        slug.length > 0 && (
+                          <S.Button
+                            type="button"
+                            className="negative"
+                            onClick={() => {
+                              setStep((prev) => prev - 1);
+                            }}
+                          >
+                            Voltar
+                          </S.Button>
+                        )}
+                      <S.Button
+                        type="button"
+                        className="negative"
+                        onClick={() => {
+                          setStep((prev) => prev + 1);
+                        }}
+                      >
+                        Adicionar histórico
+                      </S.Button>
+                      <S.Button
+                        onClick={() => {
+                          history.push("/manipulationPharmacy");
+                        }}
+                      >
+                        {filterPathname && slug !== undefined && slug.length > 0
+                          ? "Finalizar atualização"
+                          : "Finalizar cadastro"}
+                      </S.Button>
+                    </S.ContainerButtons>
+                  </S.ContainerGeneralFunctions>
+                ) : (
+                  <form
+                    onSubmit={handleSubmitMedicalHistory(
+                      handleRegisterMedicalHistory
                     )}
-                  </S.ContainerButtons>
-                </form>
-              )}
-            </S.BoxInputs>
-          </S.ContainerRegister>
-        )}
-      </S.GeneralContent>
-      <ToastContainer />
-    </S.GeneralContainer>
+                  >
+                    <S.ContainerInputMessage>
+                      <S.Label>Religião e escolaridade</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            medicalHistoryErrors.religionSchool?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"150"}
+                          placeholder="Religião e escolaridade"
+                          {...registerMedicalHistory("religionSchool")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {medicalHistoryErrors.religionSchool?.message &&
+                          medicalHistoryErrors.religionSchool.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage>
+                      <S.Label>Profissão</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            medicalHistoryErrors.work?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"100"}
+                          placeholder="Profissão"
+                          {...registerMedicalHistory("work")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {medicalHistoryErrors.work?.message &&
+                          medicalHistoryErrors.work.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+
+                    <S.ContainerInputMessage>
+                      <S.Label>Onde Nasceu e mora</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            medicalHistoryErrors.location?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"150"}
+                          placeholder="Onde nasceu e mora"
+                          {...registerMedicalHistory("location")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {medicalHistoryErrors.location?.message &&
+                          medicalHistoryErrors.location.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage className="doubleField">
+                      <S.Label>Queixa principal</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            medicalHistoryErrors.complaint?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"200"}
+                          placeholder="Queixa principal"
+                          {...registerMedicalHistory("complaint")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {medicalHistoryErrors.complaint?.message &&
+                          medicalHistoryErrors.complaint.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage className="doubleField">
+                      <S.Label>Motivo da consulta</S.Label>
+                      <S.ContainerInput
+                        style={{
+                          border:
+                            medicalHistoryErrors.reason?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.Input
+                          maxLength={"200"}
+                          placeholder="Motivo da consulta"
+                          {...registerMedicalHistory("reason")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {medicalHistoryErrors.reason?.message &&
+                          medicalHistoryErrors.reason.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage className="doubleField">
+                      <S.Label>Anotações</S.Label>
+                      <S.ContainerInput
+                        className="textArea"
+                        style={{
+                          border:
+                            medicalHistoryErrors.notes?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.TextArea
+                          maxLength={"2500"}
+                          placeholder="Anotações"
+                          {...registerMedicalHistory("notes")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {medicalHistoryErrors.notes?.message &&
+                          medicalHistoryErrors.notes.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+                    <S.ContainerInputMessage className="doubleField">
+                      <S.Label>Descrição da doença atual</S.Label>
+                      <S.ContainerInput
+                        className="textArea"
+                        style={{
+                          border:
+                            medicalHistoryErrors.description?.message &&
+                            "2px solid #ce171f",
+                        }}
+                      >
+                        <S.TextArea
+                          maxLength={"2500"}
+                          placeholder="Descrição da doença atual"
+                          {...registerMedicalHistory("description")}
+                        />
+                      </S.ContainerInput>
+                      <S.ContainerErrorMessage>
+                        {medicalHistoryErrors.description?.message &&
+                          medicalHistoryErrors.description.message}
+                      </S.ContainerErrorMessage>
+                    </S.ContainerInputMessage>
+
+                    <S.ContainerButtons>
+                      <S.Button
+                        type="button"
+                        className="negative"
+                        onClick={() => {
+                          setStep((prev) => prev - 1);
+                        }}
+                      >
+                        {subItemUpdate !== "view" ? "Cancelar" : "Voltar"}
+                      </S.Button>
+                      {subItemUpdate !== "view" && (
+                        <S.Button type="submit">Salvar</S.Button>
+                      )}
+                    </S.ContainerButtons>
+                  </form>
+                )}
+              </S.BoxInputs>
+            </S.ContainerRegister>
+          )}
+        </S.GeneralContent>
+        <ToastContainer />
+      </S.GeneralContainer>
+    </>
   );
 }
 
