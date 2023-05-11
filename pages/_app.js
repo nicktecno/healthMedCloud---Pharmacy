@@ -10,7 +10,7 @@ import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
   const history = useRouter();
-  const filterAppLogged = history.asPath.includes("/manipulationPharmacy");
+  const filterAppLogged = history.asPath.includes("/pharmacy");
   const filterLoginPage = history.asPath.includes("/login");
 
   return (
@@ -24,7 +24,9 @@ function MyApp({ Component, pageProps }) {
       />
 
       <ToastContainer />
-      {!filterLoginPage && filterAppLogged && <HeaderMicro />}
+      {!filterLoginPage && filterAppLogged && (
+        <HeaderMicro nameRoute="pharmacy" />
+      )}
       <GlobalStyles colors={defaultLayout} />
 
       <Component {...pageProps} />
