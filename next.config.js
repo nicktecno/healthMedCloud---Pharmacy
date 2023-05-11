@@ -36,7 +36,7 @@ const nextConfig = {
     };
     config.plugins.push(
       new NextFederationPlugin({
-        name: "manipulationPharmacy",
+        name: "pharmacy",
         remotes: {
           header: `header@https://health-med-cloud-header.vercel.app//_next/static/${
             isServer ? "ssr" : "chunks"
