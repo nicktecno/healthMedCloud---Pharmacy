@@ -5,7 +5,7 @@ export default function HomePage() {
   const history = useRouter();
 
   useEffect(() => {
-    history.push("/manipulationPharmacy");
+    history.push("/pharmacy");
   }, []);
   return <></>;
 }

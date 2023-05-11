@@ -5,5 +5,5 @@ const UpdateRegisterMicro = dynamic(
 );
 
 export default function UpdateRegisterPage() {
-  return <UpdateRegisterMicro nameRoute="manipulationPharmacy" />;
+  return <UpdateRegisterMicro nameRoute="pharmacy" />;
 }

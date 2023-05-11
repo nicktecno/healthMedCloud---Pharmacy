@@ -5,5 +5,5 @@ const CreatePrescriberMicro = dynamic(
 );
 
 export default function CreatePrescriberPage() {
-  return <CreatePrescriberMicro routeName="manipulationPharmacy" />;
+  return <CreatePrescriberMicro nameRoute="pharmacy" />;
 }

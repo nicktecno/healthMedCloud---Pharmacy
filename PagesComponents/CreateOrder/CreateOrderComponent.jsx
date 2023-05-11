@@ -17,7 +17,6 @@ import { PrescriptionBottleMedical } from "@styled-icons/fa-solid/PrescriptionBo
 import { useRouter } from "next/router";
 
 import Lottie from "lottie-react";
-import medicineManipulation from "../../public/images/medicineManipulation.json";
 
 function CreateOrderComponent() {
   const history = useRouter();
@@ -32,7 +31,7 @@ function CreateOrderComponent() {
 
   return (
     <S.GeneralContainer>
-      <title>HealthMedCloud - Farmácia de Manipulação</title>
+      <title>HealthMedCloud - Farmácia</title>
       <S.GeneralContent></S.GeneralContent>
     </S.GeneralContainer>
   );

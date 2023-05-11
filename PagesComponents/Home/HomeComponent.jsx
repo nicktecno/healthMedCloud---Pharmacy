@@ -16,7 +16,7 @@ import { PersonEdit } from "@styled-icons/fluentui-system-filled/PersonEdit";
 import { useRouter } from "next/router";
 
 import Lottie from "lottie-react";
-import medicineManipulation from "../../public/images/medicineManipulation.json";
+import pharmacyAnimation from "../../public/images/pharmacyAnimation.json";
 
 function HomeComponent() {
   const history = useRouter();
@@ -35,12 +35,10 @@ function HomeComponent() {
       <S.GeneralContent>
         <S.LeftContainer>
           <S.TitleName>HEALTHMEDCLOUD</S.TitleName>
-          <S.TitleSlogan className="strong">
-            Farmácia de Manipulação
-          </S.TitleSlogan>
+          <S.TitleSlogan className="strong">Farmácia</S.TitleSlogan>
           <S.AnimationContainer>
             <Lottie
-              animationData={medicineManipulation}
+              animationData={pharmacyAnimation}
               loop={false}
               style={styleAnimation}
             />
@@ -51,47 +49,39 @@ function HomeComponent() {
             <S.TitleWelcome>Seja bem vindo</S.TitleWelcome>
             <S.TitleWelcome className="strong">Juvenal!</S.TitleWelcome>
             <S.ButtonRedirect
-              onClick={() => history.push("/manipulationPharmacy/createClient")}
+              onClick={() => history.push("/pharmacy/createClient")}
             >
               <User style={{ width: 25 }} />
               Cadastrar Cliente
             </S.ButtonRedirect>
             <S.ButtonRedirect
-              onClick={() =>
-                history.push("/manipulationPharmacy/createPrescriber")
-              }
+              onClick={() => history.push("/pharmacy/createPrescriber")}
             >
               <UserDoctor style={{ width: 26 }} />
               Cadastrar Prescritor
             </S.ButtonRedirect>
             <S.ButtonRedirect
-              onClick={() =>
-                history.push("/manipulationPharmacy/updateRegister")
-              }
+              onClick={() => history.push("/pharmacy/updateRegister")}
             >
               <PersonEdit style={{ width: 30 }} />
               Atualizar cadastro
             </S.ButtonRedirect>
             <S.ButtonRedirect
-              onClick={() => history.push("/manipulationPharmacy/createOrder")}
+              onClick={() => history.push("/pharmacy/createOrder")}
             >
               <BagPlusFill style={{ width: 30 }} />
               Criar Orçamento
             </S.ButtonRedirect>
 
-            <S.ButtonRedirect
-              onClick={() => history.push("/manipulationPharmacy/orders")}
-            >
+            <S.ButtonRedirect onClick={() => history.push("/pharmacy/orders")}>
               <BagFill style={{ width: 30 }} />
               Consultar Orçamentos
             </S.ButtonRedirect>
 
             <S.ButtonRedirect
-              onClick={() =>
-                history.push("/manipulationPharmacy/createFormula")
-              }
+              onClick={() => history.push("/pharmacy/createFormula")}
             >
-              <PrescriptionBottleMedical /> Cadastrar Princípio Ativo
+              <PrescriptionBottleMedical /> Cadastrar Remédio
             </S.ButtonRedirect>
             <S.ButtonRedirect className="logout" onClick={() => handleLogout()}>
               <LogOut style={{ width: 30 }} /> Sair

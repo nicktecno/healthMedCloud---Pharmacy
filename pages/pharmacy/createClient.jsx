@@ -4,6 +4,7 @@ const CreateClientMicro = dynamic(
   { ssr: false }
 );
 
-export default function CreateClientPage() {
-  return <CreateClientMicro nameRoute="manipulationPharmacy" />;
-}
+const CreateClientPage = () => {
+  return <CreateClientMicro nameRoute="pharmacy" />;
+};
+export default CreateClientPage;
